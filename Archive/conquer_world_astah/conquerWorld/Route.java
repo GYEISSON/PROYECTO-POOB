@@ -29,12 +29,6 @@ public class Route
         y1=aPos[1];
         x2=bPos[0];
         y2=bPos[1];
-        
-        System.out.println(x1);
-        System.out.println(y1);
-        System.out.println(x2);
-        System.out.println(y2);
-
         Canvas canvas = Canvas.getCanvas();
         canvas.drawLine(x1, y1, x2, y2);
         
