@@ -20,8 +20,9 @@ public class ConquerWorld
     private boolean isVisible;
     private int maxX;
     private Cash cash;
+    private Route elimina;
     /**
-     * Constructor for objects of class conquerWorld
+     * Constructor de objetos de la clase conquerWorld
      */
     public ConquerWorld(int maxX,int maxY){
         this.maxX = maxX;
@@ -33,26 +34,24 @@ public class ConquerWorld
         cash = new Cash(0,maxX);
     }   
     /**
-     * An example of a method - replace this comment with your own
+     * Anadir efectivo al presupuesto de batalla
      *
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y
+     * @param  dinero a adicionar
      */
     public void addCash(int c){
         cash.addCash(c);
     }
     /**
-     * An example of a method - replace this comment with your own
+     * Anade una nueva nacion a la batalla
      *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * @param  La forma,el color, el area, la posicion y las unidades necesarias para esta nueva nacion
      */
     public void addNation(String shape, int area,String color,int[] position, int armiesNeeded){
         boolean put=true;
         int side;
         int xPos=position[0],yPos=position[1];
         int[] aux= new int[2];
-        System.out.println(position[0]+" "+position[1]);
+        // System.out.println(position[0]+" "+position[1]);
         if(shape=="pentagon"){
             side = (int)Math.sqrt(2*area);
             put = put && canPut(position); //1
@@ -112,7 +111,7 @@ public class ConquerWorld
         }
         if(put){
             aux[0]=xPos;aux[1]=yPos;
-            System.out.println(aux[0]+" "+aux[1]);
+            // System.out.println(aux[0]+" "+aux[1]);
             nation = new Nation(shape,area,color,aux);
             arrayNations.add(nation);
         }
@@ -120,11 +119,11 @@ public class ConquerWorld
             JOptionPane.showMessageDialog(null,"El lugar esta ocupado por otra nacion");
         }
     }    
+    
     /**
-     * An example of a method - replace this comment with your own
+     * Remueve una nacion de la batalla
      *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * @param  Nombre/Color de la nacion
      */
     public void removeNation(String removeColor)
     {        
@@ -138,16 +137,16 @@ public class ConquerWorld
             }                    
         }        
     }    
+    
     /**
-     * An example of a method - replace this comment with your own
+     * Anade una nueva ruta entre dos naciones a la batalla
      *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * @param  Las naciones con ruta y su costo
      */
     public void addRoute(String[] nations,int cost){
         int[] aPosition={0,0},bPosition={0,0};        
         for(Nation ob : arrayNations){
-            System.out.println(ob.getColor());
+            // System.out.println(ob.getColor());
             if(ob.getColor()== nations[0]){
                 aPosition = ob.getPosition();
             }
@@ -155,17 +154,48 @@ public class ConquerWorld
                 bPosition = ob.getPosition();
             }
         }
-        Route route = new Route(aPosition,bPosition,cost);        
-        routes.add(route);        
-    }    
+        Route route = new Route(aPosition,bPosition,cost,nations[0],nations[1]);
+        routes.add(route);     
+    }   
+    
     /**
-     * 
+     * Remueve una ruta entre dos naciones de la batalla
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
+     */
+    public void removeRoute(String[] nations)
+    {
+        int[] aPosition={0,0},bPosition={0,0};
+        
+        for(Route r : routes){
+            if((r.getFrom()==nations[0] && r.getTo()==nations[1]) || 
+            r.getFrom()==nations[1] && r.getTo()==nations[0]){
+                elimina = r;
+               for(Nation ob : arrayNations){
+                if(ob.getColor()== nations[0]){
+                    aPosition = ob.getPosition();
+                }
+                else if( ob.getColor()==nations[1]){
+                    bPosition = ob.getPosition();
+                }
+                }
+             r.removeR(aPosition,bPosition);
+            }
+            
+        
+        }
+        routes.remove(elimina);
+    }
+    
+    /**
+     * Limpia todo el tablero
      */
     public void erase(){
         mundo.erase();
     }                 
     /**
-     * 
+     * Hace visible todas las naciones y rutas
      */
     public void makeVisible(){
         for (Nation c:arrayNations)
@@ -174,7 +204,7 @@ public class ConquerWorld
         }
     }      
      /**
-     * 
+     * Hace invisible todas las naciones y rutas
      */
     public void makeInvisible(){
         for (Nation c:arrayNations)
@@ -182,11 +212,10 @@ public class ConquerWorld
             c.makeInvisible();
         }
     }
-        /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     /**
+     * Anade armamento a una nacion
+     * 
+     * @param  Nacion a agregar armamento
      */
     public void addArmy(String nation){
         // put your code here
@@ -207,6 +236,11 @@ public class ConquerWorld
             addArmy(nations[j]);
         }
     }
+    /**
+     * Quita armamento a una nacion
+     *
+     * @param  Nacion a quitar armamento
+     */
     public void removeArmies(String nation){
         for(Nation n : arrayNations){
             if(n.getColor() == nation ){
@@ -215,10 +249,9 @@ public class ConquerWorld
         }
     }    
     /**
-     * An example of a method - replace this comment with your own
+     * Mover armamento entre naciones
      *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * @param  Nacion origen y nacion destino
      */
     public void moveArmy(String fromNation,String toNation)
     {
@@ -227,6 +260,12 @@ public class ConquerWorld
         object2.setArmy(object1.getArmy());
         object1.setArmy();
     }
+    /**
+     * Obtiene la nacion a partir del Nombre/Color
+     *
+     * @param  Nombre/Color de nacion
+     * @return     Nacion
+     */
     private Nation getNation(String nationName){
         int[] pos={1,1};
         Nation x= new Nation("triangle",1,"blue",pos);
@@ -248,13 +287,13 @@ public class ConquerWorld
         boolean aux=true;
         for(Nation nation: arrayNations){
             aux = isFigure(positions[0],positions[1],nation);
-            System.out.println(aux);
+            // // System.out.println(aux);
             if(aux) return false;
         }
         return true;
     }
    /**
-     * Check if a figure is on top of another
+     * Revisa si una figura esta sobre otra
      * 
      * @return    int xPoint,int yPoint,Nation toNation
      */
@@ -263,7 +302,7 @@ public class ConquerWorld
         int xPosNation=natPosition[0],yPosNation= natPosition[1];
         int wNation = toNation.getWidth(),hNation= toNation.getHeight();
         String shapeNation =toNation.getShape(); 
-        System.out.println("Posiciones de otros objetos: "+xPosNation+" "+yPosNation);
+        // // // System.out.println("Posiciones de otros objetos: "+xPosNation+" "+yPosNation);
         if(shapeNation=="triangle"){
             if( xPoint<=xPosNation+(wNation/2) && xPoint>= xPosNation-(wNation/2) 
                && (yPoint>=yPosNation && yPoint<= yPosNation+hNation)){
