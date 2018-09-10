@@ -24,7 +24,6 @@ public class ConquerWorld
      * Constructor for objects of class conquerWorld
      */
     public ConquerWorld(int maxX,int maxY){
-        // initialise instance variables
         this.maxX = maxX;
         mundo = mundo.getCanvas(maxX,maxY);
         arrayNations = new ArrayList<Nation>();
@@ -49,12 +48,76 @@ public class ConquerWorld
      * @return    the sum of x and y
      */
     public void addNation(String shape, int area,String color,int[] position, int armiesNeeded){
-        if(canPut(position)){
-            nation = new Nation(shape,area,color,position);
+        boolean put=true;
+        int side;
+        int xPos=position[0],yPos=position[1];
+        int[] aux= new int[2];
+        System.out.println(position[0]+" "+position[1]);
+        if(shape=="pentagon"){
+            side = (int)Math.sqrt(2*area);
+            put = put && canPut(position); //1
+            position[0]+=side;
+            put = put && canPut(position); //2
+            position[1]-=side;
+            put = put && canPut(position); //3
+            position[0]-=side*2;
+            put= put&&canPut(position);  //4
+            position[1] +=side;
+            put = put && canPut(position); //5
+            position[0]+=side;
+            position[1]+=side;
+            put = put&&canPut(position); //6
+            position[1]-=side;
+        }
+        else if(shape == "triangle"){
+            side = (int)Math.sqrt(2*area);
+            put = put&&canPut(position);
+            position[0]+=(int)side/2;position[1]+=side;
+            put = put&&canPut(position);
+            position[0]-=side;
+            put = put&&canPut(position);
+            position[0]+=(int)side/2;position[1]-=side;
+        }
+        else if(shape == "circle"){
+            side = (int)(Math.sqrt(area/Nation.PI))*2;
+            put = put && canPut(position);
+            position[0]+=side;
+            put = put && canPut(position);
+            position[1]+=side;
+            put = put && canPut(position);
+            position[0]-=side;
+            put = put && canPut(position);
+            position[1]-=side;
+        }
+        else if(shape=="square"){
+            side = (int)Math.sqrt(area);
+            put = put && canPut(position);
+            position[0]+=side;
+            put = put && canPut(position);
+            position[1]+=side;
+            put = canPut(position);
+            position[0]-=side;
+            put = put && canPut(position);
+        }
+        else{
+            side = (int)Math.sqrt(2*area);
+            put = put && canPut(position);
+            position[0]+=(int)side/2;
+            put = put && canPut(position);
+            position[1]+=side;
+            put = put && canPut(position);
+            position[0]-=(int)side/2;
+            put = put && canPut(position);
+            position[1]-=side;
+        }
+        if(put){
+            aux[0]=xPos;aux[1]=yPos;
+            System.out.println(aux[0]+" "+aux[1]);
+            nation = new Nation(shape,area,color,aux);
             arrayNations.add(nation);
         }
         else{
-            JOptionPane.showMessageDialog(null,"El lugar esta ocupado por otra figura");
+            JOptionPane.showMessageDialog(null,"El lugar esta ocupado por otra nacion");
         }
     }    
     /**
@@ -182,8 +245,11 @@ public class ConquerWorld
      * @return    the sum of x and y
      */
     private boolean canPut(int[] positions){
+        boolean aux=true;
         for(Nation nation: arrayNations){
-            if(isFigure(positions[0],positions[1],nation)) return false;
+            aux = isFigure(positions[0],positions[1],nation);
+            System.out.println(aux);
+            if(aux) return false;
         }
         return true;
     }
@@ -197,14 +263,14 @@ public class ConquerWorld
         int xPosNation=natPosition[0],yPosNation= natPosition[1];
         int wNation = toNation.getWidth(),hNation= toNation.getHeight();
         String shapeNation =toNation.getShape(); 
-        
+        System.out.println("Posiciones de otros objetos: "+xPosNation+" "+yPosNation);
         if(shapeNation=="triangle"){
             if( xPoint<=xPosNation+(wNation/2) && xPoint>= xPosNation-(wNation/2) 
                && (yPoint>=yPosNation && yPoint<= yPosNation+hNation)){
                 return true;
             }
         }
-        else if(shapeNation == "Pentagon"){
+        else if(shapeNation == "pentagon"){           
             if(xPoint<=xPosNation+wNation && xPoint>= xPosNation-wNation 
                 && (yPoint >= yPosNation-hNation && yPoint<=yPosNation+hNation )){
                 return true;
@@ -213,8 +279,7 @@ public class ConquerWorld
         else if(shapeNation == "circle"){
             if((xPoint>=xPosNation && xPoint <= xPosNation+wNation ) && (yPoint>=yPosNation && yPoint<=yPosNation+hNation)){
                 return true;
-            }
-        
+            }        
         }
         else if(shapeNation == "rectangle"){
             if((xPoint >= xPosNation && xPoint <= xPosNation+wNation) && (yPoint >= yPosNation && yPoint <= yPosNation+hNation)){
@@ -222,7 +287,8 @@ public class ConquerWorld
             }
         }
         else{
-            if((xPoint >= xPosNation && xPoint <= xPosNation+wNation) && (yPoint >= yPosNation && yPoint <= yPosNation+hNation)){
+            
+            if((xPoint >= xPosNation && xPoint <= (int)(xPosNation+wNation)) && (yPoint >= yPosNation && yPoint <= (int)(yPosNation+hNation))){
                 return true;
             }
             else return false;

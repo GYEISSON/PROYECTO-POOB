@@ -23,24 +23,21 @@ public class Nation
     private Triangle triangle;
     private Pentagon pentagon;
     private Circle circle;
-
     private int height;
     private int width;
     private ArrayList<Triangle> tri = new ArrayList<Triangle>();
     private ArrayList<Rectangle> rec = new ArrayList<Rectangle>();
     private ArrayList<Circle> cir = new ArrayList<Circle>();
     private ArrayList<Square> sqr = new ArrayList<Square>();
-    private ArrayList<Pentagon> pen = new ArrayList<Pentagon>();
-   
-
+    private ArrayList<Pentagon> pen = new ArrayList<Pentagon>();   
     /**
      * Constructor for objects of class nation
      */
-    public Nation(String shape,int area,String color,int[] position)
+    public Nation(String shape,int area,String color,int[] pos)
     {
         // initialise instance variables
         this.color = color;
-        this.position=position;
+        this.position=pos;
         this.nationShape = shape;
         armyHave=0;
         if (shape.equals("square"))
@@ -96,19 +93,14 @@ public class Nation
             this.width=a;
             this.height = b;
             rec.add(rectangle);
-        }
-        
+        }        
     }
-
     /**
      * Make all the corresponding shapes of a nation, invisible. 
      * If it was already invisible, do nothing.
      *
      */
-    public void makeInvisible()
-    {
-        // put your code here
-       
+    public void makeInvisible(){        // put your code here       
         for (Rectangle r:rec)
         {
             r.makeInvisible();
@@ -129,19 +121,14 @@ public class Nation
         {
             s.makeInvisible();
         }
-    }
-
-    
-    
+    }      
     /**
      * Make all the corresponding shapes of a nation, invisible. 
      * If it was already invisible, do nothing.
      *
      */
     public void makeVisible()
-    {
-        // put your code here
-       
+    {        // put your code her       
         for (Rectangle r:rec)
         {
             r.makeVisible();
@@ -162,17 +149,13 @@ public class Nation
         {
             s.makeVisible();
         }
-    }
-    
-    
+    }       
     /**
      *Delete all the corresponding shapes of a nation.
      *
      * @param  color of the nation to be removed
      */
-    public void removeNationF(String color)
-    {
-        
+    public void removeNationF(String color){        
         for (Rectangle r:rec)
         {
             if (r.color == color) r.delete();
@@ -194,7 +177,6 @@ public class Nation
             if (s.color == color) s.delete();
         }
     }
-
     /**
      * Return the color of the current nation
      *
@@ -204,7 +186,6 @@ public class Nation
     
         return this.color;
     }
-
     /**
      * Return the position of the current nation
      *
@@ -215,7 +196,6 @@ public class Nation
         // put your code here
         return this.position;
     }
-
     /**
      * Add armies to the ones, the nation already has
      *
@@ -225,8 +205,7 @@ public class Nation
     {
         // put your code here
         armyHave += y;
-    }
-    
+    }    
     /**
      * Set the armies of the nation to 0
      * 
@@ -235,8 +214,7 @@ public class Nation
     {
         // put your code here
         armyHave=0;
-    }
-    
+    }    
     /**
      * Return the number of armies, the nation has
      *
@@ -246,7 +224,6 @@ public class Nation
         // put your code here
         return armyHave;
     }
-
     /**
      * Return the shape of the current nation
      *
@@ -256,8 +233,7 @@ public class Nation
     {
         // put your code here
         return this.nationShape;
-    }
-    
+    }    
      /**
      * Return the width of the current nation
      *
@@ -265,8 +241,7 @@ public class Nation
      */
     public int getWidth(){
         return width;
-    }
-    
+    }    
     /**
      * Return the height of the current nation
      *
