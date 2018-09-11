@@ -81,7 +81,6 @@ public class Route
      */
     public String getFrom()
     {
-        // put your code here
         return nationA;
     }
 
