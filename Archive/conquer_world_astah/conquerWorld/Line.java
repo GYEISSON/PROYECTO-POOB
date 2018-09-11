@@ -17,15 +17,17 @@ public class Line{
     private double area;
     private double radius;
     private int x1,y1,x2,y2;
-    private Line2D.Double line;
 
     /**
      * Create a new pentagon at default position with default color.
      */
-    public Line(){
-        x1=y1=0;
-        x2=y2=100;
-        color = "yellow";
+    public Line(int x1,int y1,int x2,int y2){
+        this.x1=x1;
+        this.x2=x2;
+        this.y1=y1;
+        this.y2=y2;
+        
+        color = "black";
         isVisible = false;
     }
  
@@ -50,12 +52,11 @@ public class Line{
      */
     private void draw(){
         if(isVisible) {
-            line =new Line2D.Double(); 
-            line.setLine(50,50,100,100);
+            int[] xpoints = { x1, x2, x2, x1};
+            int[] ypoints = { y1, y2, y2+5, y1+5};
             Canvas canvas = Canvas.getCanvas();
-            canvas.draw(this, color, line);
+            canvas.draw(this, color, new Polygon(xpoints, ypoints, 4));
             canvas.wait(10);
-            System.out.println(line.getY1());
             
         }
     }

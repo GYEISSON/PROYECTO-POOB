@@ -15,12 +15,17 @@ public class ConquerWorld
     // instance variables - replace the example below with your own
     private Canvas mundo;
     private ArrayList<Nation> arrayNations;
+    private ArrayList<String> colorNations;
     private ArrayList<Route> routes;
     private Nation nation;
     private boolean isVisible;
     private int maxX;
     private Cash cash;
     private Route elimina;
+    private ArrayList<Boolean> okR;
+    private Route route;
+    
+    /**
     /**
      * Constructor de objetos de la clase conquerWorld
      */
@@ -32,6 +37,7 @@ public class ConquerWorld
         isVisible = false;
         fondoCash f = new fondoCash(maxX);
         cash = new Cash(0,maxX);
+        okR = new ArrayList<Boolean>();
     }   
     /**
      * Anadir efectivo al presupuesto de batalla
@@ -51,7 +57,6 @@ public class ConquerWorld
         int side;
         int xPos=position[0],yPos=position[1];
         int[] aux= new int[2];
-        // System.out.println(position[0]+" "+position[1]);
         if(shape=="pentagon"){
             side = (int)Math.sqrt(2*area);
             put = put && canPut(position); //1
@@ -109,14 +114,16 @@ public class ConquerWorld
             put = put && canPut(position);
             position[1]-=side;
         }
-        if(put){
+        if(put && !(colorNations.contains(color))){
             aux[0]=xPos;aux[1]=yPos;
-            // System.out.println(aux[0]+" "+aux[1]);
             nation = new Nation(shape,area,color,aux);
             arrayNations.add(nation);
+            colorNations.add(color);
+            okR.add(true);
         }
         else{
-            JOptionPane.showMessageDialog(null,"El lugar esta ocupado por otra nacion");
+            JOptionPane.showMessageDialog(null,"El lugar esta ocupado por otra nacion o nacion existente");
+            okR.add(false);
         }
     }    
     
@@ -139,12 +146,12 @@ public class ConquerWorld
     }    
     
     /**
-     * Anade una nueva ruta entre dos naciones a la batalla
+     * Anade una nueva ruta entre dos naciones a la batalla.
      *
      * @param  Las naciones con ruta y su costo
      */
     public void addRoute(String[] nations,int cost){
-        int[] aPosition={0,0},bPosition={0,0};        
+        int[] aPosition={0,0},bPosition={0,0};   
         for(Nation ob : arrayNations){
             // System.out.println(ob.getColor());
             if(ob.getColor()== nations[0]){
@@ -155,7 +162,16 @@ public class ConquerWorld
             }
         }
         Route route = new Route(aPosition,bPosition,cost,nations[0],nations[1]);
-        routes.add(route);     
+        if (colorNations.contains(nations[0]) && colorNations.contains(nations[1])&&
+         !(routes.contains(route))
+        ){
+        route.makeVisible();
+        routes.add(route);
+        okR.add(true);
+       }
+       else{
+           okR.add(false);
+        }
     }   
     
     /**
@@ -181,10 +197,11 @@ public class ConquerWorld
                 }
                 }
              r.removeR(aPosition,bPosition);
+             r.makeInvisible();
             }
-            
         
         }
+        
         routes.remove(elimina);
     }
     
@@ -202,6 +219,9 @@ public class ConquerWorld
         {
             c.makeVisible();
         }
+        for (Route r:routes){
+            r.makeVisible();
+        }
     }      
      /**
      * Hace invisible todas las naciones y rutas
@@ -210,6 +230,9 @@ public class ConquerWorld
         for (Nation c:arrayNations)
         {
             c.makeInvisible();
+        }
+        for (Route r:routes){
+            r.makeInvisible();
         }
     }
      /**
@@ -334,4 +357,19 @@ public class ConquerWorld
         }
         return false;
     }
+   
+   /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
+     */
+    public boolean ok()
+    {
+        boolean a;
+        a = okR.get(okR.size()-1);
+        okR.clear();
+        return (a);
+    }
+
 }

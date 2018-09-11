@@ -10,7 +10,7 @@ public class fondoCash
     
     public fondoCash(int maxX) {
         Canvas canvas = Canvas.getCanvas();
-        canvas.draw(this, "red",(new java.awt.Rectangle(0, 0,maxX,40)));
+        canvas.draw(this, "red",(new java.awt.Rectangle(0, 0,maxX,10)));
     }
 
             

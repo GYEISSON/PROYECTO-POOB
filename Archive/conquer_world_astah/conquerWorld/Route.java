@@ -18,7 +18,8 @@ public class Route
     private boolean isVisible = false;
     private String color;
     private String nationA,nationB;
-    private double x1,y1,x2,y2;
+    private int x1,y1,x2,y2;
+    private Line line;
 
      /**
      // * Constructor for objects of class Ruta
@@ -35,29 +36,29 @@ public class Route
         y1=aPos[1];
         x2=bPos[0];
         y2=bPos[1];
-
-        Canvas canvas = Canvas.getCanvas();
-        // mundo.drawLine(x1, y1, x2, y2);
-        int r = (int)(Math.random()*((256-0)+1))+0;
-        int g = (int)(Math.random()*((256-0)+1))+0;
-        int b = (int)(Math.random()*((256-0)+1))+0;
+        line = new Line(x1,y1,x2,y2);
         
-        // canvas.draw(this, "black",new Line2D.Double(x1,y1,x2,y2));
-        // canvas.wait(10);
-        isVisible = true;
-        draw();
     }        
     
     /**
-     * Draw the pentagon with current specifications on screen.
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
      */
-    private void draw(){
-        if(isVisible) {
-            Canvas canvas = Canvas.getCanvas();
-            canvas.draw(this, color,new Line2D.Double(x1,y1,x2,y2));
-            canvas.wait(10);
-            
-        }
+    public void makeVisible(){
+        // put your code here
+        line.makeVisible();
+    }
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
+     */
+    public void makeInvisible(){
+        // put your code here
+        line.makeInvisible();
     }
     
     /**
