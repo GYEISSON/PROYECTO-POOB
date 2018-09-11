@@ -24,6 +24,7 @@ public class ConquerWorld
     private Route elimina;
     private ArrayList<Boolean> okR;
     private Route route;
+    private int nNations;
     
     /**
     /**
@@ -33,6 +34,7 @@ public class ConquerWorld
         this.maxX = maxX;
         mundo = mundo.getCanvas(maxX,maxY);
         arrayNations = new ArrayList<Nation>();
+        colorNations = new ArrayList<String>();
         routes = new ArrayList<Route>();
         isVisible = false;
         fondoCash f = new fondoCash(maxX);
@@ -56,65 +58,69 @@ public class ConquerWorld
         boolean put=true;
         int side;
         int xPos=position[0],yPos=position[1];
+        nNations=colorNations.size();
         int[] aux= new int[2];
-        if(shape=="pentagon"){
-            side = (int)Math.sqrt(2*area);
-            put = put && canPut(position); //1
-            position[0]+=side;
-            put = put && canPut(position); //2
-            position[1]-=side;
-            put = put && canPut(position); //3
-            position[0]-=side*2;
-            put= put&&canPut(position);  //4
-            position[1] +=side;
-            put = put && canPut(position); //5
-            position[0]+=side;
-            position[1]+=side;
-            put = put&&canPut(position); //6
-            position[1]-=side;
+        if(nNations>0){
+            if(shape=="pentagon"){
+                side = (int)Math.sqrt(2*area);
+                put = put && canPut(position); //1
+                position[0]+=side;
+                put = put && canPut(position); //2
+                position[1]-=side;
+                put = put && canPut(position); //3
+                position[0]-=side*2;
+                put= put&&canPut(position);  //4
+                position[1] +=side;
+                put = put && canPut(position); //5
+                position[0]+=side;
+                position[1]+=side;
+                put = put&&canPut(position); //6
+                position[1]-=side;
+            }
+            else if(shape == "triangle"){
+                side = (int)Math.sqrt(2*area);
+                put = put&&canPut(position);
+                position[0]+=(int)side/2;position[1]+=side;
+                put = put&&canPut(position);
+                position[0]-=side;
+                put = put&&canPut(position);
+                position[0]+=(int)side/2;position[1]-=side;
+            }
+            else if(shape == "circle"){
+                side = (int)(Math.sqrt(area/Nation.PI))*2;
+                put = put && canPut(position);
+                position[0]+=side;
+                put = put && canPut(position);
+                position[1]+=side;
+                put = put && canPut(position);
+                position[0]-=side;
+                put = put && canPut(position);
+                position[1]-=side;
+            }
+            else if(shape=="square"){
+                side = (int)Math.sqrt(area);
+                put = put && canPut(position);
+                position[0]+=side;
+                put = put && canPut(position);
+                position[1]+=side;
+                put = canPut(position);
+                position[0]-=side;
+                put = put && canPut(position);
+            }
+            else{
+                side = (int)Math.sqrt(2*area);
+                put = put && canPut(position);
+                position[0]+=(int)side/2;
+                put = put && canPut(position);
+                position[1]+=side;
+                put = put && canPut(position);
+                position[0]-=(int)side/2;
+                put = put && canPut(position);
+                position[1]-=side;
+            }
+            put = put &&  !(colorNations.contains(color));
         }
-        else if(shape == "triangle"){
-            side = (int)Math.sqrt(2*area);
-            put = put&&canPut(position);
-            position[0]+=(int)side/2;position[1]+=side;
-            put = put&&canPut(position);
-            position[0]-=side;
-            put = put&&canPut(position);
-            position[0]+=(int)side/2;position[1]-=side;
-        }
-        else if(shape == "circle"){
-            side = (int)(Math.sqrt(area/Nation.PI))*2;
-            put = put && canPut(position);
-            position[0]+=side;
-            put = put && canPut(position);
-            position[1]+=side;
-            put = put && canPut(position);
-            position[0]-=side;
-            put = put && canPut(position);
-            position[1]-=side;
-        }
-        else if(shape=="square"){
-            side = (int)Math.sqrt(area);
-            put = put && canPut(position);
-            position[0]+=side;
-            put = put && canPut(position);
-            position[1]+=side;
-            put = canPut(position);
-            position[0]-=side;
-            put = put && canPut(position);
-        }
-        else{
-            side = (int)Math.sqrt(2*area);
-            put = put && canPut(position);
-            position[0]+=(int)side/2;
-            put = put && canPut(position);
-            position[1]+=side;
-            put = put && canPut(position);
-            position[0]-=(int)side/2;
-            put = put && canPut(position);
-            position[1]-=side;
-        }
-        if(put && !(colorNations.contains(color))){
+        if(put){
             aux[0]=xPos;aux[1]=yPos;
             nation = new Nation(shape,area,color,aux);
             arrayNations.add(nation);
