@@ -22,8 +22,9 @@ public class ConquerWorld
     private int maxX;
     private Cash cash;
     private Route elimina;
-    private ArrayList<Boolean> okR;
+    private boolean okR;
     private Route route;
+    private int nNations;
     
     /**
     /**
@@ -33,12 +34,17 @@ public class ConquerWorld
         this.maxX = maxX;
         mundo = mundo.getCanvas(maxX,maxY);
         arrayNations = new ArrayList<Nation>();
+        colorNations = new ArrayList<String>();
         routes = new ArrayList<Route>();
         isVisible = false;
         fondoCash f = new fondoCash(maxX);
         cash = new Cash(0,maxX);
+<<<<<<< HEAD
         okR = new ArrayList<Boolean>();
         colorNations = new ArrayList<String>();
+=======
+        okR = true;
+>>>>>>> 56b7c964e5e48c512a643cbb571c0955999b7d7d
     }   
     /**
      * Anadir efectivo al presupuesto de batalla
@@ -46,7 +52,11 @@ public class ConquerWorld
      * @param  dinero a adicionar
      */
     public void addCash(int c){
+        int bCash=cash.getCash();
         cash.addCash(c);
+        if(cash.getCash()==(bCash+c)) okR=true;
+        else okR=false;
+        
     }
     /**
      * Anade una nueva nacion a la batalla
@@ -57,74 +67,78 @@ public class ConquerWorld
         boolean put=true;
         int side;
         int xPos=position[0],yPos=position[1];
+        nNations=colorNations.size();
         int[] aux= new int[2];
-        if(shape=="pentagon"){
-            side = (int)Math.sqrt(2*area);
-            put = put && canPut(position); //1
-            position[0]+=side;
-            put = put && canPut(position); //2
-            position[1]-=side;
-            put = put && canPut(position); //3
-            position[0]-=side*2;
-            put= put&&canPut(position);  //4
-            position[1] +=side;
-            put = put && canPut(position); //5
-            position[0]+=side;
-            position[1]+=side;
-            put = put&&canPut(position); //6
-            position[1]-=side;
+        if(nNations>0){
+            if(shape=="pentagon"){
+                side = (int)Math.sqrt(2*area);
+                put = put && canPut(position); //1
+                position[0]+=side;
+                put = put && canPut(position); //2
+                position[1]-=side;
+                put = put && canPut(position); //3
+                position[0]-=side*2;
+                put= put&&canPut(position);  //4
+                position[1] +=side;
+                put = put && canPut(position); //5
+                position[0]+=side;
+                position[1]+=side;
+                put = put&&canPut(position); //6
+                position[1]-=side;
+            }
+            else if(shape == "triangle"){
+                side = (int)Math.sqrt(2*area);
+                put = put&&canPut(position);
+                position[0]+=(int)side/2;position[1]+=side;
+                put = put&&canPut(position);
+                position[0]-=side;
+                put = put&&canPut(position);
+                position[0]+=(int)side/2;position[1]-=side;
+            }
+            else if(shape == "circle"){
+                side = (int)(Math.sqrt(area/Nation.PI))*2;
+                put = put && canPut(position);
+                position[0]+=side;
+                put = put && canPut(position);
+                position[1]+=side;
+                put = put && canPut(position);
+                position[0]-=side;
+                put = put && canPut(position);
+                position[1]-=side;
+            }
+            else if(shape=="square"){
+                side = (int)Math.sqrt(area);
+                put = put && canPut(position);
+                position[0]+=side;
+                put = put && canPut(position);
+                position[1]+=side;
+                put = canPut(position);
+                position[0]-=side;
+                put = put && canPut(position);
+            }
+            else{
+                side = (int)Math.sqrt(2*area);
+                put = put && canPut(position);
+                position[0]+=(int)side/2;
+                put = put && canPut(position);
+                position[1]+=side;
+                put = put && canPut(position);
+                position[0]-=(int)side/2;
+                put = put && canPut(position);
+                position[1]-=side;
+            }
+            put = put &&  !(colorNations.contains(color));
         }
-        else if(shape == "triangle"){
-            side = (int)Math.sqrt(2*area);
-            put = put&&canPut(position);
-            position[0]+=(int)side/2;position[1]+=side;
-            put = put&&canPut(position);
-            position[0]-=side;
-            put = put&&canPut(position);
-            position[0]+=(int)side/2;position[1]-=side;
-        }
-        else if(shape == "circle"){
-            side = (int)(Math.sqrt(area/Nation.PI))*2;
-            put = put && canPut(position);
-            position[0]+=side;
-            put = put && canPut(position);
-            position[1]+=side;
-            put = put && canPut(position);
-            position[0]-=side;
-            put = put && canPut(position);
-            position[1]-=side;
-        }
-        else if(shape=="square"){
-            side = (int)Math.sqrt(area);
-            put = put && canPut(position);
-            position[0]+=side;
-            put = put && canPut(position);
-            position[1]+=side;
-            put = canPut(position);
-            position[0]-=side;
-            put = put && canPut(position);
-        }
-        else{
-            side = (int)Math.sqrt(2*area);
-            put = put && canPut(position);
-            position[0]+=(int)side/2;
-            put = put && canPut(position);
-            position[1]+=side;
-            put = put && canPut(position);
-            position[0]-=(int)side/2;
-            put = put && canPut(position);
-            position[1]-=side;
-        }
-        if(put && !(colorNations.contains(color))){
+        if(put){
             aux[0]=xPos;aux[1]=yPos;
             nation = new Nation(shape,area,color,aux);
             arrayNations.add(nation);
             colorNations.add(color);
-            okR.add(true);
+            okR=true;
         }
         else{
             JOptionPane.showMessageDialog(null,"El lugar esta ocupado por otra nacion o nacion existente");
-            okR.add(false);
+            okR=false;
         }
     }    
     
@@ -141,6 +155,7 @@ public class ConquerWorld
             if(arrayNations.get(i).getColor()==removeColor){
                 arrayNations.get(i).removeNationF(removeColor);
                 arrayNations.remove(i);
+                okR = true;
                 break;
             }                    
         }        
@@ -157,6 +172,7 @@ public class ConquerWorld
             // System.out.println(ob.getColor());
             if(ob.getColor()== nations[0]){
                 aPosition = ob.getPosition();
+                
             }
             else if( ob.getColor()==nations[1]){
                 bPosition = ob.getPosition();
@@ -165,15 +181,18 @@ public class ConquerWorld
         Route route = new Route(aPosition,bPosition,cost,nations[0],nations[1]);
         System.out.println(route.getFrom());
         if (colorNations.contains(nations[0]) && colorNations.contains(nations[1])&&
-         !(routes.contains(route))
-        ){
-        route.makeVisible();
-        routes.add(route);
-        okR.add(true);
+         !(routes.contains(route))){
+             route.makeVisible();
+             routes.add(route);
+             okR=true;
        }
        else{
+<<<<<<< HEAD
            okR.add(false);
            System.out.println("holaaaa");
+=======
+           okR=false;
+>>>>>>> 56b7c964e5e48c512a643cbb571c0955999b7d7d
         }
     }   
     
@@ -191,21 +210,21 @@ public class ConquerWorld
             if((r.getFrom()==nations[0] && r.getTo()==nations[1]) || 
             r.getFrom()==nations[1] && r.getTo()==nations[0]){
                 elimina = r;
-               for(Nation ob : arrayNations){
-                if(ob.getColor()== nations[0]){
-                    aPosition = ob.getPosition();
+                for(Nation ob : arrayNations){
+                    if(ob.getColor()== nations[0]){
+                        aPosition = ob.getPosition();
+                    }
+                    else if( ob.getColor()==nations[1]){
+                        bPosition = ob.getPosition();
+                    }
                 }
-                else if( ob.getColor()==nations[1]){
-                    bPosition = ob.getPosition();
-                }
-                }
-             r.removeR(aPosition,bPosition);
-             r.makeInvisible();
+                r.removeR(aPosition,bPosition);
+                r.makeInvisible();
+                okR=true;
             }
         
         }
-        
-        routes.remove(elimina);
+        if(okR) routes.remove(elimina);
     }
     
     /**
@@ -221,10 +240,14 @@ public class ConquerWorld
         for (Nation c:arrayNations)
         {
             c.makeVisible();
+            okR=true;
         }
         for (Route r:routes){
             r.makeVisible();
+            okR=true;
         }
+        if(arrayNations.size()==0 && routes.size()==0) okR=true;
+        
     }      
      /**
      * Hace invisible todas las naciones y rutas
@@ -233,10 +256,13 @@ public class ConquerWorld
         for (Nation c:arrayNations)
         {
             c.makeInvisible();
+            okR=true;
         }
         for (Route r:routes){
             r.makeInvisible();
+            okR=true;
         }
+        if(arrayNations.size()==0 && routes.size()==0) okR=true;
     }
      /**
      * Anade armamento a una nacion
@@ -244,12 +270,14 @@ public class ConquerWorld
      * @param  Nacion a agregar armamento
      */
     public void addArmy(String nation){
-        // put your code here
+        
         for(Nation n : arrayNations){
             if(n.getColor() == nation ){
                 n.setArmy(10);
+                okR=true;
             }
         }
+        
     }
     /**
      * An example of a method - replace this comment with your own
@@ -271,6 +299,7 @@ public class ConquerWorld
         for(Nation n : arrayNations){
             if(n.getColor() == nation ){
                 n.setArmy();
+                okR=true;
             }
         }
     }    
@@ -283,8 +312,11 @@ public class ConquerWorld
     {
         // put your code here
         Nation object1 = getNation(fromNation),object2=getNation(toNation);
-        object2.setArmy(object1.getArmy());
-        object1.setArmy();
+        if(object1.getArmy()>0){
+            object2.setArmy(object1.getArmy());
+            object1.setArmy();
+            okR=true;
+        }
     }
     /**
      * Obtiene la nacion a partir del Nombre/Color
@@ -298,6 +330,7 @@ public class ConquerWorld
         
         for(Nation n: arrayNations){    
             if(n.getColor() == nationName){ 
+                okR=true;
                 return n;
             }
         }       
@@ -313,7 +346,6 @@ public class ConquerWorld
         boolean aux=true;
         for(Nation nation: arrayNations){
             aux = isFigure(positions[0],positions[1],nation);
-            // // System.out.println(aux);
             if(aux) return false;
         }
         return true;
@@ -368,12 +400,19 @@ public class ConquerWorld
      * @return     the sum of x and y
      */
     public boolean ok()
+<<<<<<< HEAD
     {
         boolean a;
         a = okR.get(okR.size()-1);
         System.out.println(a);
         okR.clear();
         return (a);
+=======
+    { 
+        boolean auxBool=okR;
+        okR=false;
+        return auxBool;
+>>>>>>> 56b7c964e5e48c512a643cbb571c0955999b7d7d
     }
 
 }
