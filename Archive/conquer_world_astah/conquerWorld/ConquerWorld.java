@@ -38,6 +38,7 @@ public class ConquerWorld
         fondoCash f = new fondoCash(maxX);
         cash = new Cash(0,maxX);
         okR = new ArrayList<Boolean>();
+        colorNations = new ArrayList<String>();
     }   
     /**
      * Anadir efectivo al presupuesto de batalla
@@ -162,6 +163,7 @@ public class ConquerWorld
             }
         }
         Route route = new Route(aPosition,bPosition,cost,nations[0],nations[1]);
+        System.out.println(route.getFrom());
         if (colorNations.contains(nations[0]) && colorNations.contains(nations[1])&&
          !(routes.contains(route))
         ){
@@ -171,6 +173,7 @@ public class ConquerWorld
        }
        else{
            okR.add(false);
+           System.out.println("holaaaa");
         }
     }   
     
@@ -368,6 +371,7 @@ public class ConquerWorld
     {
         boolean a;
         a = okR.get(okR.size()-1);
+        System.out.println(a);
         okR.clear();
         return (a);
     }
