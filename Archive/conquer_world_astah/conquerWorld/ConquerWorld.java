@@ -21,6 +21,7 @@ public class ConquerWorld
     private ArrayList<Route> routes;
     private Nation nation;
     private boolean isVisible;
+    private boolean aCicle;
     private int maxX;
     private Cash cash;
     private Route elimina;
@@ -433,6 +434,21 @@ public class ConquerWorld
      * @param  y  a sample parameter for a method
      * @return    the sum of x and y
      */
+    public boolean okRoutes()
+    {
+        aCicle=true;
+        for(Nation nat: arrayNations){
+            dFS(nat.getColor(),aCicle);
+        }
+        return aCicle;
+    }
+
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y  a sample parameter for a method
+     * @return    the sum of x and y
+     */
     private void depthFirstSearch(String uNation,String toFound)
     {
         // put your code here
@@ -441,6 +457,25 @@ public class ConquerWorld
                 visited.put(vNation,1);
                 depthFirstSearch( vNation, toFound);
             }
+        }
+    }
+    
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y  a sample parameter for a method
+     * @return    the sum of x and y
+     */
+    private void dFS(String uNation,boolean aCicle)
+    {
+        // put your code here
+        
+        for(String vNation: adjList.get(uNation)){
+            if(visited.get(vNation)==0){
+                visited.put(vNation,1);
+                dFS( vNation,aCicle);
+            }
+            else aCicle=false;
         }
     }
 
