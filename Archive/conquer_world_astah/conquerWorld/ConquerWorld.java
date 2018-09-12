@@ -39,12 +39,8 @@ public class ConquerWorld
         isVisible = false;
         fondoCash f = new fondoCash(maxX);
         cash = new Cash(0,maxX);
-<<<<<<< HEAD
-        okR = new ArrayList<Boolean>();
         colorNations = new ArrayList<String>();
-=======
-        okR = true;
->>>>>>> 56b7c964e5e48c512a643cbb571c0955999b7d7d
+        okR = false;
     }   
     /**
      * Anadir efectivo al presupuesto de batalla
@@ -140,8 +136,7 @@ public class ConquerWorld
             JOptionPane.showMessageDialog(null,"El lugar esta ocupado por otra nacion o nacion existente");
             okR=false;
         }
-    }    
-    
+    }        
     /**
      * Remueve una nacion de la batalla
      *
@@ -159,8 +154,7 @@ public class ConquerWorld
                 break;
             }                    
         }        
-    }    
-    
+    }        
     /**
      * Anade una nueva ruta entre dos naciones a la batalla.
      *
@@ -187,15 +181,9 @@ public class ConquerWorld
              okR=true;
        }
        else{
-<<<<<<< HEAD
-           okR.add(false);
-           System.out.println("holaaaa");
-=======
            okR=false;
->>>>>>> 56b7c964e5e48c512a643cbb571c0955999b7d7d
         }
-    }   
-    
+    }       
     /**
      * Remueve una ruta entre dos naciones de la batalla
      *
@@ -204,8 +192,7 @@ public class ConquerWorld
      */
     public void removeRoute(String[] nations)
     {
-        int[] aPosition={0,0},bPosition={0,0};
-        
+        int[] aPosition={0,0},bPosition={0,0};        
         for(Route r : routes){
             if((r.getFrom()==nations[0] && r.getTo()==nations[1]) || 
             r.getFrom()==nations[1] && r.getTo()==nations[0]){
@@ -221,8 +208,7 @@ public class ConquerWorld
                 r.removeR(aPosition,bPosition);
                 r.makeInvisible();
                 okR=true;
-            }
-        
+            }        
         }
         if(okR) routes.remove(elimina);
     }
@@ -276,8 +262,7 @@ public class ConquerWorld
                 n.setArmy(10);
                 okR=true;
             }
-        }
-        
+        }        
     }
     /**
      * An example of a method - replace this comment with your own
@@ -392,27 +377,30 @@ public class ConquerWorld
         }
         return false;
     }
-   
-   /**
+
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y  a sample parameter for a method
+     * @return    the sum of x and y
+     */
+    public void  finish()
+    {
+        // put your code here
+        System.exit(0);
+    }
+
+    /**
      * An example of a method - replace this comment with your own
      *
      * @param  y   a sample parameter for a method
      * @return     the sum of x and y
      */
-    public boolean ok()
-<<<<<<< HEAD
-    {
-        boolean a;
-        a = okR.get(okR.size()-1);
-        System.out.println(a);
-        okR.clear();
-        return (a);
-=======
+    public boolean ok()  
     { 
         boolean auxBool=okR;
         okR=false;
         return auxBool;
->>>>>>> 56b7c964e5e48c512a643cbb571c0955999b7d7d
     }
 
 }
