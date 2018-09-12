@@ -16,6 +16,8 @@ public class ConquerWorld
     private Canvas mundo;
     private ArrayList<Nation> arrayNations;
     private ArrayList<String> colorNations;
+    private HashMap<String,Integer> visited;
+    private Map<String,ArrayList<String>> adjList;    
     private ArrayList<Route> routes;
     private Nation nation;
     private boolean isVisible;
@@ -25,6 +27,7 @@ public class ConquerWorld
     private boolean okR;
     private Route route;
     private int nNations;
+
     
     /**
     /**
@@ -40,10 +43,11 @@ public class ConquerWorld
         fondoCash f = new fondoCash(maxX);
         cash = new Cash(0,maxX);
         colorNations = new ArrayList<String>();
+        visited = new HashMap<String,Integer>();
+        adjList = new HashMap<>();
         okR = false;
     }   
-    /**
-     * Anadir efectivo al presupuesto de batalla
+    /**     * Anadir efectivo al presupuesto de batalla
      *
      * @param  dinero a adicionar
      */
@@ -65,6 +69,7 @@ public class ConquerWorld
         int xPos=position[0],yPos=position[1];
         nNations=colorNations.size();
         int[] aux= new int[2];
+        
         if(nNations>0){
             if(shape=="pentagon"){
                 side = (int)Math.sqrt(2*area);
@@ -130,6 +135,8 @@ public class ConquerWorld
             nation = new Nation(shape,area,color,aux);
             arrayNations.add(nation);
             colorNations.add(color);
+            adjList.put(color,new ArrayList<String>());
+            visited.put(color,0);
             okR=true;
         }
         else{
@@ -178,6 +185,8 @@ public class ConquerWorld
          !(routes.contains(route))){
              route.makeVisible();
              routes.add(route);
+             adjList.get(nations[0]).add(nations[1]);
+             adjList.get(nations[1]).add(nations[0]);
              okR=true;
        }
        else{
@@ -401,6 +410,38 @@ public class ConquerWorld
         boolean auxBool=okR;
         okR=false;
         return auxBool;
+    }
+    
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y  a sample parameter for a method
+     * @return    the sum of x and y
+     */
+    public boolean okRoute(String[] nations )
+    {
+        // put your code here
+        visited.put(nations[0],1);
+        depthFirstSearch(nations[0],nations[1]);
+        if(visited.get(nations[1])==1){ System.out.println("no"); return false;}
+        else{ System.out.println("yes"); return true;}
+    }
+    
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y  a sample parameter for a method
+     * @return    the sum of x and y
+     */
+    private void depthFirstSearch(String uNation,String toFound)
+    {
+        // put your code here
+        for(String vNation: adjList.get(uNation)){
+            if(visited.get(vNation)==0){
+                visited.put(vNation,1);
+                depthFirstSearch( vNation, toFound);
+            }
+        }
     }
 
 }
