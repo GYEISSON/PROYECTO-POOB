@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * The test class ConquerWorldTest01.
+ * The test class ConquerWorldTest01
  *
  * @author  (your name)
  * @version (a version number or a date)
@@ -465,4 +465,4 @@ public class ConquerWorldTest01
         
         // assertFalse(cw.okRoutes());        
     // }   
-    }
+}
