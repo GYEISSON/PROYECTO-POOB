@@ -78,13 +78,13 @@ public class ConquerWorldTest01
         
         cw.addNation("Triangle", 30, "blue", new int[]{9, 8}, 3);
         cw.addNation("Rectangle", 10, "red", new int[]{18, 16}, 2);
-        assertTrue(cw.ok());
+        assertTrue(cw.okRoutes());
         
         cw.addRoute(new String[]{"blue", "red"}, 10);
-        assertTrue(cw.ok());
+        assertTrue(cw.okRoutes());
         
         cw.addRoute(new String[]{"blue", "red"}, 5);
-        assertFalse(cw.ok());
+        assertFalse(cw.okRoutes());
     }
     
     @Test

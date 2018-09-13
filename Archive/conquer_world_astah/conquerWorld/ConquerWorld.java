@@ -170,18 +170,19 @@ public class ConquerWorld
      * @param  Las naciones con ruta y su costo
      */
     public void addRoute(String[] nations,int cost){
-        int[] aPosition={0,0},bPosition={0,0};          
+        int[] aPosition={0,0},bPosition={0,0};
+        
         for(Nation ob : arrayNations){            
             if(ob.getColor()== nations[0]){
-                aPosition = ob.getPosition();
-                
+                aPosition = ob.getPosition();                
             }
             else if( ob.getColor()==nations[1]){
                 bPosition = ob.getPosition();
             }
         }        
         Route route = new Route(aPosition,bPosition,cost,nations[0],nations[1]);       
-        if (colorNations.contains(nations[0]) && colorNations.contains(nations[1])){
+        if (colorNations.contains(nations[0]) && colorNations.contains(nations[1]) 
+            && okRoute(nations)){
              route.makeVisible();
              routes.add(route);    
              adjList.get(nations[0]).add(nations[1]);
@@ -229,8 +230,7 @@ public class ConquerWorld
             }            
         }
                    
-    }
-    
+    }    
     /**
      * Limpia todo el tablero
      */
