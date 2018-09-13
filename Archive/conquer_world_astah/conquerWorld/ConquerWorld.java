@@ -16,9 +16,8 @@ public class ConquerWorld
     private Canvas mundo;
     private ArrayList<Nation> arrayNations;
     private ArrayList<String> colorNations;
-    private HashMap<String,Integer> visited;
-    private Map<String,ArrayList<String>> adjList;   
-    private HashMap <String,String> routesS;
+    private HashMap<String,Integer> visited; //tabla de hash para saber si un una nacion esta visitado
+    private Map<String,ArrayList<String>> adjList; //lista de adyacencia para los nodos del grafo       
     private ArrayList<Route> routes;
     private Nation nation;
     private boolean isVisible;
@@ -29,7 +28,6 @@ public class ConquerWorld
     private boolean okR;
     private Route route;
     private int nNations;
-
     
     /**
     /**
@@ -41,7 +39,6 @@ public class ConquerWorld
         arrayNations = new ArrayList<Nation>();
         colorNations = new ArrayList<String>();
         routes = new ArrayList<Route>();
-        routesS = new HashMap<String,String>();
         isVisible = false;
         fondoCash f = new fondoCash(maxX);
         cash = new Cash(0,maxX);
@@ -173,13 +170,8 @@ public class ConquerWorld
      * @param  Las naciones con ruta y su costo
      */
     public void addRoute(String[] nations,int cost){
-        int[] aPosition={0,0},bPosition={0,0};  
-        System.out.println(routesS.size());
-        for (String entry : routesS.keySet()) {     
-            System.out.println("Key: " + routesS.toString() + " Value: " + routesS.get(entry).toString()+"1111111111111111111");
-        }
-        for(Nation ob : arrayNations){
-            // System.out.println(ob.getColor());
+        int[] aPosition={0,0},bPosition={0,0};          
+        for(Nation ob : arrayNations){            
             if(ob.getColor()== nations[0]){
                 aPosition = ob.getPosition();
                 
@@ -187,28 +179,18 @@ public class ConquerWorld
             else if( ob.getColor()==nations[1]){
                 bPosition = ob.getPosition();
             }
-        }
-        
-        Route route = new Route(aPosition,bPosition,cost,nations[0],nations[1]);
-        //System.out.println(route.getFrom());
-        if (colorNations.contains(nations[0]) && colorNations.contains(nations[1])&&
-         !(routesS.containsKey(nations[0]) && routesS.containsValue(nations[1]))
-        ){
+        }        
+        Route route = new Route(aPosition,bPosition,cost,nations[0],nations[1]);       
+        if (colorNations.contains(nations[0]) && colorNations.contains(nations[1])){
              route.makeVisible();
-             routes.add(route);
-             routesS.put(nations[0],nations[1]);
-             //routesS.put(nations[1],nations[0]);
+             routes.add(route);    
              adjList.get(nations[0]).add(nations[1]);
              adjList.get(nations[1]).add(nations[0]);
-             okR=true;
-             
-       }
-       else{
-           okR=false;
+             okR=true;             
         }
-       for (String entry : routesS.keySet()) {     
-                 System.out.println("Key: " + routesS.toString() + " Value: " + routesS.get(entry).toString()+"2222222222222222222");
-                }
+        else{
+            okR=false;
+        }
     }       
     /**
      * Remueve una ruta entre dos naciones de la batalla
@@ -218,35 +200,35 @@ public class ConquerWorld
      */
     public void removeRoute(String[] nations)
     {
-        int[] aPosition={0,0},bPosition={0,0};  
-        System.out.println(routesS.size());
-        for (String entry : routesS.keySet()) {     
-                 System.out.println("Key: " + routesS.toString() + " Value: " + routesS.get(entry).toString()+"33333333333333333333333333");
-        }
-        
-        if(routesS.containsKey(nations[0]) && routesS.containsValue(nations[1])){
-            for(Route r : routes){
-                if((r.getFrom()==nations[0] && r.getTo()==nations[1]) || 
-                r.getFrom()==nations[1] && r.getTo()==nations[0]){
-                    elimina = r;
-                    for(Nation ob : arrayNations){
-                        if(ob.getColor()== nations[0]){
-                            aPosition = ob.getPosition();
-                        }
-                        else if( ob.getColor()==nations[1]){
-                            bPosition = ob.getPosition();
+        int[] aPosition={0,0},bPosition={0,0};          
+        for(Route r : routes){
+            if((r.getFrom()==nations[0] && r.getTo()==nations[1]) || 
+            r.getFrom()==nations[1] && r.getTo()==nations[0]){
+                elimina = r;
+                for(Nation obNation : arrayNations){
+                    if(obNation.getColor()== nations[0]){
+                        aPosition = obNation.getPosition();
+                        for(int k =0;k<adjList.get(nations[0]).size();k++){
+                            if(adjList.get(nations[0]).get(k).equals(nations[1])){
+                                adjList.get(nations[0]).remove(k);
+                            }
                         }
                     }
-                    r.removeR(aPosition,bPosition);
-                    r.makeInvisible();
-                }        
-            }
-            okR=true;
-            routes.remove(elimina);
-            routesS.remove(nations[0]);
-            //routesS.remove(nations[1]);
+                    else if( obNation.getColor()==nations[1]){
+                        bPosition = obNation.getPosition();
+                        for(int l =0;l<adjList.get(nations[1]).size();l++){
+                            if(adjList.get(nations[1]).get(l).equals(nations[0])){
+                                adjList.get(nations[1]).remove(l);
+                            }
+                        }
+                    }
+                }
+                r.removeR(aPosition,bPosition);
+                r.makeInvisible();
+                okR=true;
+            }            
         }
-        else okR=false;
+                   
     }
     
     /**
