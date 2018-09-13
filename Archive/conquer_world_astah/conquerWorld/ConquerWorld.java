@@ -16,15 +16,19 @@ public class ConquerWorld
     private Canvas mundo;
     private ArrayList<Nation> arrayNations;
     private ArrayList<String> colorNations;
+    private HashMap<String,Integer> visited;
+    private Map<String,ArrayList<String>> adjList;    
     private ArrayList<Route> routes;
     private Nation nation;
     private boolean isVisible;
+    private boolean aCicle;
     private int maxX;
     private Cash cash;
     private Route elimina;
     private boolean okR;
     private Route route;
     private int nNations;
+
     
     /**
     /**
@@ -39,15 +43,12 @@ public class ConquerWorld
         isVisible = false;
         fondoCash f = new fondoCash(maxX);
         cash = new Cash(0,maxX);
-<<<<<<< HEAD
-        okR = new ArrayList<Boolean>();
         colorNations = new ArrayList<String>();
-=======
-        okR = true;
->>>>>>> 56b7c964e5e48c512a643cbb571c0955999b7d7d
+        visited = new HashMap<String,Integer>();
+        adjList = new HashMap<>();
+        okR = false;
     }   
-    /**
-     * Anadir efectivo al presupuesto de batalla
+    /**     * Anadir efectivo al presupuesto de batalla
      *
      * @param  dinero a adicionar
      */
@@ -69,6 +70,7 @@ public class ConquerWorld
         int xPos=position[0],yPos=position[1];
         nNations=colorNations.size();
         int[] aux= new int[2];
+        
         if(nNations>0){
             if(shape=="pentagon"){
                 side = (int)Math.sqrt(2*area);
@@ -134,14 +136,15 @@ public class ConquerWorld
             nation = new Nation(shape,area,color,aux);
             arrayNations.add(nation);
             colorNations.add(color);
+            adjList.put(color,new ArrayList<String>());
+            visited.put(color,0);
             okR=true;
         }
         else{
             JOptionPane.showMessageDialog(null,"El lugar esta ocupado por otra nacion o nacion existente");
             okR=false;
         }
-    }    
-    
+    }        
     /**
      * Remueve una nacion de la batalla
      *
@@ -159,8 +162,7 @@ public class ConquerWorld
                 break;
             }                    
         }        
-    }    
-    
+    }        
     /**
      * Anade una nueva ruta entre dos naciones a la batalla.
      *
@@ -184,18 +186,14 @@ public class ConquerWorld
          !(routes.contains(route))){
              route.makeVisible();
              routes.add(route);
+             adjList.get(nations[0]).add(nations[1]);
+             adjList.get(nations[1]).add(nations[0]);
              okR=true;
        }
        else{
-<<<<<<< HEAD
-           okR.add(false);
-           System.out.println("holaaaa");
-=======
            okR=false;
->>>>>>> 56b7c964e5e48c512a643cbb571c0955999b7d7d
         }
-    }   
-    
+    }       
     /**
      * Remueve una ruta entre dos naciones de la batalla
      *
@@ -204,8 +202,7 @@ public class ConquerWorld
      */
     public void removeRoute(String[] nations)
     {
-        int[] aPosition={0,0},bPosition={0,0};
-        
+        int[] aPosition={0,0},bPosition={0,0};        
         for(Route r : routes){
             if((r.getFrom()==nations[0] && r.getTo()==nations[1]) || 
             r.getFrom()==nations[1] && r.getTo()==nations[0]){
@@ -221,8 +218,7 @@ public class ConquerWorld
                 r.removeR(aPosition,bPosition);
                 r.makeInvisible();
                 okR=true;
-            }
-        
+            }        
         }
         if(okR) routes.remove(elimina);
     }
@@ -276,8 +272,7 @@ public class ConquerWorld
                 n.setArmy(10);
                 okR=true;
             }
-        }
-        
+        }        
     }
     /**
      * An example of a method - replace this comment with your own
@@ -392,27 +387,96 @@ public class ConquerWorld
         }
         return false;
     }
-   
-   /**
+
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y  a sample parameter for a method
+     * @return    the sum of x and y
+     */
+    public void  finish()
+    {
+        // put your code here
+        System.exit(0);
+    }
+
+    /**
      * An example of a method - replace this comment with your own
      *
      * @param  y   a sample parameter for a method
      * @return     the sum of x and y
      */
-    public boolean ok()
-<<<<<<< HEAD
-    {
-        boolean a;
-        a = okR.get(okR.size()-1);
-        System.out.println(a);
-        okR.clear();
-        return (a);
-=======
+    public boolean ok()  
     { 
         boolean auxBool=okR;
         okR=false;
         return auxBool;
->>>>>>> 56b7c964e5e48c512a643cbb571c0955999b7d7d
+    }
+    
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y  a sample parameter for a method
+     * @return    the sum of x and y
+     */
+    public boolean okRoute(String[] nations )
+    {
+        // put your code here
+        visited.put(nations[0],1);
+        depthFirstSearch(nations[0],nations[1]);
+        if(visited.get(nations[1])==1){ System.out.println("no"); return false;}
+        else{ System.out.println("yes"); return true;}
+    }
+    
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y  a sample parameter for a method
+     * @return    the sum of x and y
+     */
+    public boolean okRoutes()
+    {
+        aCicle=true;
+        for(Nation nat: arrayNations){
+            dFS(nat.getColor(),aCicle);
+        }
+        return aCicle;
+    }
+
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y  a sample parameter for a method
+     * @return    the sum of x and y
+     */
+    private void depthFirstSearch(String uNation,String toFound)
+    {
+        // put your code here
+        for(String vNation: adjList.get(uNation)){
+            if(visited.get(vNation)==0){
+                visited.put(vNation,1);
+                depthFirstSearch( vNation, toFound);
+            }
+        }
+    }
+    
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y  a sample parameter for a method
+     * @return    the sum of x and y
+     */
+    private void dFS(String uNation,boolean aCicle)
+    {
+        // put your code here
+        
+        for(String vNation: adjList.get(uNation)){
+            if(visited.get(vNation)==0){
+                visited.put(vNation,1);
+                dFS( vNation,aCicle);
+            }
+            else aCicle=false;
+        }
     }
 
 }
