@@ -17,7 +17,8 @@ public class ConquerWorld
     private ArrayList<Nation> arrayNations;
     private ArrayList<String> colorNations;
     private HashMap<String,Integer> visited;
-    private Map<String,ArrayList<String>> adjList;    
+    private Map<String,ArrayList<String>> adjList;   
+    private HashMap <String,String> routesS;
     private ArrayList<Route> routes;
     private Nation nation;
     private boolean isVisible;
@@ -40,13 +41,13 @@ public class ConquerWorld
         arrayNations = new ArrayList<Nation>();
         colorNations = new ArrayList<String>();
         routes = new ArrayList<Route>();
+        routesS = new HashMap<String,String>();
         isVisible = false;
         fondoCash f = new fondoCash(maxX);
         cash = new Cash(0,maxX);
         colorNations = new ArrayList<String>();
         visited = new HashMap<String,Integer>();
         adjList = new HashMap<>();
-        okR = false;
     }   
     /**     * Anadir efectivo al presupuesto de batalla
      *
@@ -129,9 +130,8 @@ public class ConquerWorld
                 put = put && canPut(position);
                 position[1]-=side;
             }
-            put = put &&  !(colorNations.contains(color));
         }
-        if(put){
+        if(put &&  !(colorNations.contains(color))){
             aux[0]=xPos;aux[1]=yPos;
             nation = new Nation(shape,area,color,aux);
             arrayNations.add(nation);
@@ -141,7 +141,7 @@ public class ConquerWorld
             okR=true;
         }
         else{
-            JOptionPane.showMessageDialog(null,"El lugar esta ocupado por otra nacion o nacion existente");
+            //JOptionPane.showMessageDialog(null,"El lugar esta ocupado por otra nacion o nacion existente");
             okR=false;
         }
     }        
@@ -149,27 +149,35 @@ public class ConquerWorld
      * Remueve una nacion de la batalla
      *
      * @param  Nombre/Color de la nacion
+     * 
      */
     public void removeNation(String removeColor)
     {        
         String colorob;
+        // System.out.println(colorNations.toString());
+        if(colorNations.contains(removeColor)){ 
         for(int i=0;i<arrayNations.size();i++){
             colorob= arrayNations.get(i).getColor();
             if(arrayNations.get(i).getColor()==removeColor){
                 arrayNations.get(i).removeNationF(removeColor);
                 arrayNations.remove(i);
                 okR = true;
-                break;
             }                    
-        }        
-    }        
+        }
+        okR = true;
+      }
+    }
     /**
      * Anade una nueva ruta entre dos naciones a la batalla.
      *
      * @param  Las naciones con ruta y su costo
      */
     public void addRoute(String[] nations,int cost){
-        int[] aPosition={0,0},bPosition={0,0};   
+        int[] aPosition={0,0},bPosition={0,0};  
+        System.out.println(routesS.size());
+        for (String entry : routesS.keySet()) {     
+            System.out.println("Key: " + routesS.toString() + " Value: " + routesS.get(entry).toString()+"1111111111111111111");
+        }
         for(Nation ob : arrayNations){
             // System.out.println(ob.getColor());
             if(ob.getColor()== nations[0]){
@@ -180,19 +188,27 @@ public class ConquerWorld
                 bPosition = ob.getPosition();
             }
         }
+        
         Route route = new Route(aPosition,bPosition,cost,nations[0],nations[1]);
-        System.out.println(route.getFrom());
+        //System.out.println(route.getFrom());
         if (colorNations.contains(nations[0]) && colorNations.contains(nations[1])&&
-         !(routes.contains(route))){
+         !(routesS.containsKey(nations[0]) && routesS.containsValue(nations[1]))
+        ){
              route.makeVisible();
              routes.add(route);
+             routesS.put(nations[0],nations[1]);
+             //routesS.put(nations[1],nations[0]);
              adjList.get(nations[0]).add(nations[1]);
              adjList.get(nations[1]).add(nations[0]);
              okR=true;
+             
        }
        else{
            okR=false;
         }
+       for (String entry : routesS.keySet()) {     
+                 System.out.println("Key: " + routesS.toString() + " Value: " + routesS.get(entry).toString()+"2222222222222222222");
+                }
     }       
     /**
      * Remueve una ruta entre dos naciones de la batalla
@@ -202,25 +218,35 @@ public class ConquerWorld
      */
     public void removeRoute(String[] nations)
     {
-        int[] aPosition={0,0},bPosition={0,0};        
-        for(Route r : routes){
-            if((r.getFrom()==nations[0] && r.getTo()==nations[1]) || 
-            r.getFrom()==nations[1] && r.getTo()==nations[0]){
-                elimina = r;
-                for(Nation ob : arrayNations){
-                    if(ob.getColor()== nations[0]){
-                        aPosition = ob.getPosition();
-                    }
-                    else if( ob.getColor()==nations[1]){
-                        bPosition = ob.getPosition();
-                    }
-                }
-                r.removeR(aPosition,bPosition);
-                r.makeInvisible();
-                okR=true;
-            }        
+        int[] aPosition={0,0},bPosition={0,0};  
+        System.out.println(routesS.size());
+        for (String entry : routesS.keySet()) {     
+                 System.out.println("Key: " + routesS.toString() + " Value: " + routesS.get(entry).toString()+"33333333333333333333333333");
         }
-        if(okR) routes.remove(elimina);
+        
+        if(routesS.containsKey(nations[0]) && routesS.containsValue(nations[1])){
+            for(Route r : routes){
+                if((r.getFrom()==nations[0] && r.getTo()==nations[1]) || 
+                r.getFrom()==nations[1] && r.getTo()==nations[0]){
+                    elimina = r;
+                    for(Nation ob : arrayNations){
+                        if(ob.getColor()== nations[0]){
+                            aPosition = ob.getPosition();
+                        }
+                        else if( ob.getColor()==nations[1]){
+                            bPosition = ob.getPosition();
+                        }
+                    }
+                    r.removeR(aPosition,bPosition);
+                    r.makeInvisible();
+                }        
+            }
+            okR=true;
+            routes.remove(elimina);
+            routesS.remove(nations[0]);
+            //routesS.remove(nations[1]);
+        }
+        else okR=false;
     }
     
     /**
@@ -242,8 +268,6 @@ public class ConquerWorld
             r.makeVisible();
             okR=true;
         }
-        if(arrayNations.size()==0 && routes.size()==0) okR=true;
-        
     }      
      /**
      * Hace invisible todas las naciones y rutas
@@ -258,7 +282,6 @@ public class ConquerWorld
             r.makeInvisible();
             okR=true;
         }
-        if(arrayNations.size()==0 && routes.size()==0) okR=true;
     }
      /**
      * Anade armamento a una nacion
@@ -408,9 +431,9 @@ public class ConquerWorld
      */
     public boolean ok()  
     { 
-        boolean auxBool=okR;
-        okR=false;
-        return auxBool;
+        //boolean auxBool=okR;
+        //okR=false;
+        return okR;
     }
     
     /**
@@ -424,8 +447,12 @@ public class ConquerWorld
         // put your code here
         visited.put(nations[0],1);
         depthFirstSearch(nations[0],nations[1]);
-        if(visited.get(nations[1])==1){ System.out.println("no"); return false;}
-        else{ System.out.println("yes"); return true;}
+        if(visited.get(nations[1])==1){ 
+            //System.out.println("no"); 
+            return false;}
+        else{ 
+            //System.out.println("yes"); 
+            return true;}
     }
     
     /**
