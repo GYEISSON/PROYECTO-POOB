@@ -151,9 +151,17 @@ public class ConquerWorld
     public void removeNation(String removeColor)
     {        
         String colorob;
+<<<<<<< HEAD
         okR=false;
         // System.out.println(colorNations.toString());
         if(colorNations.contains(removeColor)){ 
+=======
+        //Prints para mirar que hay en colorNations y en adjList 
+        System.out.println(colorNations.toString()+"cccccccccc");
+        adjList.entrySet().stream().forEach(e-> System.out.println(e));
+        //condicinal revisa que la nacion exista y que haga una ruta desde ese color
+        if(colorNations.contains(removeColor) && !(adjList.containsKey(removeColor))){ 
+>>>>>>> 36b84d29aed352fa5cccadcc720082d39440ee06
         for(int i=0;i<arrayNations.size();i++){
             colorob= arrayNations.get(i).getColor();
             if(arrayNations.get(i).getColor().equals(removeColor)){
@@ -168,9 +176,14 @@ public class ConquerWorld
                 }
                 arrayNations.get(i).removeNationF(removeColor);
                 arrayNations.remove(i);
+<<<<<<< HEAD
                 colorNations.remove(i);
                 adjList.remove(removeColor);
                 okR = true;
+=======
+                colorNations.remove(removeColor);
+                
+>>>>>>> 36b84d29aed352fa5cccadcc720082d39440ee06
             }                    
         }
       }
@@ -289,6 +302,7 @@ public class ConquerWorld
      * @param  Nacion a agregar armamento
      */
     public void addArmy(String nation){
+<<<<<<< HEAD
         okR=false;
         for(Nation n : arrayNations){
             if(n.getColor() == nation ){
@@ -296,6 +310,17 @@ public class ConquerWorld
                 okR=true;
             }
         }        
+=======
+        if (colorNations.contains(nation)){
+            for(Nation n : arrayNations){
+                if(n.getColor() == nation ){
+                    n.setArmy(10);
+                    okR=true;
+                }
+            }        
+        }
+        else okR=false;
+>>>>>>> 36b84d29aed352fa5cccadcc720082d39440ee06
     }
     /**
      * An example of a method - replace this comment with your own
@@ -318,15 +343,24 @@ public class ConquerWorld
      * @param  Nacion a quitar armamento
      */
     public void removeArmies(String nation){
+<<<<<<< HEAD
         okR=false;
         for(Nation n : arrayNations){
             if(n.getColor() == nation ){
                 if(n.getArmy()>0){
                     n.setArmy();
                     okR=true;
+=======
+        if (colorNations.contains(nation)){
+            for(Nation n : arrayNations){
+                if(n.getColor() == nation ){
+                    n.setArmy();
+>>>>>>> 36b84d29aed352fa5cccadcc720082d39440ee06
                 }
             }
+            okR=true;
         }
+        else okR=false;
     }    
     /**
      * Mover armamento entre naciones
@@ -445,7 +479,6 @@ public class ConquerWorld
      */
     public boolean okRoute(String[] nations )
     {
-        // put your code here
         //visited.put(nations[0],1);
         depthFirstSearch(nations[0],nations[1]);
         if(visited.containsKey(nations[1])){ 
@@ -454,8 +487,12 @@ public class ConquerWorld
         else{ 
             //System.out.println("yes");
             visited.clear();
+<<<<<<< HEAD
             return true;
         }
+=======
+            return true;}
+>>>>>>> 36b84d29aed352fa5cccadcc720082d39440ee06
     }
     
     /**
@@ -466,9 +503,9 @@ public class ConquerWorld
      */
     public boolean ok()  
     { 
-        //boolean auxBool=okR;
-        //okR=false;
-        return okR;
+        boolean auxBool=okR;
+        okR=false;
+        return auxBool;
     }
     
     
