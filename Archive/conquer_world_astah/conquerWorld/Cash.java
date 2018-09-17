@@ -29,7 +29,7 @@ public class Cash
     public Cash(int cash,int maxweight)
     {
         // initialise instance variables
-        height = 40;
+        height = 10;
         width = maxweight;
         cont = 0;
         xPosition = 0;
@@ -63,12 +63,22 @@ public class Cash
     public void addCash(long newWidth) {
         erase();
         cont+=newWidth;
-        System.out.println(cont);
-        System.out.println(width);
         double x = (width*cont)/1000000000;
-        System.out.println(x);
         cash = (int)x;
         draw();
     }
+    
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y  a sample parameter for a method
+     * @return    the sum of x and y
+     */
+    public int getCash()
+    {
+        // put your code here
+        return this.cash;
+    }
+
 
 }

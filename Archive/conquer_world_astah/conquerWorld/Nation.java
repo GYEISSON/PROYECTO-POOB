@@ -100,7 +100,7 @@ public class Nation
      * If it was already invisible, do nothing.
      *
      */
-    public void makeInvisible(){        // put your code here       
+    public void makeInvisible(){     
         for (Rectangle r:rec)
         {
             r.makeInvisible();

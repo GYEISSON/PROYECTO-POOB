@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 import java.util.*;
+import java.awt.geom.*;
 
 /**
  * Canvas is a class to allow for simple graphical drawing on a canvas.
@@ -64,23 +65,23 @@ public class Canvas{
     public static final Color DARK_PURPLE = new Color(76,0,153);
     public static final Color darkgreen = new Color(34,139,39);
 
-     /** 
-     * Draws a line on the Canvas.
-     * @param  x1   x co-ordinate of start of line 
-     * @param  y1   y co-ordinate of start of line 
-     * @param  x2   x co-ordinate of end of line 
-     * @param  y2   y co-ordinate of end of line 
-     */
-    public void drawLine(int x1, int y1, int x2, int y2)
-    {
-        int r = (int)(Math.random()*((256-0)+1))+0;
-        int g = (int)(Math.random()*((256-0)+1))+0;
-        int b = (int)(Math.random()*((256-0)+1))+0;
-        graphic.setColor(new Color(r,g,b));
-        graphic.setStroke(new BasicStroke(6));
-        graphic.drawLine(x1, y1, x2, y2);   
-        canvas.repaint();
-    }
+     // /** 
+     // * Draws a line on the Canvas.
+     // * @param  x1   x co-ordinate of start of line 
+     // * @param  y1   y co-ordinate of start of line 
+     // * @param  x2   x co-ordinate of end of line 
+     // * @param  y2   y co-ordinate of end of line 
+     // */
+    // public void drawLine(int x1, int y1, int x2, int y2)
+    // {
+        // int r = (int)(Math.random()*((256-0)+1))+0;
+        // int g = (int)(Math.random()*((256-0)+1))+0;
+        // int b = (int)(Math.random()*((256-0)+1))+0;
+        // graphic.setColor(new Color(r,g,b));
+        // graphic.setStroke(new BasicStroke(6));
+        // graphic.drawLine(x1, y1, x2, y2);   
+        // canvas.repaint();
+    // }
     
     
     /**
@@ -267,6 +268,7 @@ public class Canvas{
         public void draw(Graphics2D graphic){
             setForegroundColor(colorString);
             graphic.fill(shape);
+            graphic.setStroke(new BasicStroke(10));
         }
     }
 
