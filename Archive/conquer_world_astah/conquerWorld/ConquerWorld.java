@@ -151,14 +151,18 @@ public class ConquerWorld
     public void removeNation(String removeColor)
     {        
         String colorob;
-        // System.out.println(colorNations.toString());
-        if(colorNations.contains(removeColor)){ 
+        //Prints para mirar que hay en colorNations y en adjList 
+        System.out.println(colorNations.toString()+"cccccccccc");
+        adjList.entrySet().stream().forEach(e-> System.out.println(e));
+        //condicinal revisa que la nacion exista y que haga una ruta desde ese color
+        if(colorNations.contains(removeColor) && !(adjList.containsKey(removeColor))){ 
         for(int i=0;i<arrayNations.size();i++){
             colorob= arrayNations.get(i).getColor();
             if(arrayNations.get(i).getColor()==removeColor){
                 arrayNations.get(i).removeNationF(removeColor);
                 arrayNations.remove(i);
-                okR = true;
+                colorNations.remove(removeColor);
+                
             }                    
         }
         okR = true;
@@ -271,13 +275,15 @@ public class ConquerWorld
      * @param  Nacion a agregar armamento
      */
     public void addArmy(String nation){
-        
-        for(Nation n : arrayNations){
-            if(n.getColor() == nation ){
-                n.setArmy(10);
-                okR=true;
-            }
-        }        
+        if (colorNations.contains(nation)){
+            for(Nation n : arrayNations){
+                if(n.getColor() == nation ){
+                    n.setArmy(10);
+                    okR=true;
+                }
+            }        
+        }
+        else okR=false;
     }
     /**
      * An example of a method - replace this comment with your own
@@ -296,12 +302,15 @@ public class ConquerWorld
      * @param  Nacion a quitar armamento
      */
     public void removeArmies(String nation){
-        for(Nation n : arrayNations){
-            if(n.getColor() == nation ){
-                n.setArmy();
-                okR=true;
+        if (colorNations.contains(nation)){
+            for(Nation n : arrayNations){
+                if(n.getColor() == nation ){
+                    n.setArmy();
+                }
             }
+            okR=true;
         }
+        else okR=false;
     }    
     /**
      * Mover armamento entre naciones
@@ -433,9 +442,9 @@ public class ConquerWorld
      */
     public boolean ok()  
     { 
-        //boolean auxBool=okR;
-        //okR=false;
-        return okR;
+        boolean auxBool=okR;
+        okR=false;
+        return auxBool;
     }
     
     
