@@ -78,30 +78,15 @@ public class ConquerWorldTest01
         
         cw.addNation("Triangle", 30, "blue", new int[]{9, 8}, 3);
         cw.addNation("Rectangle", 10, "red", new int[]{18, 16}, 2);
-<<<<<<< HEAD
-
         assertTrue(cw.ok());
-        assertTrue(cw.okRoute(new String[]{"blue", "red"}));
-        cw.addRoute(new String[]{"blue", "red"}, 10);
         
-        assertFalse(cw.okRoute(new String[]{"blue", "red"}));
-        cw.addRoute(new String[]{"blue", "red"}, 5);
-        assertFalse(cw.ok());
+        cw.addRoute(new String[]{"blue", "red"}, 10);
+        assertTrue(cw.ok());
         
         cw.addRoute(new String[]{"blue", "red"}, 5);
         assertFalse(cw.ok());
     }
     
-=======
-        assertTrue(cw.ok());
-        
-        cw.addRoute(new String[]{"blue", "red"}, 10);
-        assertTrue(cw.ok());
-        
-        cw.addRoute(new String[]{"blue", "red"}, 5);
-        assertFalse(cw.ok());
-    }    
->>>>>>> 36b84d29aed352fa5cccadcc720082d39440ee06
     @Test
     public void shoudNotAddRoutesToNonExistentNations() {
         ConquerWorld cw = new ConquerWorld(200, 200);
@@ -177,6 +162,7 @@ public class ConquerWorldTest01
         cw.removeNation("red");
         assertTrue(cw.ok());
     }
+    
     @Test
     public void shouldNotRemoveNonExistentNations() {
         ConquerWorld cw = new ConquerWorld(200, 200);
@@ -251,7 +237,7 @@ public class ConquerWorldTest01
         assertTrue(cw.ok());
         
         cw.removeRoute(new String[]{"blue", "yellow"});        
-        assertFalse(cw.ok());
+        assertFalse(cw.ok()); 
     }
     
     @Test
@@ -298,6 +284,7 @@ public class ConquerWorldTest01
         cw.removeArmies("red");
         assertFalse(cw.ok());        
     }
+    
     @Test
     public void shouldNotRemoveArmiesToOfNonExistentNations() {
         ConquerWorld cw = new ConquerWorld(200, 200);
@@ -451,7 +438,7 @@ public class ConquerWorldTest01
 
         assertFalse(cw.okRoute(new String[]{"blue", "yellow"})); 
         cw.addRoute(new String[]{"blue", "yellow"}, 6);
-        assertFalse(cw.ok());
+        assertTrue(cw.ok());
     }
     
     @Test
@@ -474,8 +461,8 @@ public class ConquerWorldTest01
 
         assertTrue(cw.okRoutes()); 
         cw.addRoute(new String[]{"blue", "yellow"}, 6);
-        assertFalse(cw.ok());
+        assertTrue(cw.ok());
         
-        assertTrue(cw.okRoutes());        
+        assertFalse(cw.okRoutes());        
     }   
 }

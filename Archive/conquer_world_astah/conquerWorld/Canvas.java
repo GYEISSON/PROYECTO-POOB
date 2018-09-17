@@ -52,6 +52,9 @@ public class Canvas{
     private Image canvasImage;
     private List <Object> objects;
     private HashMap <Object,ShapeDescription> shapes;
+    private double zoomfactor=1;
+    private double prevZoomFactor=1;
+    private boolean zoomer;
     
     public static final Color VERY_LIGHT_RED = new Color(255,102,102);
     public static final Color VERY_LIGHT_BLUE = new Color(51,204,255);
@@ -65,24 +68,27 @@ public class Canvas{
     public static final Color DARK_PURPLE = new Color(76,0,153);
     public static final Color darkgreen = new Color(34,139,39);
 
-     // /** 
-     // * Draws a line on the Canvas.
-     // * @param  x1   x co-ordinate of start of line 
-     // * @param  y1   y co-ordinate of start of line 
-     // * @param  x2   x co-ordinate of end of line 
-     // * @param  y2   y co-ordinate of end of line 
-     // */
-    // public void drawLine(int x1, int y1, int x2, int y2)
-    // {
-        // int r = (int)(Math.random()*((256-0)+1))+0;
-        // int g = (int)(Math.random()*((256-0)+1))+0;
-        // int b = (int)(Math.random()*((256-0)+1))+0;
-        // graphic.setColor(new Color(r,g,b));
-        // graphic.setStroke(new BasicStroke(6));
-        // graphic.drawLine(x1, y1, x2, y2);   
-        // canvas.repaint();
-    // }
-    
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y  a sample parameter for a method
+     * @return    the sum of x and y
+     */
+    public void sign(String a)
+    {
+        zoomer = true;
+        if (a.equals("+")){
+            zoomfactor *= 1.1;
+            canvas.repaint();
+        }
+        if (a.equals("-")){
+            
+            zoomfactor/=1.1;
+            canvas.repaint();
+        }
+    }
+            
+
     
     /**
      * Create a Canvas.
@@ -214,7 +220,7 @@ public class Canvas{
             // ignoring exception at the moment
         }
     }
-
+    
     /**
      * Redraw ell shapes currently on the Canvas.
      */
@@ -244,8 +250,17 @@ public class Canvas{
      * Canvas frame. This is essentially a JPanel with added capability to
      * refresh the image drawn on it.
      */
-    private class CanvasPane extends JPanel{
+    public class CanvasPane extends JPanel{
         public void paint(Graphics g){
+            super.paint(g);
+            Graphics2D g2 = (Graphics2D) g;
+            if (zoomer){
+                AffineTransform at = new AffineTransform();
+                at.scale(zoomfactor,zoomfactor);
+                prevZoomFactor = zoomfactor;
+                g2.transform(at);
+                zoomer=false;
+            }
             g.drawImage(canvasImage, 0, 0, null);
         }
     }
