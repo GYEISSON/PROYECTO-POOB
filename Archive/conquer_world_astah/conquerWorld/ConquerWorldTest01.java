@@ -303,7 +303,7 @@ public class ConquerWorldTest01
     }
     
     @Test
-    public void souldMoveArmyUnidirectional() {
+    public void shouldMoveArmyUnidirectional() {
         ConquerWorld cw = new ConquerWorld(200, 200);
         
         cw.addNation("Triangle", 10, "blue", new int[]{9, 8}, 3);
@@ -328,7 +328,7 @@ public class ConquerWorldTest01
     }    
     
     @Test
-    public void souldMoveArmyBidirectional() {
+    public void shouldMoveArmyBidirectional() {
         ConquerWorld cw = new ConquerWorld(200, 200);
         
         cw.addNation("Triangle", 10, "blue", new int[]{9, 8}, 3);
@@ -339,8 +339,10 @@ public class ConquerWorldTest01
         cw.addRoute(new String[]{"blue", "red"}, 10);
         cw.addRoute(new String[]{"red", "yellow"}, 5);
         cw.addRoute(new String[]{"blue", "yellow"}, 6);
+        assertFalse(cw.ok());
         
         cw.addCash(20);
+        assertTrue(cw.ok());
         cw.addArmy("blue");
         cw.moveArmy("blue", "red");
         assertTrue(cw.ok());       
@@ -355,7 +357,7 @@ public class ConquerWorldTest01
     }
     
     @Test
-    public void souldNotMoveNonExistentArmy() {
+    public void shouldNotMoveNonExistentArmy() {
         ConquerWorld cw = new ConquerWorld(200, 200);
         
         cw.addNation("Triangle", 10, "blue", new int[]{9, 8}, 3);
@@ -376,7 +378,7 @@ public class ConquerWorldTest01
     }
     
     @Test
-    public void souldNotMoveArmyOnANonExistentRoute() {
+    public void shouldNotMoveArmyOnANonExistentRoute() {
         ConquerWorld cw = new ConquerWorld(200, 200);
         
         cw.addNation("Triangle", 10, "blue", new int[]{9, 8}, 3);
@@ -400,7 +402,7 @@ public class ConquerWorldTest01
     }
     
     @Test
-    public void souldNotMoveArmyIfNotCash() {
+    public void shouldNotMoveArmyIfNotCash() {
         ConquerWorld cw = new ConquerWorld(200, 200);
         
         cw.addNation("Triangle", 10, "blue", new int[]{9, 8}, 3);
@@ -438,7 +440,7 @@ public class ConquerWorldTest01
 
         assertFalse(cw.okRoute(new String[]{"blue", "yellow"})); 
         cw.addRoute(new String[]{"blue", "yellow"}, 6);
-        assertTrue(cw.ok());
+        assertFalse(cw.ok());
     }
     
     @Test
@@ -461,8 +463,8 @@ public class ConquerWorldTest01
 
         assertTrue(cw.okRoutes()); 
         cw.addRoute(new String[]{"blue", "yellow"}, 6);
-        assertTrue(cw.ok());
+        assertFalse(cw.ok());
         
-        assertFalse(cw.okRoutes());        
+        assertTrue(cw.okRoutes());        
     }   
 }

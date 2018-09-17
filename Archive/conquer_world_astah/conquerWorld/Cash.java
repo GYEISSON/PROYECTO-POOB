@@ -11,7 +11,7 @@ public class Cash
 {
     // instance variables - replace the example below with your own
     private int cash;
-    private long cont;
+    private long contCash;
     private int height;
     private long width;
     private long maxweight;
@@ -31,7 +31,7 @@ public class Cash
         // initialise instance variables
         height = 10;
         width = maxweight;
-        cont = 0;
+        contCash = 0;
         xPosition = 0;
         yPosition = 0;
         isVisible = true;
@@ -62,9 +62,10 @@ public class Cash
      */
     public void addCash(long newWidth) {
         erase();
-        cont+=newWidth;
-        double x = (width*cont)/1000000000;
+        contCash+=newWidth;
+        double x = (width*contCash)/1000000000;
         cash = (int)x;
+        
         draw();
     }
     
@@ -74,11 +75,12 @@ public class Cash
      * @param  y  a sample parameter for a method
      * @return    the sum of x and y
      */
-    public int getCash()
+    public long getCash()
     {
         // put your code here
-        return this.cash;
+        return this.contCash;
     }
+
 
 
 }
