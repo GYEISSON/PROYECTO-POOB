@@ -95,5 +95,17 @@ public class Route
         // put your code here
         return nationB;
     }
+    
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y  a sample parameter for a method
+     * @return    the sum of x and y
+     */
+    public int getCost()
+    {
+        // put your code here
+        return this.cost;
+    }
 
 }

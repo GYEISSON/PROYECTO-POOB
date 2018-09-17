@@ -151,17 +151,28 @@ public class ConquerWorld
     public void removeNation(String removeColor)
     {        
         String colorob;
+        okR=false;
         // System.out.println(colorNations.toString());
         if(colorNations.contains(removeColor)){ 
         for(int i=0;i<arrayNations.size();i++){
             colorob= arrayNations.get(i).getColor();
-            if(arrayNations.get(i).getColor()==removeColor){
+            if(arrayNations.get(i).getColor().equals(removeColor)){
+                for(String nodo: colorNations){
+                    for(int k =0;k<adjList.get(nodo).size();k++){
+                        if(adjList.get(nodo).get(k).equals(removeColor)){
+                           adjList.get(nodo).remove(k);
+                           break;
+                        }
+                    }
+                   
+                }
                 arrayNations.get(i).removeNationF(removeColor);
                 arrayNations.remove(i);
+                colorNations.remove(i);
+                adjList.remove(removeColor);
                 okR = true;
             }                    
         }
-        okR = true;
       }
     }
     /**
@@ -278,7 +289,7 @@ public class ConquerWorld
      * @param  Nacion a agregar armamento
      */
     public void addArmy(String nation){
-        
+        okR=false;
         for(Nation n : arrayNations){
             if(n.getColor() == nation ){
                 n.setArmy(10);
@@ -293,9 +304,13 @@ public class ConquerWorld
      * @return    the sum of x and y
      */
     public void addArmies(String[] nations){
+        okR=false;
+        boolean conjun=true;
         for(int j=0;j<nations.length;j++){
             addArmy(nations[j]);
+            conjun=conjun&&ok();
         }
+        okR=conjun;
     }
     /**
      * Quita armamento a una nacion
@@ -303,10 +318,13 @@ public class ConquerWorld
      * @param  Nacion a quitar armamento
      */
     public void removeArmies(String nation){
+        okR=false;
         for(Nation n : arrayNations){
             if(n.getColor() == nation ){
-                n.setArmy();
-                okR=true;
+                if(n.getArmy()>0){
+                    n.setArmy();
+                    okR=true;
+                }
             }
         }
     }    
@@ -318,12 +336,19 @@ public class ConquerWorld
     public void moveArmy(String fromNation,String toNation)
     {
         // put your code here
+        okR=false;
+        System.out.println(cash.getCash());
         Nation object1 = getNation(fromNation),object2=getNation(toNation);
-        if(object1.getArmy()>0){
-            object2.setArmy(object1.getArmy());
-            object1.setArmy();
-            okR=true;
+        for(Route rout: routes){
+            if(rout.getFrom().equals(fromNation) && rout.getTo().equals(toNation)){
+                if(object1.getArmy()>0 && cash.getCash()>0 && cash.getCash() > rout.getCost()){
+                    object2.setArmy(object1.getArmy());
+                    object1.setArmy();
+                    okR=true;
+                } else okR = false;
+            }else okR=false;
         }
+        
     }
     /**
      * Obtiene la nacion a partir del Nombre/Color
@@ -423,22 +448,14 @@ public class ConquerWorld
         // put your code here
         //visited.put(nations[0],1);
         depthFirstSearch(nations[0],nations[1]);
-<<<<<<< HEAD
         if(visited.containsKey(nations[1])){ 
             visited.clear();
             return false;}
         else{ 
             //System.out.println("yes");
             visited.clear();
-=======
-        if(visited.get(nations[1])==1){ 
-            System.out.println("no");
-            return false;
+            return true;
         }
-        else{ 
-            System.out.println("yes");
->>>>>>> 0f5a1e262e627ebc65af5b5ac0664b82b1575582
-            return true;}
     }
     
     /**
