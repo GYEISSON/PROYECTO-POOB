@@ -411,7 +411,36 @@ public class ConquerWorld
         // put your code here
         System.exit(0);
     }
-
+    
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y  a sample parameter for a method
+     * @return    the sum of x and y
+     */
+    public boolean okRoute(String[] nations )
+    {
+        // put your code here
+        //visited.put(nations[0],1);
+        depthFirstSearch(nations[0],nations[1]);
+<<<<<<< HEAD
+        if(visited.containsKey(nations[1])){ 
+            visited.clear();
+            return false;}
+        else{ 
+            //System.out.println("yes");
+            visited.clear();
+=======
+        if(visited.get(nations[1])==1){ 
+            System.out.println("no");
+            return false;
+        }
+        else{ 
+            System.out.println("yes");
+>>>>>>> 0f5a1e262e627ebc65af5b5ac0664b82b1575582
+            return true;}
+    }
+    
     /**
      * An example of a method - replace this comment with your own
      *
@@ -425,25 +454,7 @@ public class ConquerWorld
         return okR;
     }
     
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
-     */
-    public boolean okRoute(String[] nations )
-    {
-        // put your code here
-        //visited.put(nations[0],1);
-        depthFirstSearch(nations[0],nations[1]);
-        if(visited.containsKey(nations[1])){ 
-            visited.clear();
-            return false;}
-        else{ 
-            //System.out.println("yes");
-            visited.clear();
-            return true;}
-    }
+    
     
     /**
      * An example of a method - replace this comment with your own
