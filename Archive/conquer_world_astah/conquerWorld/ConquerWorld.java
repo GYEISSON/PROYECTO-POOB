@@ -404,19 +404,6 @@ public class ConquerWorld
         // put your code here
         System.exit(0);
     }
-
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y
-     */
-    public boolean ok()  
-    { 
-        //boolean auxBool=okR;
-        //okR=false;
-        return okR;
-    }
     
     /**
      * An example of a method - replace this comment with your own
@@ -430,12 +417,28 @@ public class ConquerWorld
         visited.put(nations[0],1);
         depthFirstSearch(nations[0],nations[1]);
         if(visited.get(nations[1])==1){ 
-            //System.out.println("no"); 
-            return false;}
+            System.out.println("no");
+            return false;
+        }
         else{ 
-            //System.out.println("yes"); 
+            System.out.println("yes");
             return true;}
     }
+    
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
+     */
+    public boolean ok()  
+    { 
+        //boolean auxBool=okR;
+        //okR=false;
+        return okR;
+    }
+    
+    
     
     /**
      * An example of a method - replace this comment with your own
