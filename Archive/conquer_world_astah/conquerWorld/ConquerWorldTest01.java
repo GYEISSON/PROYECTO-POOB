@@ -76,6 +76,7 @@ public class ConquerWorldTest01
     // public void shoudNotDuplicateRoutes() {
         // ConquerWorld cw = new ConquerWorld(200, 200);
         
+<<<<<<< HEAD
         // cw.addNation("Triangle", 30, "blue", new int[]{9, 8}, 3);
         // cw.addNation("Rectangle", 10, "red", new int[]{18, 16}, 2);
         // assertTrue(cw.ok());
@@ -86,6 +87,29 @@ public class ConquerWorldTest01
         // cw.addRoute(new String[]{"blue", "red"}, 5);
         // assertFalse(cw.ok());
     // }
+=======
+        cw.addNation("Triangle", 30, "blue", new int[]{9, 8}, 3);
+        cw.addNation("Rectangle", 10, "red", new int[]{18, 16}, 2);
+<<<<<<< HEAD
+        assertTrue(cw.okRoutes());        
+=======
+        assertTrue(cw.ok());
+>>>>>>> 0f5a1e262e627ebc65af5b5ac0664b82b1575582
+        
+        assertTrue(cw.okRoute(new String[]{"blue", "red"}));
+        cw.addRoute(new String[]{"blue", "red"}, 10);
+<<<<<<< HEAD
+        
+        cw.addRoute(new String[]{"blue", "red"}, 5);
+        assertFalse(cw.okRoute(new String[]{"blue", "red"}));
+=======
+        assertTrue(cw.ok());
+        
+        cw.addRoute(new String[]{"blue", "red"}, 5);
+        assertFalse(cw.ok());
+>>>>>>> 0f5a1e262e627ebc65af5b5ac0664b82b1575582
+    }
+>>>>>>> a3388f946072b7276a7524cbaeb4d9cc9159e907
     
     // @Test
     // public void shoudNotAddRoutesToNonExistentNations() {
@@ -436,7 +460,7 @@ public class ConquerWorldTest01
 
         assertFalse(cw.okRoute(new String[]{"blue", "yellow"})); 
         cw.addRoute(new String[]{"blue", "yellow"}, 6);
-        assertTrue(cw.ok());
+        assertFalse(cw.ok());
     }
     
     @Test

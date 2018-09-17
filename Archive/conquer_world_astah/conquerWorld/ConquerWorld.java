@@ -134,7 +134,7 @@ public class ConquerWorld
             arrayNations.add(nation);
             colorNations.add(color);
             adjList.put(color,new ArrayList<String>());
-            visited.put(color,0);
+           
             okR=true;
         }
         else{
@@ -174,8 +174,7 @@ public class ConquerWorld
      * @param  Las naciones con ruta y su costo
      */
     public void addRoute(String[] nations,int cost){
-        int[] aPosition={0,0},bPosition={0,0};
-        
+        int[] aPosition={0,0},bPosition={0,0};        
         for(Nation ob : arrayNations){            
             if(ob.getColor()== nations[0]){
                 aPosition = ob.getPosition();                
@@ -183,15 +182,16 @@ public class ConquerWorld
             else if( ob.getColor()==nations[1]){
                 bPosition = ob.getPosition();
             }
-        }        
-        Route route = new Route(aPosition,bPosition,cost,nations[0],nations[1]);       
-        if (colorNations.contains(nations[0]) && colorNations.contains(nations[1]) 
-            && okRoute(nations)){
-             route.makeVisible();
-             routes.add(route);    
-             adjList.get(nations[0]).add(nations[1]);
-             adjList.get(nations[1]).add(nations[0]);
-             okR=true;             
+        }                       
+        if (colorNations.contains(nations[0]) && colorNations.contains(nations[1]) ){
+            if(okRoute(nations)){
+                Route route = new Route(aPosition,bPosition,cost,nations[0],nations[1]); 
+                route.makeVisible();
+                routes.add(route);    
+                adjList.get(nations[0]).add(nations[1]);
+                adjList.get(nations[1]).add(nations[0]);
+                okR=true;
+            }else okR=false;
         }
         else{
             okR=false;
@@ -205,10 +205,12 @@ public class ConquerWorld
      */
     public void removeRoute(String[] nations)
     {
-        int[] aPosition={0,0},bPosition={0,0};          
+        int[] aPosition={0,0},bPosition={0,0};
+        int posRouteToRemove = 0;
+        okR=false;
         for(Route r : routes){
-            if((r.getFrom()==nations[0] && r.getTo()==nations[1]) || 
-            r.getFrom()==nations[1] && r.getTo()==nations[0]){
+            if((r.getFrom()==nations[0] && r.getTo()==nations[1]) ||( 
+            r.getFrom()==nations[1] && r.getTo()==nations[0])){
                 elimina = r;
                 for(Nation obNation : arrayNations){
                     if(obNation.getColor()== nations[0]){
@@ -231,9 +233,14 @@ public class ConquerWorld
                 r.removeR(aPosition,bPosition);
                 r.makeInvisible();
                 okR=true;
-            }            
+                //System.out.println("true");
+            }
+            //else{okR=false;System.out.println("false");}
+            if(!okR) posRouteToRemove++;
         }
-                   
+        if(okR){
+            routes.remove(posRouteToRemove);
+        }
     }    
     /**
      * Limpia todo el tablero
@@ -423,14 +430,23 @@ public class ConquerWorld
     public boolean okRoute(String[] nations )
     {
         // put your code here
-        visited.put(nations[0],1);
+        //visited.put(nations[0],1);
         depthFirstSearch(nations[0],nations[1]);
+<<<<<<< HEAD
+        if(visited.containsKey(nations[1])){ 
+            visited.clear();
+            return false;}
+        else{ 
+            //System.out.println("yes");
+            visited.clear();
+=======
         if(visited.get(nations[1])==1){ 
             System.out.println("no");
             return false;
         }
         else{ 
             System.out.println("yes");
+>>>>>>> 0f5a1e262e627ebc65af5b5ac0664b82b1575582
             return true;}
     }
     
@@ -461,6 +477,7 @@ public class ConquerWorld
         for(Nation nat: arrayNations){
             dFS(nat.getColor(),aCicle);
         }
+        visited.clear();
         return aCicle;
     }
 
@@ -474,7 +491,7 @@ public class ConquerWorld
     {
         // put your code here
         for(String vNation: adjList.get(uNation)){
-            if(visited.get(vNation)==0){
+            if(!visited.containsKey(vNation)){
                 visited.put(vNation,1);
                 depthFirstSearch( vNation, toFound);
             }
@@ -492,12 +509,11 @@ public class ConquerWorld
         // put your code here
         
         for(String vNation: adjList.get(uNation)){
-            if(visited.get(vNation)==0){
+            if(visited.containsKey(vNation)){
                 visited.put(vNation,1);
                 dFS( vNation,aCicle);
             }
             else aCicle=false;
         }
     }
-
 }

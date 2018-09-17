@@ -2,6 +2,7 @@
 dependency1.from=Circle
 dependency1.to=Canvas
 dependency1.type=UsesDependency
+<<<<<<< HEAD
 dependency10.from=Route
 dependency10.to=Line
 dependency10.type=UsesDependency
@@ -31,15 +32,53 @@ dependency18.to=Canvas
 dependency18.type=UsesDependency
 dependency19.from=ConquerWorld
 dependency19.to=Nation
+=======
+dependency10.from=Cash
+dependency10.to=Canvas
+dependency10.type=UsesDependency
+dependency11.from=Square
+dependency11.to=Canvas
+dependency11.type=UsesDependency
+dependency12.from=Line
+dependency12.to=Canvas
+dependency12.type=UsesDependency
+dependency13.from=fondoCash
+dependency13.to=Canvas
+dependency13.type=UsesDependency
+dependency14.from=Pentagon
+dependency14.to=Canvas
+dependency14.type=UsesDependency
+dependency15.from=Route
+dependency15.to=Line
+dependency15.type=UsesDependency
+dependency16.from=ConquerWorld
+dependency16.to=Canvas
+dependency16.type=UsesDependency
+dependency17.from=ConquerWorld
+dependency17.to=Nation
+dependency17.type=UsesDependency
+dependency18.from=ConquerWorld
+dependency18.to=Route
+dependency18.type=UsesDependency
+dependency19.from=ConquerWorld
+dependency19.to=Cash
+>>>>>>> a3388f946072b7276a7524cbaeb4d9cc9159e907
 dependency19.type=UsesDependency
 dependency2.from=Rectangle
 dependency2.to=Canvas
 dependency2.type=UsesDependency
 dependency20.from=ConquerWorld
+<<<<<<< HEAD
 dependency20.to=Route
 dependency20.type=UsesDependency
 dependency21.from=ConquerWorld
 dependency21.to=Cash
+=======
+dependency20.to=fondoCash
+dependency20.type=UsesDependency
+dependency21.from=ConquerWorldTest01
+dependency21.to=ConquerWorld
+>>>>>>> a3388f946072b7276a7524cbaeb4d9cc9159e907
 dependency21.type=UsesDependency
 dependency22.from=ConquerWorld
 dependency22.to=fondoCash
@@ -62,6 +101,7 @@ dependency7.type=UsesDependency
 dependency8.from=fondoCash
 dependency8.to=Canvas
 dependency8.type=UsesDependency
+<<<<<<< HEAD
 dependency9.from=Pentagon
 dependency9.to=Canvas
 dependency9.type=UsesDependency
@@ -81,6 +121,31 @@ package.frame.height=869
 package.frame.width=1218
 package.numDependencies=22
 package.numTargets=14
+=======
+dependency9.from=Cash
+dependency9.to=ConquerWorld
+dependency9.type=UsesDependency
+editor.fx.0.height=744
+editor.fx.0.width=1382
+editor.fx.0.x=-8
+editor.fx.0.y=-8
+editor.fx.1.height=744
+editor.fx.1.width=1382
+editor.fx.1.x=-8
+editor.fx.1.y=-8
+objectbench.height=79
+objectbench.width=657
+package.divider.horizontal=0.599601593625498
+package.divider.vertical=0.8615136876006442
+package.editor.height=515
+package.editor.width=554
+package.editor.x=100
+package.editor.y=100
+package.frame.height=721
+package.frame.width=697
+package.numDependencies=21
+package.numTargets=13
+>>>>>>> a3388f946072b7276a7524cbaeb4d9cc9159e907
 package.showExtends=true
 package.showUses=true
 project.charset=UTF-8
