@@ -14,6 +14,4 @@ public class fondoCash
         Canvas canvas = Canvas.getCanvas();
         canvas.draw(this, "red",(new java.awt.Rectangle(0, 0,maxX,10)));
     }
-
-            
 }

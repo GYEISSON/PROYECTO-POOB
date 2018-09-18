@@ -8,19 +8,12 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
-<<<<<<< HEAD
  * Manage all the nations and also ConquerWorld the canvas .
  * 
  * @author (Yeisson Gualdron y Santiago Rubiano)
  * @version 4.0.  (18 September 2018)
  */
-=======
-* Manage all the nations and also ConquerWorld the canvas .
-* 
-* @author (Yeisson Gualdron y Santiago Rubiano)
-* @version 2.4.  (21 August 2018)
-*/
->>>>>>> 4761cc904837c7fec3a74ebe82f20abc289da1cc
+
 public class ConquerWorld
 {
     // instance variables - replace the example below with your own
@@ -253,10 +246,8 @@ public class ConquerWorld
                 }
                 r.removeR(aPosition,bPosition);
                 r.makeInvisible();
-                okR=true;
-                //System.out.println("true");
-            }
-            //else{okR=false;System.out.println("false");}
+                okR=true;                
+            }            
             if(!okR) posRouteToRemove++;
         }
         if(okR){
@@ -314,10 +305,6 @@ public class ConquerWorld
             }        
         }
         else okR=false;
-<<<<<<< HEAD
-=======
-    
->>>>>>> 4761cc904837c7fec3a74ebe82f20abc289da1cc
     }
     /**
      * Anadimos army a una lista(arreglo estatico de colores) de naciones iterando la lista 
@@ -365,8 +352,7 @@ public class ConquerWorld
             if(rout.getFrom().equals(fromNation) && rout.getTo().equals(toNation)
             && adjList.get(fromNation).contains(toNation) && adjList.get(toNation).contains(fromNation)
             ){
-                if(object1.getArmy()>0 && cash.getCash()>0 && cash.getCash() > rout.getCost()){
-                    //System.out.println("si2");
+                if(object1.getArmy()>0 && cash.getCash()>0 && cash.getCash() > rout.getCost()){                    
                     object2.setArmy(object1.getArmy());
                     object1.setArmy();
                     cash.addCash(cash.getCash()-rout.getCost());
@@ -396,7 +382,7 @@ public class ConquerWorld
             }
         }       
         return x;
-    }    
+    }        
     /**
      * Puedo poner, este metodo toma posiciones en el eje x, y revisa si cualquier nacion anteriormente creada 
      * esta dibujada sobre los puntos x,y anteriores, para esto iteramos el arraylist de naciones y 
@@ -407,7 +393,6 @@ public class ConquerWorld
      * 
      * @return false si existe una nacion dibujada sobre los puntos x,y. true de lo contrario
      */
-<<<<<<< HEAD
     private boolean canPut(int[] positions){
         boolean aux=true;
         System.out.println(positions[0]+" "+positions[1] );
@@ -419,18 +404,6 @@ public class ConquerWorld
     }
     /**
      * Revisa si una nacion en especifico esta dibujada sobre  posicion x,y  
-=======
-        private boolean canPut(int[] positions){
-            boolean aux=true;
-            for(Nation nation: arrayNations){
-                aux = isFigure(positions[0],positions[1],nation);
-                if(aux) return false;
-            }
-            return true;
-        }
-    /**
-     * Revisa si una figura esta sobre otra
->>>>>>> 4761cc904837c7fec3a74ebe82f20abc289da1cc
      * 
      * @Param    int xPoint,int yPoint,Nation toNation
      * @return true si existe una figura dibujada sobre los puntos. false de lo contrario
@@ -438,8 +411,7 @@ public class ConquerWorld
     private boolean isFigure(int xPoint,int yPoint,Nation toNation){
         int[] natPosition = toNation.getPosition();
         int xPosNation=natPosition[0],yPosNation= natPosition[1], wNation = toNation.getWidth(),hNation= toNation.getHeight();
-        String shapeNation = toNation.getShape(); 
-        // // // System.out.println("Posiciones de otros objetos: "+xPosNation+" "+yPosNation);
+        String shapeNation = toNation.getShape();         
         if(shapeNation.equals("triangle")){
             if( xPoint<=xPosNation+(wNation/2) && xPoint>= xPosNation-(wNation/2) 
                && (yPoint>=yPosNation && yPoint<= yPosNation+hNation)) return true;
@@ -464,10 +436,6 @@ public class ConquerWorld
         }
         return false;
     }
-<<<<<<< HEAD
-=======
-    
->>>>>>> 4761cc904837c7fec3a74ebe82f20abc289da1cc
     /**
      * El metodo finish termina el juego, cerrando y elimiando todos los objetos, variables anteriormente creados
      *
@@ -475,8 +443,7 @@ public class ConquerWorld
      * @return  
      */
     public void  finish()
-    {
-        
+    {        
         System.exit(0);
     }    
     /**
@@ -501,12 +468,7 @@ public class ConquerWorld
             visited.clear();
             return true;
         }
-<<<<<<< HEAD
-    }    
-=======
-    }
-        
->>>>>>> 4761cc904837c7fec3a74ebe82f20abc289da1cc
+    }                
     /**
      * El metodo ok revisa si la operacion exactamente anterior se realizo satisfactoriamente
      * , y se guarda  en una variable local para retornar su valor,pero antes ella se predefine en false  
@@ -519,12 +481,7 @@ public class ConquerWorld
         boolean auxBool=okR;
         okR=false;
         return auxBool;
-<<<<<<< HEAD
-    }            
-=======
-    }
-    
->>>>>>> 4761cc904837c7fec3a74ebe82f20abc289da1cc
+    }        
     /**
      * El metodo okRoutes tomas todas las naciones y hace una busqueda en profundidad sobre 
      * la lista de adyacencia buscando ciclos en el grafo 
@@ -541,9 +498,6 @@ public class ConquerWorld
         visited.clear();
         return aCicle;
     }
-<<<<<<< HEAD
-=======
-    
     /**
      * Consultar rutas de una nacion
      *
@@ -556,23 +510,18 @@ public class ConquerWorld
         ArrayList<String> a = adjList.get(nation);
         String[] strings = a.stream().toArray(String[]::new);
         return strings;
-    }
-            
+    }            
     /**
      * Consultar rutas de todas las naciones
      *
      */
     public void routes()
     {
-         // adjList.entrySet().stream().forEach(e-> System.out.println(e));
          Map<String,ArrayList<String>> reversedMap = new TreeMap<String,ArrayList<String>>(adjList);
             for (Map.Entry entry: reversedMap.entrySet()){
                 System.out.println(entry.getKey()+ " " + entry.getValue());
             }
     }
-
-    
->>>>>>> 4761cc904837c7fec3a74ebe82f20abc289da1cc
     /**
      * el metodo depthFirstSearch es el clasico algoritmo de busqueda primero en profundidad de la teoria de grafos,
      * el cual utiliza la lista de adyacencia para explorar los nodos del grafo; en este caso las naciones y de 
@@ -625,7 +574,6 @@ public class ConquerWorld
         }
         return theNations;
     }
-
     /**
      * El metodo suminnout toma un aumenta o disminuye el tamaño de todas las figuras dibujadas en el mundo
      * 
@@ -636,9 +584,5 @@ public class ConquerWorld
     public void zoominnout(String symbol)
     {
         mundo.sign(symbol);
-<<<<<<< HEAD
-    }    
-=======
     }
->>>>>>> 4761cc904837c7fec3a74ebe82f20abc289da1cc
 }
