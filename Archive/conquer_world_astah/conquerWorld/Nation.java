@@ -92,8 +92,8 @@ public class Nation
             rectangle.changeColor(color);
             rectangle.changeSize(a,b);
             rectangle.changePos(position[0],position[1]);
-            this.width=a;
-            this.height = b;
+            this.width=b;
+            this.height = a;
             rec.add(rectangle);
         }        
     }
