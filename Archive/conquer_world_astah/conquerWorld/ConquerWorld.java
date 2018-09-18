@@ -8,11 +8,19 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
+<<<<<<< HEAD
  * Manage all the nations and also ConquerWorld the canvas .
  * 
  * @author (Yeisson Gualdron y Santiago Rubiano)
  * @version 4.0.  (18 September 2018)
  */
+=======
+* Manage all the nations and also ConquerWorld the canvas .
+* 
+* @author (Yeisson Gualdron y Santiago Rubiano)
+* @version 2.4.  (21 August 2018)
+*/
+>>>>>>> 4761cc904837c7fec3a74ebe82f20abc289da1cc
 public class ConquerWorld
 {
     // instance variables - replace the example below with your own
@@ -296,7 +304,7 @@ public class ConquerWorld
      * @param  Nacion a agregar armamento
      */
     public void addArmy(String nation){
-
+    
         if (colorNations.contains(nation)){
             for(Nation n : arrayNations){
                 if(n.getColor().equals(nation)){
@@ -306,6 +314,10 @@ public class ConquerWorld
             }        
         }
         else okR=false;
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 4761cc904837c7fec3a74ebe82f20abc289da1cc
     }
     /**
      * Anadimos army a una lista(arreglo estatico de colores) de naciones iterando la lista 
@@ -395,6 +407,7 @@ public class ConquerWorld
      * 
      * @return false si existe una nacion dibujada sobre los puntos x,y. true de lo contrario
      */
+<<<<<<< HEAD
     private boolean canPut(int[] positions){
         boolean aux=true;
         System.out.println(positions[0]+" "+positions[1] );
@@ -406,6 +419,18 @@ public class ConquerWorld
     }
     /**
      * Revisa si una nacion en especifico esta dibujada sobre  posicion x,y  
+=======
+        private boolean canPut(int[] positions){
+            boolean aux=true;
+            for(Nation nation: arrayNations){
+                aux = isFigure(positions[0],positions[1],nation);
+                if(aux) return false;
+            }
+            return true;
+        }
+    /**
+     * Revisa si una figura esta sobre otra
+>>>>>>> 4761cc904837c7fec3a74ebe82f20abc289da1cc
      * 
      * @Param    int xPoint,int yPoint,Nation toNation
      * @return true si existe una figura dibujada sobre los puntos. false de lo contrario
@@ -439,6 +464,10 @@ public class ConquerWorld
         }
         return false;
     }
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 4761cc904837c7fec3a74ebe82f20abc289da1cc
     /**
      * El metodo finish termina el juego, cerrando y elimiando todos los objetos, variables anteriormente creados
      *
@@ -472,7 +501,12 @@ public class ConquerWorld
             visited.clear();
             return true;
         }
+<<<<<<< HEAD
     }    
+=======
+    }
+        
+>>>>>>> 4761cc904837c7fec3a74ebe82f20abc289da1cc
     /**
      * El metodo ok revisa si la operacion exactamente anterior se realizo satisfactoriamente
      * , y se guarda  en una variable local para retornar su valor,pero antes ella se predefine en false  
@@ -485,7 +519,12 @@ public class ConquerWorld
         boolean auxBool=okR;
         okR=false;
         return auxBool;
+<<<<<<< HEAD
     }            
+=======
+    }
+    
+>>>>>>> 4761cc904837c7fec3a74ebe82f20abc289da1cc
     /**
      * El metodo okRoutes tomas todas las naciones y hace una busqueda en profundidad sobre 
      * la lista de adyacencia buscando ciclos en el grafo 
@@ -502,6 +541,38 @@ public class ConquerWorld
         visited.clear();
         return aCicle;
     }
+<<<<<<< HEAD
+=======
+    
+    /**
+     * Consultar rutas de una nacion
+     *
+     * @param  nacion a consultar
+     * @return   rutas desde la nacion dada
+     */
+    public String[] routes(String nation)
+    {
+        // adjList.entrySet().stream().forEach(e-> System.out.println(e));
+        ArrayList<String> a = adjList.get(nation);
+        String[] strings = a.stream().toArray(String[]::new);
+        return strings;
+    }
+            
+    /**
+     * Consultar rutas de todas las naciones
+     *
+     */
+    public void routes()
+    {
+         // adjList.entrySet().stream().forEach(e-> System.out.println(e));
+         Map<String,ArrayList<String>> reversedMap = new TreeMap<String,ArrayList<String>>(adjList);
+            for (Map.Entry entry: reversedMap.entrySet()){
+                System.out.println(entry.getKey()+ " " + entry.getValue());
+            }
+    }
+
+    
+>>>>>>> 4761cc904837c7fec3a74ebe82f20abc289da1cc
     /**
      * el metodo depthFirstSearch es el clasico algoritmo de busqueda primero en profundidad de la teoria de grafos,
      * el cual utiliza la lista de adyacencia para explorar los nodos del grafo; en este caso las naciones y de 
@@ -565,5 +636,9 @@ public class ConquerWorld
     public void zoominnout(String symbol)
     {
         mundo.sign(symbol);
+<<<<<<< HEAD
     }    
+=======
+    }
+>>>>>>> 4761cc904837c7fec3a74ebe82f20abc289da1cc
 }
