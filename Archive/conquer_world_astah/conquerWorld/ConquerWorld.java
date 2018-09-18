@@ -1,9 +1,12 @@
+package Archive.conquer_world_astah.conquerWorld;
+
 import java.util.*;
 import java.awt.*;
 import java.awt.Graphics;
 import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+
 /**
  * Manage all the nations and also ConquerWorld the canvas .
  * 
@@ -545,5 +548,5 @@ public class ConquerWorld
     {
         mundo.sign(symbol);
     }
-
+    //nada solo probando jaja
 }

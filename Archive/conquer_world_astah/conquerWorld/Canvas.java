@@ -1,3 +1,5 @@
+package Archive.conquer_world_astah.conquerWorld;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
