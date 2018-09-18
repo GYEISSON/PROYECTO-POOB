@@ -8,11 +8,11 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
- * Manage all the nations and also ConquerWorld the canvas .
- * 
- * @author (Yeisson Gualdron y Santiago Rubiano)
- * @version 2.4.  (21 August 2018)
- */
+* Manage all the nations and also ConquerWorld the canvas .
+* 
+* @author (Yeisson Gualdron y Santiago Rubiano)
+* @version 2.4.  (21 August 2018)
+*/
 public class ConquerWorld
 {
     // instance variables - replace the example below with your own
@@ -294,7 +294,7 @@ public class ConquerWorld
      * @param  Nacion a agregar armamento
      */
     public void addArmy(String nation){
-
+    
         if (colorNations.contains(nation)){
             for(Nation n : arrayNations){
                 if(n.getColor() == nation ){
@@ -304,7 +304,7 @@ public class ConquerWorld
             }        
         }
         else okR=false;
-
+    
     }
     /**
      * An example of a method - replace this comment with your own
@@ -388,15 +388,15 @@ public class ConquerWorld
      * @param  y  a sample parameter for a method
      * @return    the sum of x and y
      */
-    private boolean canPut(int[] positions){
-        boolean aux=true;
-        for(Nation nation: arrayNations){
-            aux = isFigure(positions[0],positions[1],nation);
-            if(aux) return false;
+        private boolean canPut(int[] positions){
+            boolean aux=true;
+            for(Nation nation: arrayNations){
+                aux = isFigure(positions[0],positions[1],nation);
+                if(aux) return false;
+            }
+            return true;
         }
-        return true;
-    }
-   /**
+    /**
      * Revisa si una figura esta sobre otra
      * 
      * @return    int xPoint,int yPoint,Nation toNation
@@ -438,7 +438,7 @@ public class ConquerWorld
         }
         return false;
     }
-
+    
     /**
      * An example of a method - replace this comment with your own
      *
@@ -470,7 +470,7 @@ public class ConquerWorld
             return true;
         }
     }
-    
+        
     /**
      * An example of a method - replace this comment with your own
      *
@@ -483,8 +483,6 @@ public class ConquerWorld
         okR=false;
         return auxBool;
     }
-    
-    
     
     /**
      * An example of a method - replace this comment with your own
@@ -501,7 +499,35 @@ public class ConquerWorld
         visited.clear();
         return aCicle;
     }
+    
+    /**
+     * Consultar rutas de una nacion
+     *
+     * @param  nacion a consultar
+     * @return   rutas desde la nacion dada
+     */
+    public String[] routes(String nation)
+    {
+        // adjList.entrySet().stream().forEach(e-> System.out.println(e));
+        ArrayList<String> a = adjList.get(nation);
+        String[] strings = a.stream().toArray(String[]::new);
+        return strings;
+    }
+            
+    /**
+     * Consultar rutas de todas las naciones
+     *
+     */
+    public void routes()
+    {
+         // adjList.entrySet().stream().forEach(e-> System.out.println(e));
+         Map<String,ArrayList<String>> reversedMap = new TreeMap<String,ArrayList<String>>(adjList);
+            for (Map.Entry entry: reversedMap.entrySet()){
+                System.out.println(entry.getKey()+ " " + entry.getValue());
+            }
+    }
 
+    
     /**
      * An example of a method - replace this comment with your own
      *
@@ -527,8 +553,6 @@ public class ConquerWorld
      */
     private void dFS(String uNation,boolean aCicle)
     {
-        // put your code here
-        
         for(String vNation: adjList.get(uNation)){
             if(visited.containsKey(vNation)){
                 visited.put(vNation,1);
@@ -548,5 +572,4 @@ public class ConquerWorld
     {
         mundo.sign(symbol);
     }
-    //nada solo probando jaja
 }
