@@ -80,18 +80,19 @@ public class Canvas{
     {
         zoomer = true;
         if (a.equals("+")){
-            zoomfactor *= 1.1;
+            zoomfactor *= 1.5;
             canvas.repaint();
         }
         if (a.equals("-")){
             
-            zoomfactor/=1.1;
+            zoomfactor/=1.5;
             canvas.repaint();
         }
+        erase();
+        graphic.scale(zoomfactor,zoomfactor);
+        redraw();
     }
-            
-
-    
+                
     /**
      * Create a Canvas.
      * @param title  title to appear in Canvas Frame
