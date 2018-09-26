@@ -1,64 +1,69 @@
+package Archive.conquer_world_astah.conquerWorld;
+
 import java.util.*;
 import java.awt.*;
 import java.awt.Graphics;
 import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+
 /**
  * Manage all the nations and also ConquerWorld the canvas .
  * 
  * @author (Yeisson Gualdron y Santiago Rubiano)
- * @version 2.4.  (21 August 2018)
+ * @version 4.0.  (18 September 2018)
  */
+
 public class ConquerWorld
 {
     // instance variables - replace the example below with your own
     private Canvas mundo;
+    private Nation nation;
+    private Cash cash;
+    private Route elimina;    
+    private Route route;        
     private ArrayList<Nation> arrayNations;
     private ArrayList<String> colorNations;
-    private HashMap<String,Integer> visited; //tabla de hash para saber si un una nacion esta visitado
-    private Map<String,ArrayList<String>> adjList; //lista de adyacencia para los nodos del grafo       
     private ArrayList<Route> routes;
-    private Nation nation;
+    private HashMap<String,Integer> visited; //tabla de hash para saber si un una nacion esta visitado
+    private Map<String,ArrayList<String>> adjList; //lista de adyacencia para los nodos del grafo           
     private boolean isVisible;
     private boolean aCicle;
-    private int maxX;
-    private Cash cash;
-    private Route elimina;
     private boolean okR;
-    private Route route;
+    private int maxX;
     private int nNations;
     
     /**
     /**
-     * Constructor de objetos de la clase conquerWorld
+     * Constructor de objetos de la clase conquerWorld, solicitamos memoria para los contenedores
+     * de la clase conquerWorld y para crear otros objetos
      */
     public ConquerWorld(int maxX,int maxY){
         this.maxX = maxX;
         mundo = mundo.getCanvas(maxX,maxY);
         arrayNations = new ArrayList<Nation>();
         colorNations = new ArrayList<String>();
-        routes = new ArrayList<Route>();
-        isVisible = false;
+        routes = new ArrayList<Route>();        
         fondoCash f = new fondoCash(maxX);
         cash = new Cash(0,maxX);
         colorNations = new ArrayList<String>();
         visited = new HashMap<String,Integer>();
         adjList = new HashMap<>();
+        isVisible = false;
     }   
-    /**     * Anadir efectivo al presupuesto de batalla
+    /** Anadir efectivo al presupuesto de batalla, ademas guardamos el antigua cash le sumamos el valor de cash a anadir 
+     * y comparamos con el nuevo valor 
+     *  
      *
      * @param  dinero a adicionar
      */
     public void addCash(int c){
-        int bCash=cash.getCash();
+        long bCash=cash.getCash();
         cash.addCash(c);
-        if(cash.getCash()==(bCash+c)) okR=true;
-        else okR=false;
-        
+        okR = ((cash.getCash()==(bCash+c))? true : false);        
     }
     /**
-     * Anade una nueva nacion a la batalla
+     * Anade una nueva nacion a la batalla, para esto revisa que no exista una nacion en esta posicion 
      *
      * @param  La forma,el color, el area, la posicion y las unidades necesarias para esta nueva nacion
      */
@@ -68,9 +73,9 @@ public class ConquerWorld
         int xPos=position[0],yPos=position[1];
         nNations=colorNations.size();
         int[] aux= new int[2];
-        
+        //revisamos si existen naciones anteriormente creadas
         if(nNations>0){
-            if(shape=="pentagon"){
+            if(shape.equals("pentagon")){
                 side = (int)Math.sqrt(2*area);
                 put = put && canPut(position); //1
                 position[0]+=side;
@@ -86,7 +91,7 @@ public class ConquerWorld
                 put = put&&canPut(position); //6
                 position[1]-=side;
             }
-            else if(shape == "triangle"){
+            else if(shape.equals("triangle")){
                 side = (int)Math.sqrt(2*area);
                 put = put&&canPut(position);
                 position[0]+=(int)side/2;position[1]+=side;
@@ -95,7 +100,7 @@ public class ConquerWorld
                 put = put&&canPut(position);
                 position[0]+=(int)side/2;position[1]-=side;
             }
-            else if(shape == "circle"){
+            else if(shape.equals("circle")){
                 side = (int)(Math.sqrt(area/Nation.PI))*2;
                 put = put && canPut(position);
                 position[0]+=side;
@@ -106,19 +111,20 @@ public class ConquerWorld
                 put = put && canPut(position);
                 position[1]-=side;
             }
-            else if(shape=="square"){
+            else if(shape.equals("square")){
                 side = (int)Math.sqrt(area);
-                put = put && canPut(position);
+                put = put && canPut(position);                
                 position[0]+=side;
-                put = put && canPut(position);
+                put = put && canPut(position);                
                 position[1]+=side;
-                put = canPut(position);
+                put = put && canPut(position);
                 position[0]-=side;
                 put = put && canPut(position);
+                
             }
             else{
                 side = (int)Math.sqrt(2*area);
-                put = put && canPut(position);
+                put = put && canPut(position);                 
                 position[0]+=(int)side/2;
                 put = put && canPut(position);
                 position[1]+=side;
@@ -127,14 +133,13 @@ public class ConquerWorld
                 put = put && canPut(position);
                 position[1]-=side;
             }
-        }
+        }        
         if(put &&  !(colorNations.contains(color))){
             aux[0]=xPos;aux[1]=yPos;
             nation = new Nation(shape,area,color,aux);
             arrayNations.add(nation);
             colorNations.add(color);
             adjList.put(color,new ArrayList<String>());
-            visited.put(color,0);
             okR=true;
         }
         else{
@@ -143,35 +148,46 @@ public class ConquerWorld
         }
     }        
     /**
-     * Remueve una nacion de la batalla
+     * Remueve una nacion de la batalla, remueve la nacion si no tiene rutas a otras naciones 
      *
      * @param  Nombre/Color de la nacion
      * 
      */
-    public void removeNation(String removeColor)
-    {        
+    public void removeNation(String removeColor){        
         String colorob;
-        // System.out.println(colorNations.toString());
+        okR=false;
+        boolean okTempt = true;        
         if(colorNations.contains(removeColor)){ 
-        for(int i=0;i<arrayNations.size();i++){
-            colorob= arrayNations.get(i).getColor();
-            if(arrayNations.get(i).getColor()==removeColor){
-                arrayNations.get(i).removeNationF(removeColor);
-                arrayNations.remove(i);
-                okR = true;
-            }                    
+            for(int i=0;i<arrayNations.size();i++){
+                colorob= arrayNations.get(i).getColor();
+                if(arrayNations.get(i).getColor().equals(removeColor)){
+                    for(String nodo: colorNations){
+                         for(int k =0;k<adjList.get(nodo).size();k++){
+                             if(adjList.get(nodo).get(k).equals(removeColor)){
+                                okTempt = false;                                
+                             }
+                         }
+                    }
+                    //okTemp revisa otra nacion existente tiene una ruta creada hacia removecolor(nacion a remover)
+                    if(okTempt){
+                         arrayNations.get(i).removeNationF(removeColor);
+                         arrayNations.remove(i);
+                         colorNations.remove(i);
+                         adjList.remove(removeColor);
+                         okR = true;
+                    }
+                }                    
+            }         
         }
-        okR = true;
-      }
     }
     /**
-     * Anade una nueva ruta entre dos naciones a la batalla.
+     * Anade una nueva ruta entre dos naciones a la batalla. para esto revisamos si las naciones existen,
+     * si no existe una ruta entre la nacionA y la nacionB si lo anterior se cumple creamos y graficamos la ruta 
      *
      * @param  Las naciones con ruta y su costo
      */
     public void addRoute(String[] nations,int cost){
-        int[] aPosition={0,0},bPosition={0,0};
-        
+        int[] aPosition={0,0},bPosition={0,0};        
         for(Nation ob : arrayNations){            
             if(ob.getColor()== nations[0]){
                 aPosition = ob.getPosition();                
@@ -179,32 +195,36 @@ public class ConquerWorld
             else if( ob.getColor()==nations[1]){
                 bPosition = ob.getPosition();
             }
-        }        
-        Route route = new Route(aPosition,bPosition,cost,nations[0],nations[1]);       
-        if (colorNations.contains(nations[0]) && colorNations.contains(nations[1]) 
-            && okRoute(nations)){
-             route.makeVisible();
-             routes.add(route);    
-             adjList.get(nations[0]).add(nations[1]);
-             adjList.get(nations[1]).add(nations[0]);
-             okR=true;             
+        }                       
+        if (colorNations.contains(nations[0]) && colorNations.contains(nations[1]) ){
+            if(okRoute(nations)){
+                Route route = new Route(aPosition,bPosition,cost,nations[0],nations[1]); 
+                route.makeVisible();
+                routes.add(route);    
+                adjList.get(nations[0]).add(nations[1]);
+                adjList.get(nations[1]).add(nations[0]);
+                okR=true;
+            }else okR=false;
         }
         else{
             okR=false;
         }
     }       
     /**
-     * Remueve una ruta entre dos naciones de la batalla
+     * Remueve una ruta entre dos naciones de la batalla, para esto reviamos que las naciones existan,
+     * y eliminamos las apariciones de las naciones en la lista de adyacencia
      *
      * @param  y   a sample parameter for a method
      * @return     the sum of x and y
      */
     public void removeRoute(String[] nations)
     {
-        int[] aPosition={0,0},bPosition={0,0};          
+        int[] aPosition={0,0},bPosition={0,0};
+        int posRouteToRemove = 0;
+        okR=false;
         for(Route r : routes){
-            if((r.getFrom()==nations[0] && r.getTo()==nations[1]) || 
-            r.getFrom()==nations[1] && r.getTo()==nations[0]){
+            if((r.getFrom()==nations[0] && r.getTo()==nations[1]) ||( 
+            r.getFrom()==nations[1] && r.getTo()==nations[0])){
                 elimina = r;
                 for(Nation obNation : arrayNations){
                     if(obNation.getColor()== nations[0]){
@@ -226,10 +246,13 @@ public class ConquerWorld
                 }
                 r.removeR(aPosition,bPosition);
                 r.makeInvisible();
-                okR=true;
+                okR=true;                
             }            
+            if(!okR) posRouteToRemove++;
         }
-                   
+        if(okR){
+            routes.remove(posRouteToRemove);
+        }
     }    
     /**
      * Limpia todo el tablero
@@ -266,61 +289,85 @@ public class ConquerWorld
         }
     }
      /**
-     * Anade armamento a una nacion
-     * 
+     * Anade armamento a una nacion, buscamos la nacion en el arrayList de naciones,
+     * obteniendo su color y comparandolo con el color de la nacion a la cual anadiremos 
+     * army 
      * @param  Nacion a agregar armamento
      */
     public void addArmy(String nation){
-        
-        for(Nation n : arrayNations){
-            if(n.getColor() == nation ){
-                n.setArmy(10);
-                okR=true;
-            }
-        }        
+    
+        if (colorNations.contains(nation)){
+            for(Nation n : arrayNations){
+                if(n.getColor().equals(nation)){
+                    n.setArmy(10);
+                    okR=true;
+                }
+            }        
+        }
+        else okR=false;
     }
     /**
-     * An example of a method - replace this comment with your own
+     * Anadimos army a una lista(arreglo estatico de colores) de naciones iterando la lista 
+     * y llamando al metodo addArmy con cada uno de los elementos de la lista
      *
      * @param  y  a sample parameter for a method
      * @return    the sum of x and y
      */
     public void addArmies(String[] nations){
+        okR=false;
+        boolean conjun=true;
         for(int j=0;j<nations.length;j++){
             addArmy(nations[j]);
+            conjun=conjun&&ok();
         }
+        okR=conjun;
     }
     /**
-     * Quita armamento a una nacion
+     * Quita armamento a una nacion,buscamos la nacion en el arrayList de naciones
+     * y revismaos si tiene un army a remover 
      *
      * @param  Nacion a quitar armamento
      */
     public void removeArmies(String nation){
+        okR=false;
         for(Nation n : arrayNations){
-            if(n.getColor() == nation ){
-                n.setArmy();
-                okR=true;
+            if(n.getColor().equals(nation)){
+                if(n.getArmy()>0){
+                    n.setArmy();
+                    okR=true;
+                }
             }
         }
-    }    
+    } 
     /**
-     * Mover armamento entre naciones
+     * Mover armamento entre naciones, para esto revisamos si la ruta entre la nacion A y B existe
+     * , ademas reviamos si el cash es suficiente para mover el army por esta ruta
      *
      * @param  Nacion origen y nacion destino
      */
     public void moveArmy(String fromNation,String toNation)
     {
-        // put your code here
         Nation object1 = getNation(fromNation),object2=getNation(toNation);
-        if(object1.getArmy()>0){
-            object2.setArmy(object1.getArmy());
-            object1.setArmy();
-            okR=true;
+        for(Route rout: routes){
+            if(rout.getFrom().equals(fromNation) && rout.getTo().equals(toNation)
+            && adjList.get(fromNation).contains(toNation) && adjList.get(toNation).contains(fromNation)
+            ){
+                if(object1.getArmy()>0 && cash.getCash()>0 && cash.getCash() > rout.getCost()){                    
+                    object2.setArmy(object1.getArmy());
+                    object1.setArmy();
+                    cash.addCash(cash.getCash()-rout.getCost());
+                    okR=true;
+                    break;
+                }
+                else okR=false;
+            }
+            else okR=false;
         }
+        
     }
     /**
-     * Obtiene la nacion a partir del Nombre/Color
-     *
+     * Obtiene la nacion a partir del Nombre/Color, para esto iteramos el arrayList de naciones 
+     *  
      * @param  Nombre/Color de nacion
      * @return     Nacion
      */
@@ -329,119 +376,118 @@ public class ConquerWorld
         Nation x= new Nation("triangle",1,"blue",pos);
         
         for(Nation n: arrayNations){    
-            if(n.getColor() == nationName){ 
+            if(n.getColor().equals(nationName)){ 
                 okR=true;
                 return n;
             }
         }       
         return x;
-    }    
+    }        
     /**
-     * An example of a method - replace this comment with your own
+     * Puedo poner, este metodo toma posiciones en el eje x, y revisa si cualquier nacion anteriormente creada 
+     * esta dibujada sobre los puntos x,y anteriores, para esto iteramos el arraylist de naciones y 
+     * nos apoyamos en el metodo isFigure 
      *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * @param arreglo estatico de enteros de dos elementos en su primera posicion la coordenada X,
+     * y en el siguiente la coordenada Y
+     * 
+     * @return false si existe una nacion dibujada sobre los puntos x,y. true de lo contrario
      */
     private boolean canPut(int[] positions){
         boolean aux=true;
+        System.out.println(positions[0]+" "+positions[1] );
         for(Nation nation: arrayNations){
-            aux = isFigure(positions[0],positions[1],nation);
+            aux = isFigure(positions[0],positions[1],nation);            
             if(aux) return false;
         }
         return true;
     }
-   /**
-     * Revisa si una figura esta sobre otra
+    /**
+     * Revisa si una nacion en especifico esta dibujada sobre  posicion x,y  
      * 
-     * @return    int xPoint,int yPoint,Nation toNation
+     * @Param    int xPoint,int yPoint,Nation toNation
+     * @return true si existe una figura dibujada sobre los puntos. false de lo contrario
      */
     private boolean isFigure(int xPoint,int yPoint,Nation toNation){
         int[] natPosition = toNation.getPosition();
-        int xPosNation=natPosition[0],yPosNation= natPosition[1];
-        int wNation = toNation.getWidth(),hNation= toNation.getHeight();
-        String shapeNation =toNation.getShape(); 
-        // // // System.out.println("Posiciones de otros objetos: "+xPosNation+" "+yPosNation);
-        if(shapeNation=="triangle"){
+        int xPosNation=natPosition[0],yPosNation= natPosition[1], wNation = toNation.getWidth(),hNation= toNation.getHeight();
+        String shapeNation = toNation.getShape();         
+        if(shapeNation.equals("triangle")){
             if( xPoint<=xPosNation+(wNation/2) && xPoint>= xPosNation-(wNation/2) 
-               && (yPoint>=yPosNation && yPoint<= yPosNation+hNation)){
-                return true;
-            }
+               && (yPoint>=yPosNation && yPoint<= yPosNation+hNation)) return true;
         }
-        else if(shapeNation == "pentagon"){           
+        else if(shapeNation.equals("pentagon")){           
             if(xPoint<=xPosNation+wNation && xPoint>= xPosNation-wNation 
-                && (yPoint >= yPosNation-hNation && yPoint<=yPosNation+hNation )){
-                return true;
-            }
+                && (yPoint >= yPosNation-hNation && yPoint<=yPosNation+hNation )) return true;
         }
-        else if(shapeNation == "circle"){
-            if((xPoint>=xPosNation && xPoint <= xPosNation+wNation ) && (yPoint>=yPosNation && yPoint<=yPosNation+hNation)){
-                return true;
-            }        
+        else if(shapeNation.equals("circle")){
+            if((xPoint>=xPosNation && xPoint <= xPosNation+wNation ) && (yPoint>=yPosNation && yPoint<=yPosNation+hNation)) return true;        
         }
-        else if(shapeNation == "rectangle"){
-            if((xPoint >= xPosNation && xPoint <= xPosNation+wNation) && (yPoint >= yPosNation && yPoint <= yPosNation+hNation)){
-                return true;
-            }
+        else if(shapeNation.equals("rectangle")){            
+            if((xPosNation <= xPoint && xPoint <= xPosNation+wNation) 
+            && ( yPosNation<= yPoint &&  yPoint <= yPosNation+hNation)) return true;            
         }
-        else{
-            
-            if((xPoint >= xPosNation && xPoint <= (int)(xPosNation+wNation)) && (yPoint >= yPosNation && yPoint <= (int)(yPosNation+hNation))){
+        else{            
+            if((xPoint >= xPosNation && xPoint <= (int)(xPosNation+wNation)) &&
+            (yPoint >= yPosNation && yPoint <= (int)(yPosNation+hNation))){
                 return true;
             }
             else return false;
         }
         return false;
     }
-
     /**
-     * An example of a method - replace this comment with your own
+     * El metodo finish termina el juego, cerrando y elimiando todos los objetos, variables anteriormente creados
      *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * @param  
+     * @return  
      */
     public void  finish()
-    {
-        // put your code here
+    {        
         System.exit(0);
-    }
-
+    }    
     /**
-     * An example of a method - replace this comment with your own
+     * El metodo okRoute revisa si existe un "camino"(ruta o secuencia de rutas) entre un par de naciones anteriormente creadas,
+     * para esto utilizamos el metodo busqueda primero en profundidad el cual nos llena un hashmap de 
+     * elementos llamado visited, este hashmap no indica todas las naciones a las cuales puedo llegar desde 
+     * la nacion A, por tanto si en el hashmap esta visitada la nacion B luego de realizar la dfs podemos 
+     * afirmar que existe un camino entre la nacion A y B
      *
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y
-     */
-    public boolean ok()  
-    { 
-        //boolean auxBool=okR;
-        //okR=false;
-        return okR;
-    }
-    
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * @param  arreglo estatico de naciones(colores)
+     * @return false si  existe un "camino" entre la nacion A y B. true de lo contrario 
      */
     public boolean okRoute(String[] nations )
     {
-        // put your code here
-        visited.put(nations[0],1);
-        depthFirstSearch(nations[0],nations[1]);
-        if(visited.get(nations[1])==1){ 
-            //System.out.println("no"); 
-            return false;}
+        //visited.put(nations[0],1);
+        depthFirstSearch(nations[0]);
+        if(visited.containsKey(nations[1])){ 
+            visited.clear();
+            return false;
+        }
         else{ 
-            //System.out.println("yes"); 
-            return true;}
-    }
-    
+            visited.clear();
+            return true;
+        }
+    }                
     /**
-     * An example of a method - replace this comment with your own
+     * El metodo ok revisa si la operacion exactamente anterior se realizo satisfactoriamente
+     * , y se guarda  en una variable local para retornar su valor,pero antes ella se predefine en false  
      *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * @param 
+     * @return okR la cual tiene le valor de true si la operacion anterior fue exitosa. false de lo contrario. 
+     */
+    public boolean ok()  
+    { 
+        boolean auxBool=okR;
+        okR=false;
+        return auxBool;
+    }        
+    /**
+     * El metodo okRoutes tomas todas las naciones y hace una busqueda en profundidad sobre 
+     * la lista de adyacencia buscando ciclos en el grafo 
+     *
+     * @param  
+     * @return  false si hay dos caminos entre algun par de naciones, true de lo contrario. 
      */
     public boolean okRoutes()
     {
@@ -449,43 +495,94 @@ public class ConquerWorld
         for(Nation nat: arrayNations){
             dFS(nat.getColor(),aCicle);
         }
+        visited.clear();
         return aCicle;
     }
-
     /**
-     * An example of a method - replace this comment with your own
+     * Consultar rutas de una nacion
      *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * @param  nacion a consultar
+     * @return   rutas desde la nacion dada
      */
-    private void depthFirstSearch(String uNation,String toFound)
+    public String[] routes(String nation)
     {
-        // put your code here
+        // adjList.entrySet().stream().forEach(e-> System.out.println(e));
+        ArrayList<String> a = adjList.get(nation);
+        String[] strings = a.stream().toArray(String[]::new);
+        return strings;
+    }            
+    /**
+     * Consultar rutas de todas las naciones
+     *
+     */
+    public void routes()
+    {
+         Map<String,ArrayList<String>> reversedMap = new TreeMap<String,ArrayList<String>>(adjList);
+            for (Map.Entry entry: reversedMap.entrySet()){
+                System.out.println(entry.getKey()+ " " + entry.getValue());
+            }
+    }
+    /**
+     * el metodo depthFirstSearch es el clasico algoritmo de busqueda primero en profundidad de la teoria de grafos,
+     * el cual utiliza la lista de adyacencia para explorar los nodos del grafo; en este caso las naciones y de 
+     * forma recursiva(backtracking) garantiza explorar todos los nodos a los cuales se puede acceder de un nodo 
+     * inicial A
+     *
+     * @param  String nacion inicial 
+     * @return void el dfs explora primero en profundidad mientras exista la adyacencia. 
+     * Cuando no existen vuelve a una adyacencia anterior hasta finalizar todas las adyacencias
+     */
+    private void depthFirstSearch(String uNation)
+    {
         for(String vNation: adjList.get(uNation)){
-            if(visited.get(vNation)==0){
+            if(!visited.containsKey(vNation)){
                 visited.put(vNation,1);
-                depthFirstSearch( vNation, toFound);
+                depthFirstSearch( vNation);
             }
         }
-    }
-    
+    }    
     /**
-     * An example of a method - replace this comment with your own
+     * el metodo dfs busca ciclos en el grafo basado en el mismo criterio de depthFirstSearch, pero este lleva una 
+     * variable la cual se define en false si se llega a un nodo anteriormente explorado(existe un ciclo en el grafo)
+     * se conforma con hallar 1 no cuenta todos los ciclos
      *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * @param String nacion inicial de exploracion,boolean  acicle booleano que es false cuando hay uno o mas ciclos en el grafo
+     * @return void backtracking cumpliendo el mismo criterio de depthFirstSearch
      */
     private void dFS(String uNation,boolean aCicle)
     {
-        // put your code here
-        
         for(String vNation: adjList.get(uNation)){
-            if(visited.get(vNation)==0){
+            if(visited.containsKey(vNation)){
                 visited.put(vNation,1);
                 dFS( vNation,aCicle);
             }
             else aCicle=false;
         }
+    }    
+    /**
+     * el metodo naciones genera un arreglo estatico de String con los colores de las naciones que estan en el mundo sin importar
+     * si estan visibles o no
+     *
+     * @param      
+     * @return String[] arreglo estatico de naciones  
+     */
+    public String[] nations()
+    {
+        String[] theNations = new String[colorNations.size()];
+        for(int i=0;i<colorNations.size();i++){
+            theNations[i] = colorNations.get(i);
+        }
+        return theNations;
     }
-
+    /**
+     * El metodo suminnout toma un aumenta o disminuye el tamaño de todas las figuras dibujadas en el mundo
+     * 
+     *
+     * @param  "+" o "-" Aumenta o disminuye el tamaño de las figuras respectivamente
+     * @return  
+     */
+    public void zoominnout(String symbol)
+    {
+        mundo.sign(symbol);
+    }
 }

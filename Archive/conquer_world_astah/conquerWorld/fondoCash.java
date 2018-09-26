@@ -1,3 +1,5 @@
+package Archive.conquer_world_astah.conquerWorld;
+
 
 /**
  * Write a description of class fondoCash here.
@@ -12,6 +14,4 @@ public class fondoCash
         Canvas canvas = Canvas.getCanvas();
         canvas.draw(this, "red",(new java.awt.Rectangle(0, 0,maxX,10)));
     }
-
-            
 }

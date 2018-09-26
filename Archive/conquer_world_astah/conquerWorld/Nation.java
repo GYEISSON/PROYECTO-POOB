@@ -1,3 +1,5 @@
+package Archive.conquer_world_astah.conquerWorld;
+
 import java.lang.*;
 import java.awt.*;
 import java.util.*;
@@ -14,8 +16,9 @@ public class Nation
     private int area;
     private String color;
     private int[] position;
-    private int armiesNeeded;
-    private int armyHave;
+    private Army army;
+    
+
     private int puntos;
     public static double PI=3.1416;
     private Square square;
@@ -39,7 +42,7 @@ public class Nation
         this.color = color;
         this.position=pos;
         this.nationShape = shape;
-        armyHave=0;
+        army = new Army();
         if (shape.equals("square"))
         {
             square = new Square();
@@ -90,8 +93,8 @@ public class Nation
             rectangle.changeColor(color);
             rectangle.changeSize(a,b);
             rectangle.changePos(position[0],position[1]);
-            this.width=a;
-            this.height = b;
+            this.width=b;
+            this.height = a;
             rec.add(rectangle);
         }        
     }
@@ -204,7 +207,7 @@ public class Nation
     public void setArmy(int y)
     {
         // put your code here
-        armyHave += y;
+        army.setArmy(army.getArmy()+y);
     }    
     /**
      * Set the armies of the nation to 0
@@ -213,7 +216,7 @@ public class Nation
     public void setArmy()
     {
         // put your code here
-        armyHave=0;
+        army.setArmy();
     }    
     /**
      * Return the number of armies, the nation has
@@ -222,7 +225,7 @@ public class Nation
     public int getArmy()
     {
         // put your code here
-        return armyHave;
+        return army.getArmy();
     }
     /**
      * Return the shape of the current nation
