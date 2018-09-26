@@ -20,9 +20,7 @@ public class DoubleHeap
     {
         set1 = new TreeSet<Long>();
         set2 = new TreeSet<Long>();
-    }
-    
-    
+    }        
     // Make sure set 1 contains exactly "part" elements, padding with 0 if needed.
     public void shiftPartition(int part){
         while(set1.size() < part){
@@ -94,7 +92,7 @@ public class DoubleHeap
      * @param  y  a sample parameter for a method
      * @return    the sum of x and y
      */
-    public void pruneNeg(int y)
+    public void pruneNeg()
     {
         while(set2.size()>0  && (set2.first() + set2Base) < 0 ){
             set2.remove(set2.first());
@@ -103,4 +101,10 @@ public class DoubleHeap
             set1.remove(set1.first());
         }
     }
+    
+    public long getset1Base(){ return this.set1Base;}
+    public long getset2Base(){ return this.set2Base;}
+    
+    public void setset1Base(long newNum){ this.set1Base = newNum;}
+    public void setset2Base(long newNum){ this.set2Base  =  newNum;}
 }

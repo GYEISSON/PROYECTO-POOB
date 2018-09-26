@@ -24,6 +24,18 @@ public class State
         baseCost = 0;
         savings = new DoubleHeap();
     }
-
-
+    
+    public void deleteState(){
+        savings = null;
+    }
+    
+    public int getminInc(){ return this.minInc;}
+    public void setminInc(int newminInc){ this.minInc = newminInc;}
+    
+    
+    public long getbaseCost(){ return this.baseCost;}
+    public void setbaseCost(long newbaseCost){ this.baseCost = baseCost;}
+    
+    public DoubleHeap getHeap(){return this.savings;}
+    public void setHeap(DoubleHeap newHeap){ this.savings = newHeap;}
 }
