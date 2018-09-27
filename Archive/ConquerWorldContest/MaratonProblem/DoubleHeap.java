@@ -23,18 +23,26 @@ public class DoubleHeap
     }        
     // Make sure set 1 contains exactly "part" elements, padding with 0 if needed.
     public void shiftPartition(int part){
+        System.out.println(set1.size()+ " " + part );
         while(set1.size() < part){
+            System.out.println("ok while set1 < part" +" " +set1.size() +" "+ part  );
             if(set2.size()>0){
+                //System.out.println("ok66666");
                 set1.add(set2.last() + set2Base + set1Base);
                 set2.remove(set2.last()-1);
             } else {
-                set1.add(-set1Base);
+                 System.out.println("add");
+                set1.add(-(set1Base));
             }            
         }
+        //System.out.println("ok5");
         while(set1.size() > part){
+            //System.out.println("ok6");
             set2.add(set1.first() + set1Base - set2Base);
+            //System.out.println("ok7");
             set1.remove(set1.first());
         }
+        //System.out.println("ok8");
     }
      
     public int size(){

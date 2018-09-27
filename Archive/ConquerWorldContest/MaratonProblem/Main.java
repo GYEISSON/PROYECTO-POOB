@@ -58,7 +58,7 @@ public class Main
         }
         System.out.println("ok");
         State st = doit(1,-1);
-        System.out.println("ok2");
+        
         long ret = st.getbaseCost();
         for(int i = 0; i< -(st.getminInc()); i++ ){
             ret -= st.getHeap().top();
@@ -69,6 +69,7 @@ public class Main
     
     private State doit(int nd , int prev){
         State st =  new State();
+        System.out.println("ok2");
         for(int i = 0;i< adjList.get(nd).size(); i++){
             if(adjList.get(nd).get(i) != prev){
                 State st2 = doit(adjList.get(nd).get(i), nd);
@@ -97,8 +98,12 @@ public class Main
                 }
             }
         }
+        System.out.println("ok3");
         st.setminInc(st.getminInc() + armiesNeedNation.get(nd) - armiesNation.get(nd));
+        System.out.println("ok4");
+        //ERROR
         st.getHeap().shiftPartition(java.lang.Math.max(0,-(st.getminInc())));
+        
         return st;
     }
 }
