@@ -74,10 +74,8 @@ public class Main
             if(adjList.get(nd).get(i) != prev){
                 State st2 = doit(adjList.get(nd).get(i), nd);
                 st.setminInc(st.getminInc() + st2.getminInc());
-                st.setbaseCost(st.getbaseCost() + st2.getbaseCost() +
-                 (long)(adjCost.get(nd).get(i) + java.lang.Math.abs(st2.getminInc())));
-                st2.getHeap().setset1Base(st2.getHeap().getset1Base() +
-                (long)adjCost.get(nd).get(prev));
+                st.setbaseCost(st.getbaseCost() + st2.getbaseCost() + (long)(adjCost.get(nd).get(i) + java.lang.Math.abs(st2.getminInc())));
+                st2.getHeap().setset1Base(st2.getHeap().getset1Base() + (long)(adjCost.get(nd).get(prev)));
                 
                 st2.getHeap().setset2Base(st2.getHeap().getset2Base() +
                 (long)adjCost.get(nd).get(prev));
