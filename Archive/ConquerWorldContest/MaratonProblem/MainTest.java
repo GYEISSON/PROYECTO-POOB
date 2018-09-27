@@ -19,7 +19,7 @@ public class MainTest
     public MainTest()
     {
         Main cw = new Main();
-        cw.init(3);
+        cw.init(6);
     }
 
 }

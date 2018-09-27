@@ -33,6 +33,8 @@ public class Main
     }
     
     public void init(int n){
+        //Llenando las estructuras con los datos (creando el grafo(uno de adyacencias y otro de costos))
+        
         this.numberNations = n;
         int aux1;
         for(int k=0;k<=numberNations;k++){
@@ -41,6 +43,7 @@ public class Main
             armiesNation.addElement(0);
             armiesNeedNation.addElement(0);
         }
+        System.out.println(armiesNation.size()+" size initial");
         for(int i = 0; i<numberNations-1;i++){
             source = sc.nextInt();
             target = sc.nextInt();
@@ -50,18 +53,24 @@ public class Main
             adjCost.elementAt(source).addElement(cost);
             adjCost.elementAt(target).addElement(cost);
         }
+        
         for(int j =1 ;j<=numberNations;j++){
             aux1 = sc.nextInt();
             armiesNation.insertElementAt(aux1,j);
             aux1 = sc.nextInt();
             armiesNeedNation.insertElementAt(aux1,j);
         }
-        System.out.println("ok");
+        //revisamo si las adyacencias esten bien// paso
+        //revisamo si los costos de las madyacencias esten bien//paso
+        //revisamos si el armies este bien de cada nacion //maso cuidado con el tamaño de armies
+        //solucionando el problema 
         State st = doit(1,-1);
         
         long ret = st.getbaseCost();
+        //System.out.println(ret+" iniciamos");
         for(int i = 0; i< -(st.getminInc()); i++ ){
             ret -= st.getHeap().top();
+            //System.out.println(ret);
             st.getHeap().pop();
         }
         System.out.println(ret);
@@ -69,16 +78,19 @@ public class Main
     
     private State doit(int nd , int prev){
         State st =  new State();
-        System.out.println("ok2");
+
         for(int i = 0;i< adjList.get(nd).size(); i++){
             if(adjList.get(nd).get(i) != prev){
                 State st2 = doit(adjList.get(nd).get(i), nd);
                 st.setminInc(st.getminInc() + st2.getminInc());
-                st.setbaseCost(st.getbaseCost() + st2.getbaseCost() + (long)(adjCost.get(nd).get(i) + java.lang.Math.abs(st2.getminInc())));
-                st2.getHeap().setset1Base(st2.getHeap().getset1Base() + (long)(adjCost.get(nd).get(prev)));
+                //System.out.println(st2.getbaseCost() + " + "+ adjCost.get(nd).get(i)+ " * "+  java.lang.Math.abs(st2.getminInc()) + " check 1004");
+                st.setbaseCost(st.getbaseCost() + st2.getbaseCost() + (long)(adjCost.get(nd).get(i) * java.lang.Math.abs(st2.getminInc())));
+
+
+                st2.getHeap().setset1Base(st2.getHeap().getset1Base() + (long)(adjCost.get(nd).get(i)));
                 
                 st2.getHeap().setset2Base(st2.getHeap().getset2Base() +
-                (long)adjCost.get(nd).get(prev));
+                (long)adjCost.get(nd).get(i));
                 
                 st2.getHeap().pruneNeg();
                 DoubleHeap auxHeap;
@@ -96,9 +108,9 @@ public class Main
                 }
             }
         }
-        System.out.println("ok3");
+        
         st.setminInc(st.getminInc() + armiesNeedNation.get(nd) - armiesNation.get(nd));
-        System.out.println("ok4");
+        
         //ERROR
         st.getHeap().shiftPartition(java.lang.Math.max(0,-(st.getminInc())));
         

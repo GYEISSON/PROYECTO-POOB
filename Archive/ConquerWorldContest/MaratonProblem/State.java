@@ -34,7 +34,7 @@ public class State
     
     
     public long getbaseCost(){ return this.baseCost;}
-    public void setbaseCost(long newbaseCost){ this.baseCost = baseCost;}
+    public void setbaseCost(long newbaseCost){ this.baseCost = newbaseCost;}
     
     public DoubleHeap getHeap(){return this.savings;}
     public void setHeap(DoubleHeap newHeap){ this.savings = newHeap;}
