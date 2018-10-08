@@ -131,7 +131,7 @@ public class Nation
         {
             s.makeInvisible();
         }
-        army.makekeV
+        army.makeVisible();
     }      
     /**
      * Make all the corresponding shapes of a nation, invisible. 
@@ -160,6 +160,7 @@ public class Nation
         {
             s.makeVisible();
         }
+        army.makeInvisible();
     }       
     /**
      *Delete all the corresponding shapes of a nation.
