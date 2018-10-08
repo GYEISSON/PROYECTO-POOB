@@ -28,6 +28,7 @@ public class Nation
     private Circle circle;
     private int height;
     private int width;
+    
     private ArrayList<Triangle> tri = new ArrayList<Triangle>();
     private ArrayList<Rectangle> rec = new ArrayList<Rectangle>();
     private ArrayList<Circle> cir = new ArrayList<Circle>();
@@ -42,7 +43,7 @@ public class Nation
         this.color = color;
         this.position=pos;
         this.nationShape = shape;
-        army = new Army();
+        
         if (shape.equals("square"))
         {
             square = new Square();
@@ -52,6 +53,7 @@ public class Nation
             this.width=((int)Math.sqrt(area));
             this.height=((int)Math.sqrt(area));
             sqr.add(square);
+
         }
         else if(shape.equals("circle"))
         {
@@ -62,6 +64,7 @@ public class Nation
             this.width=((int)(Math.sqrt(area/PI)))*2;
             this.height=((int)(Math.sqrt(area/PI)))*2;
             cir.add(circle);
+
         }
         
         else if(shape.equals("triangle"))
@@ -73,6 +76,7 @@ public class Nation
             this.width=(int)Math.sqrt(2*area);
             this.height = (int)Math.sqrt(2*area);
             tri.add(triangle);
+
         }
         
         else if(shape.equals("pentagon"))
@@ -84,6 +88,7 @@ public class Nation
             this.width=(int)Math.sqrt(2*area);
             this.height = (int)Math.sqrt(2*area);
             pen.add(pentagon);
+            
         }
         else if(shape.equals("rectangle"))
         {
@@ -96,7 +101,9 @@ public class Nation
             this.width=b;
             this.height = a;
             rec.add(rectangle);
-        }        
+            
+        }
+        army = new Army(pos);
     }
     /**
      * Make all the corresponding shapes of a nation, invisible. 
@@ -124,6 +131,7 @@ public class Nation
         {
             s.makeInvisible();
         }
+        army.makekeV
     }      
     /**
      * Make all the corresponding shapes of a nation, invisible. 

@@ -102,6 +102,7 @@ public class Square{
             canvas.draw(this, color,
         new java.awt.Rectangle(xPosition, yPosition, width, height));
             canvas.wait(10);
+            
         }
     }
 

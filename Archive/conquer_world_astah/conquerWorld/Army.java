@@ -12,14 +12,20 @@ public class Army
     // instance variables - replace the example below with your own
     private int armiesNeeded;
     private int armyHave;
+    private int[] pos; 
+    private boolean isVisible;
+   
 
     /**
      * Constructor for objects of class Army
      */
-    public Army()
+    public Army(int[] positions)
     {
         // initialise instance variables
         armiesNeeded = armyHave = 0;
+        this.pos = positions;
+        this.isVisible =false;
+        
     }
 
     /**
@@ -49,5 +55,41 @@ public class Army
     {
         // put your code here
         return armyHave;
+    }
+    
+    /**
+     * Make this visible. If it was already visible, do nothing.
+     */
+    public void makeVisible(){
+        isVisible = true;
+        draw();
+    }
+    
+    /**
+     * Make this invisible. If it was already invisible, do nothing.
+     */
+    public void makeInvisible(){
+        erase();
+        isVisible = false;
+    }
+    
+        /*
+     * Erase the rectangle on screen.
+     */
+    private void erase(){
+        if(isVisible) {
+            Canvas canvas = Canvas.getCanvas();
+            canvas.erase(this);
+        }
+    }
+        /*
+     * Draw the square with current specifications on screen.
+     */
+
+    private void draw() {
+        if(isVisible) {
+            Canvas canvas = Canvas.getCanvas();
+            canvas.drawString(Integer.toString(armyHave),pos[0],pos[1]);            
+        }
     }
 }
