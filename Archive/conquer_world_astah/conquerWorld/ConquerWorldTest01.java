@@ -477,8 +477,8 @@ public class ConquerWorldTest01
     public void yeisson(){
         ConquerWorld cw = new ConquerWorld(800, 800);
         cw.addNation("pentagon", 3000, "blue", new int[]{200, 200},new int[] {50,30});
-        cw.makeVisible();
-        cw.addNation("triangle", 3000, "yellow", new int[]{350, 350},new  int[] {5,3});
         
+        cw.addNation("triangle", 3000, "yellow", new int[]{350, 350},new  int[] {5,3});
+        cw.makeVisible();
     }
 }

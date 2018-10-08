@@ -151,6 +151,7 @@ public class Nation
         }
         for (Triangle t:tri)
         {
+            System.out.println("ok2");
             t.makeVisible();
             army.makeVisible();
         }
@@ -167,7 +168,7 @@ public class Nation
         }
         for (Square s:sqr)
         {
-            System.out.println("ok2");
+            
             s.makeVisible();
             army.makeVisible();
         }
