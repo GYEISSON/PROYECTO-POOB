@@ -19,10 +19,11 @@ public class Army
     /**
      * Constructor for objects of class Army
      */
-    public Army(int[] positions)
+    public Army(int[] armies,int[] positions)
     {
         // initialise instance variables
-        armiesNeeded = armyHave = 0;
+        armiesNeeded =  armies[1];
+        armyHave = armies[0];
         this.pos = positions;
         this.isVisible =false;
         
@@ -87,9 +88,11 @@ public class Army
      */
 
     private void draw() {
+        //System.out.println("okdraw");
         if(isVisible) {
             Canvas canvas = Canvas.getCanvas();
-            canvas.drawString(Integer.toString(armyHave),pos[0],pos[1]);            
+            canvas.drawString(Integer.toString(armyHave),pos[0]-5,pos[1]-5);
+            canvas.drawString(Integer.toString(armiesNeeded),pos[0]+20,pos[1]-5);
         }
     }
 }

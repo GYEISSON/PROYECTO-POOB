@@ -37,7 +37,7 @@ public class Nation
     /**
      * Constructor for objects of class nation
      */
-    public Nation(String shape,int area,String color,int[] pos)
+    public Nation(String shape,int area,String color,int[] pos,int[] armies)
     {
         // initialise instance variables
         this.color = color;
@@ -103,7 +103,8 @@ public class Nation
             rec.add(rectangle);
             
         }
-        army = new Army(pos);
+        //funciona el army si no es un pentagono
+        army = new Army(armies,pos);
     }
     /**
      * Make all the corresponding shapes of a nation, invisible. 
@@ -131,7 +132,7 @@ public class Nation
         {
             s.makeInvisible();
         }
-        army.makeVisible();
+        army.makeInvisible();
     }      
     /**
      * Make all the corresponding shapes of a nation, invisible. 
@@ -160,7 +161,7 @@ public class Nation
         {
             s.makeVisible();
         }
-        army.makeInvisible();
+        army.makeVisible();
     }       
     /**
      *Delete all the corresponding shapes of a nation.

@@ -67,7 +67,7 @@ public class ConquerWorld
      *
      * @param  La forma,el color, el area, la posicion y las unidades necesarias para esta nueva nacion
      */
-    public void addNation(String shape, int area,String color,int[] position, int armiesNeeded){
+    public void addNation(String shape, int area,String color,int[] position, int[] armies){
         boolean put=true;
         int side;
         int xPos=position[0],yPos=position[1];
@@ -136,7 +136,7 @@ public class ConquerWorld
         }        
         if(put &&  !(colorNations.contains(color))){
             aux[0]=xPos;aux[1]=yPos;
-            nation = new Nation(shape,area,color,aux);
+            nation = new Nation(shape,area,color,aux,armies);
             arrayNations.add(nation);
             colorNations.add(color);
             adjList.put(color,new ArrayList<String>());
@@ -373,7 +373,7 @@ public class ConquerWorld
      */
     private Nation getNation(String nationName){
         int[] pos={1,1};
-        Nation x= new Nation("triangle",1,"blue",pos);
+        Nation x= new Nation("triangle",1,"blue",pos,pos);
         
         for(Nation n: arrayNations){    
             if(n.getColor().equals(nationName)){ 
