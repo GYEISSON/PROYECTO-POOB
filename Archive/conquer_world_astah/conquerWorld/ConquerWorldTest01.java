@@ -1,19 +1,19 @@
-// package Archive.conquer_world_astah.conquerWorld;
+package Archive.conquer_world_astah.conquerWorld;
 
-// import static org.junit.Assert.*;
-// import org.junit.After;
-// import org.junit.Before;
-// import org.junit.Test;
-// import java.util.*;
+import static org.junit.Assert.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import java.util.*;
 
-// /**
- // * The test class ConquerWorldTest01.
- // *
- // * @author  (your name)
- // * @version (a version number or a date)
- // */
-// public class ConquerWorldTest01
-// {
+/**
+ * The test class ConquerWorldTest01.
+ *
+ * @author  (your name)
+ * @version (a version number or a date)
+ */
+public class ConquerWorldTest01
+{
     // /**
      // * Default constructor for test class ConquerWorldTest01
      // */
@@ -472,5 +472,13 @@
         // assertFalse(cw.ok());
         
         // assertTrue(cw.okRoutes());        
-    // }     
-// }
+    // }
+    @Test
+    public void yeisson(){
+        ConquerWorld cw = new ConquerWorld(800, 800);
+        cw.addNation("pentagon", 3000, "blue", new int[]{200, 200},new int[] {50,30});
+        cw.makeVisible();
+        cw.addNation("triangle", 3000, "yellow", new int[]{350, 350},new  int[] {5,3});
+        
+    }
+}

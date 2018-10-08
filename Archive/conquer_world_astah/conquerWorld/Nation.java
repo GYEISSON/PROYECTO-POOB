@@ -88,7 +88,7 @@ public class Nation
             this.width=(int)Math.sqrt(2*area);
             this.height = (int)Math.sqrt(2*area);
             pen.add(pentagon);
-            
+            army = new Army(armies,pos,this.width,this.height);
         }
         else if(shape.equals("rectangle"))
         {
@@ -104,7 +104,10 @@ public class Nation
             
         }
         //funciona el army si no es un pentagono
-        army = new Army(armies,pos);
+        if(!shape.equals("pentagon")){
+            army = new Army(armies,pos);
+        }
+        
     }
     /**
      * Make all the corresponding shapes of a nation, invisible. 
@@ -144,24 +147,31 @@ public class Nation
         for (Rectangle r:rec)
         {
             r.makeVisible();
+            army.makeVisible();
         }
         for (Triangle t:tri)
         {
             t.makeVisible();
+            army.makeVisible();
         }
         for (Circle c:cir)
         {
             c.makeVisible();
+            army.makeVisible();
         }
         for (Pentagon p:pen)
         {
+            System.out.println("ok_Nation_army");
             p.makeVisible();
+            army.makeVisible(1);
         }
         for (Square s:sqr)
         {
+            System.out.println("ok2");
             s.makeVisible();
+            army.makeVisible();
         }
-        army.makeVisible();
+        
     }       
     /**
      *Delete all the corresponding shapes of a nation.
