@@ -11,7 +11,7 @@ public class Army
 {
     // instance variables - replace the example below with your own
     private int armiesNeeded;
-    private int armyHave;
+    private int armyHave,width,height;
     private int[] pos; 
     private boolean isVisible;
    
@@ -19,15 +19,31 @@ public class Army
     /**
      * Constructor for objects of class Army
      */
-    public Army(int[] positions)
+    public Army(int[] armies,int[] positions)
     {
         // initialise instance variables
-        armiesNeeded = armyHave = 0;
+        armiesNeeded =  armies[1];
+        armyHave = armies[0];
         this.pos = positions;
         this.isVisible =false;
         
     }
 
+    
+    /**
+     * Constructor for objects of class Army
+     */
+    public Army(int[] armies,int[] positions,int width,int height)
+    {
+        // initialise instance variables
+        armiesNeeded =  armies[1];
+        armyHave = armies[0];
+        this.pos = positions;
+        this.isVisible =false;
+        this.width = width;
+        this.height = height;
+    }
+    
     /**
      * Add armies to the ones, the nation already has
      *
@@ -64,6 +80,10 @@ public class Army
         isVisible = true;
         draw();
     }
+    public void makeVisible(int x){
+        isVisible = true;
+        draw(x);
+    }
     
     /**
      * Make this invisible. If it was already invisible, do nothing.
@@ -72,6 +92,7 @@ public class Army
         erase();
         isVisible = false;
     }
+
     
         /*
      * Erase the rectangle on screen.
@@ -87,9 +108,19 @@ public class Army
      */
 
     private void draw() {
+        //System.out.println("okdraw");
         if(isVisible) {
             Canvas canvas = Canvas.getCanvas();
-            canvas.drawString(Integer.toString(armyHave),pos[0],pos[1]);            
+            canvas.drawString(Integer.toString(armyHave),pos[0]-5,pos[1]-5);
+            canvas.drawString(Integer.toString(armiesNeeded),pos[0]+30,pos[1]-5);
+        }
+    }
+    private void draw(int x) {
+        //System.out.println("okdraw");
+        if(isVisible) {
+            Canvas canvas = Canvas.getCanvas();
+            canvas.drawString(Integer.toString(armyHave),pos[0]-(width+5),pos[1]-(height+5));
+            canvas.drawString(Integer.toString(armiesNeeded),pos[0]-(width-30),pos[1]-(height+5));
         }
     }
 }

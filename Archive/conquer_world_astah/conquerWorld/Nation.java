@@ -37,7 +37,7 @@ public class Nation
     /**
      * Constructor for objects of class nation
      */
-    public Nation(String shape,int area,String color,int[] pos)
+    public Nation(String shape,int area,String color,int[] pos,int[] armies)
     {
         // initialise instance variables
         this.color = color;
@@ -88,7 +88,7 @@ public class Nation
             this.width=(int)Math.sqrt(2*area);
             this.height = (int)Math.sqrt(2*area);
             pen.add(pentagon);
-            
+            army = new Army(armies,pos,this.width,this.height);
         }
         else if(shape.equals("rectangle"))
         {
@@ -103,7 +103,11 @@ public class Nation
             rec.add(rectangle);
             
         }
-        army = new Army(pos);
+        //funciona el army si no es un pentagono
+        if(!shape.equals("pentagon")){
+            army = new Army(armies,pos);
+        }
+        
     }
     /**
      * Make all the corresponding shapes of a nation, invisible. 
@@ -131,7 +135,7 @@ public class Nation
         {
             s.makeInvisible();
         }
-        army.makeVisible();
+        army.makeInvisible();
     }      
     /**
      * Make all the corresponding shapes of a nation, invisible. 
@@ -143,24 +147,32 @@ public class Nation
         for (Rectangle r:rec)
         {
             r.makeVisible();
+            army.makeVisible();
         }
         for (Triangle t:tri)
         {
+            System.out.println("ok2");
             t.makeVisible();
+            army.makeVisible();
         }
         for (Circle c:cir)
         {
             c.makeVisible();
+            army.makeVisible();
         }
         for (Pentagon p:pen)
         {
+            System.out.println("ok_Nation_army");
             p.makeVisible();
+            army.makeVisible(1);
         }
         for (Square s:sqr)
         {
+            
             s.makeVisible();
+            army.makeVisible();
         }
-        army.makeInvisible();
+        
     }       
     /**
      *Delete all the corresponding shapes of a nation.
