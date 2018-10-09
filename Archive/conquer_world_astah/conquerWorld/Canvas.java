@@ -228,7 +228,7 @@ public class Canvas{
      * Redraw ell shapes currently on the Canvas.
      */
     private void redraw(){
-        erase();
+        // erase();
         for(Iterator i=objects.iterator(); i.hasNext(); ) {
                        shapes.get(i.next()).draw(graphic);
         }
@@ -298,6 +298,8 @@ public class Canvas{
      */
     public void drawString(String text, int x, int y)
     {
+        graphic.setColor(Color.black);  
+        graphic.setFont(new Font("Arial",Font.PLAIN,10));
         graphic.drawString(text, x, y);   
         canvas.repaint();
     }
