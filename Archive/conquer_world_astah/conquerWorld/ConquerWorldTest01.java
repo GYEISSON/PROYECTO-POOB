@@ -479,6 +479,10 @@ public class ConquerWorldTest01
         cw.addNation("pentagon", 3000, "blue", new int[]{200, 200},new int[] {50,30});
         
         cw.addNation("triangle", 3000, "yellow", new int[]{350, 350},new  int[] {5,3});
+        
+        cw.addNation("square", 3000, "red", new int[]{100, 400},new  int[] {10,23});
+        cw.makeVisible();
+        cw.erase();
         cw.makeVisible();
     }
 }

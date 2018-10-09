@@ -119,8 +119,8 @@ public class Army
         //System.out.println("okdraw");
         if(isVisible) {
             Canvas canvas = Canvas.getCanvas();
-            canvas.drawString(Integer.toString(armyHave),pos[0]-(width+5),pos[1]-(height+5));
-            canvas.drawString(Integer.toString(armiesNeeded),pos[0]-(width-30),pos[1]-(height+5));
+            canvas.drawString(Integer.toString(armyHave),pos[0]-(width-30),pos[1]-(height+5));
+            canvas.drawString(Integer.toString(armiesNeeded),pos[0]-(width-100),pos[1]-(height+5));
         }
     }
 }
