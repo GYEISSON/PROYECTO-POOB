@@ -13,6 +13,7 @@ public class Nation
 {
     // instance variables - replace the example below with your own
     private String nationShape;
+    Canvas mundo;
     private int area;
     private String color;
     private int[] position;
@@ -37,13 +38,13 @@ public class Nation
     /**
      * Constructor for objects of class nation
      */
-    public Nation(String shape,int area,String color,int[] pos,int[] armies)
+    public Nation(String shape,int area,String color,int[] pos,int[] armies,Canvas mundo)
     {
         // initialise instance variables
         this.color = color;
         this.position=pos;
         this.nationShape = shape;
-        
+        this.mundo = mundo;
         if (shape.equals("square"))
         {
             square = new Square();
@@ -88,7 +89,7 @@ public class Nation
             this.width=(int)Math.sqrt(2*area);
             this.height = (int)Math.sqrt(2*area);
             pen.add(pentagon);
-            army = new Army(armies,pos,this.width,this.height);
+            army = new Army(armies,pos,this.width,this.height,mundo);
         }
         else if(shape.equals("rectangle"))
         {
@@ -105,7 +106,7 @@ public class Nation
         }
         //funciona el army si no es un pentagono
         if(!shape.equals("pentagon")){
-            army = new Army(armies,pos);
+            army = new Army(armies,pos,mundo);
         }
         
     }

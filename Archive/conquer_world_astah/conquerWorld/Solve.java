@@ -19,25 +19,25 @@ public class Solve
     private Vector<Integer> armiesNation,armiesNeedNation;
     
     private int source,target, cost;
-    private BufferedReader br;
-    private Scanner sc;
+
     /**
      * Constructor for objects of class Solve
      */
-    public Solve()
+    public Solve(int n)
     {
-        sc  =  new Scanner(System.in);
+
         
         adjList = new Vector();
         adjCost = new Vector();
         armiesNation = new Vector();
         armiesNeedNation = new Vector();
+        this.numberNations = n;
     }
     
-    public void init(int n){
+    public void init(int[][] routes,int[][] armies){
         //Llenando las estructuras con los datos (creando el grafo(uno de adyacencias y otro de costos))
         
-        this.numberNations = n;
+
         int aux1;
         for(int k=0;k<=numberNations;k++){
             adjList.addElement(new Vector());
@@ -45,22 +45,17 @@ public class Solve
             armiesNation.addElement(0);
             armiesNeedNation.addElement(0);
         }
-        System.out.println(armiesNation.size()+" size initial");
+        //System.out.println(armiesNation.size()+" size initial");
         for(int i = 0; i<numberNations-1;i++){
-            source = sc.nextInt();
-            target = sc.nextInt();
-            cost = sc.nextInt();
-            adjList.elementAt(source).addElement(target);
-            adjList.elementAt(target).addElement(source);
-            adjCost.elementAt(source).addElement(cost);
-            adjCost.elementAt(target).addElement(cost);
+            adjList.elementAt(routes[i][0]).addElement(routes[i][1]);
+            adjList.elementAt(routes[i][1]).addElement(routes[i][0]);
+            adjCost.elementAt(routes[i][0]).addElement(routes[i][2]);
+            adjCost.elementAt(routes[i][1]).addElement(routes[i][2]);
         }
         
         for(int j =1 ;j<=numberNations;j++){
-            aux1 = sc.nextInt();
-            armiesNation.insertElementAt(aux1,j);
-            aux1 = sc.nextInt();
-            armiesNeedNation.insertElementAt(aux1,j);
+            armiesNation.insertElementAt(armies[j-1][0],j);
+            armiesNeedNation.insertElementAt(armies[j-1][1],j);
         }
         //revisamo si las adyacencias esten bien// paso
         //revisamo si los costos de las madyacencias esten bien//paso

@@ -40,7 +40,8 @@ public class ConquerWorld
      */
     public ConquerWorld(int maxX,int maxY){
         this.maxX = maxX;
-        mundo = mundo.getCanvas(maxX,maxY);
+        this.mundo = mundo.getCanvas(maxX,maxY);
+        
         arrayNations = new ArrayList<Nation>();
         colorNations = new ArrayList<String>();
         routes = new ArrayList<Route>();        
@@ -136,7 +137,7 @@ public class ConquerWorld
         }        
         if(put &&  !(colorNations.contains(color))){
             aux[0]=xPos;aux[1]=yPos;
-            nation = new Nation(shape,area,color,aux,armies);
+            nation = new Nation(shape,area,color,aux,armies,this.mundo);
             arrayNations.add(nation);
             colorNations.add(color);
             adjList.put(color,new ArrayList<String>());
@@ -258,6 +259,7 @@ public class ConquerWorld
      * Limpia todo el tablero
      */
     public void erase(){
+        
         mundo.erase();
     }                 
     /**
@@ -273,6 +275,7 @@ public class ConquerWorld
             r.makeVisible();
             okR=true;
         }
+        isVisible = true;
     }      
      /**
      * Hace invisible todas las naciones y rutas
@@ -287,6 +290,7 @@ public class ConquerWorld
             r.makeInvisible();
             okR=true;
         }
+        isVisible = false;
     }
      /**
      * Anade armamento a una nacion, buscamos la nacion en el arrayList de naciones,
@@ -373,7 +377,7 @@ public class ConquerWorld
      */
     private Nation getNation(String nationName){
         int[] pos={1,1};
-        Nation x= new Nation("triangle",1,"blue",pos,pos);
+        Nation x = new Nation("triangle",1,"blue",pos,pos,this.mundo);
         
         for(Nation n: arrayNations){    
             if(n.getColor().equals(nationName)){ 

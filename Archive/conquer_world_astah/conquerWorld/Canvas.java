@@ -53,6 +53,7 @@ public class Canvas{
     private Color backgroundColour;
     private Image canvasImage;
     private List <Object> objects;
+
     private HashMap <Object,ShapeDescription> shapes;
     private double zoomfactor=1;
     private double prevZoomFactor=1;
@@ -244,6 +245,10 @@ public class Canvas{
         Dimension size = canvas.getSize();
         graphic.fill(new java.awt.Rectangle(0, 0, size.width, size.height));
         graphic.setColor(original);
+        for(Object ss: objects){
+            erase(ss);
+        }
+        
     }
 
 
