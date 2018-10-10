@@ -229,7 +229,7 @@ public class Nation
     public void setArmy(int y)
     {
         // put your code here
-        army.setArmy(army.getArmy()+y);
+        army.setArmy(y);
     }    
     /**
      * Set the armies of the nation to 0
@@ -244,10 +244,19 @@ public class Nation
      * Return the number of armies, the nation has
      *
      */
-    public int getArmy()
+    public int getArmyN()
     {
         // put your code here
-        return army.getArmy();
+        return army.getArmyN();
+    }
+    /**
+     * Return the number of armies, the nation has
+     *
+     */
+    public int getArmyH()
+    {
+        // put your code here
+        return army.getArmyH();
     }
     /**
      * Return the shape of the current nation

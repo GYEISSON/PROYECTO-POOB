@@ -336,7 +336,7 @@ public class ConquerWorld
         okR=false;
         for(Nation n : arrayNations){
             if(n.getColor().equals(nation)){
-                if(n.getArmy()>0){
+                if(n.getArmyH()>0){
                     n.setArmy();
                     okR=true;
                 }
@@ -356,9 +356,20 @@ public class ConquerWorld
             if(rout.getFrom().equals(fromNation) && rout.getTo().equals(toNation)
             && adjList.get(fromNation).contains(toNation) && adjList.get(toNation).contains(fromNation)
             ){
-                if(object1.getArmy()>0 && cash.getCash()>0 && cash.getCash() > rout.getCost()){                    
-                    object2.setArmy(object1.getArmy());
-                    object1.setArmy();
+                if(object1.getArmyH()>0 && cash.getCash()>0 && cash.getCash() > rout.getCost()){                    
+                    int n = object1.getArmyH()-object1.getArmyN();
+                    int m = object2.getArmyN()-object2.getArmyH();
+                    if (n>m){
+                        object2.setArmy(object2.getArmyN());
+                        object1.setArmy(-m);
+                    }
+                    else {
+                        object2.setArmy(n);
+                        object1.setArmy(-n);
+                    }
+                    
+                    // object2.setArmy(object1.getArmy());
+                    // object1.setArmy();
                     cash.addCash(cash.getCash()-rout.getCost());
                     okR=true;
                     break;

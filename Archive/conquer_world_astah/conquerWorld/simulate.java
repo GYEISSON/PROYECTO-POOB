@@ -25,7 +25,7 @@ public class simulate
     {
         solution = 0;
         agente  = new Solve( n);
-        cw = new ConquerWorld(1000,800);
+        cw = new ConquerWorld(1000,1000);
     }
 
     
@@ -37,5 +37,6 @@ public class simulate
         cw.addRoute(new String[] {"blue","yellow"},routes[0][2]);
         cw.addRoute(new String[] {"red","blue"},routes[1][2]);
         cw.makeVisible();
+        cw.moveArmy("blue","red");
     }
 }

@@ -72,10 +72,19 @@ public class Army
      * Return the number of armies, the nation has
      *
      */
-    public int getArmy()
+    public int getArmyH()
     {
         // put your code here
         return armyHave;
+    }
+    /**
+     * Return the number of armies, the nation need
+     *
+     */
+    public int getArmyN()
+    {
+        // put your code here
+        return armiesNeeded;
     }
     
     /**
