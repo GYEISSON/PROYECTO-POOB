@@ -4,6 +4,7 @@ import java.util.*;
 public class Cyclist {
 	private boolean  estaEnfermo;
 	private ArrayList<Plan> planes;
+	
 	public Cyclist() {
 		estaEnfermo=false; 
 		planes = new ArrayList<Plan>();
