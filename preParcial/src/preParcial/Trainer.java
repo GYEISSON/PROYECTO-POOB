@@ -11,7 +11,8 @@ public class Trainer {
 	}
 	public void suspend() {
 		for(Plan p: planes) {
-			p.suspend();
+			p.inactive();
 		}
+		System.out.println("Trainer suspended");
 	}
 }

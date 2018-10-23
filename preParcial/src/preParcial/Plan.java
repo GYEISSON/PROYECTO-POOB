@@ -15,4 +15,5 @@ public class Plan {
 	public void inactive() {}
 	public String getType() { return Typet;}
 	public long getNumber() {return number; }
+	public boolean state() { return active; }
 }

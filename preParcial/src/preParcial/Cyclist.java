@@ -11,9 +11,11 @@ public class Cyclist {
 	
 	public void suspend() {
 		for(Plan p: planes) {
-			p.inactive();
+			if(p.state()) {
+				p.inactive();
+			}
 		}
-		System.out.println("Suspended");
+		System.out.println("Cyclists suspended");
 	}
-
+	
 }
