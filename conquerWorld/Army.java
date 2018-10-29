@@ -104,7 +104,7 @@ public class Army
      * Make this invisible. If it was already invisible, do nothing.
      */
     public void makeInvisible(){
-        System.out.println("makeinvis_army");
+        //System.out.println("makeinvis_army");
         erase();
         isVisible = false;
     }

@@ -355,7 +355,7 @@ public class ConquerWorld
      */
     public void moveArmy(String fromNation,String toNation)
     {
-        System.out.println("move_army_conquer_1");
+        //System.out.println("move_army_conquer_1");
         Nation object1 = getNation(fromNation),object2=getNation(toNation);
         for(Route rout: routes){
 
@@ -363,9 +363,9 @@ public class ConquerWorld
             || (rout.getFrom().equals(toNation) && rout.getTo().equals(fromNation)))
             && adjList.get(fromNation).contains(toNation) && adjList.get(toNation).contains(fromNation)
             ){
-                System.out.println("move_army_conquer_1_5");
+                //System.out.println("move_army_conquer_1_5");
                 if(object1.getArmyH()>0 && cash.getCash()>0 && cash.getCash() > rout.getCost()){  
-                    System.out.println("move_army_conquer_2");
+                    //System.out.println("move_army_conquer_2");
                     int n = object1.getArmyH()-object1.getArmyN();
                     int m = object2.getArmyN()-object2.getArmyH();
                     if (n>m){
@@ -418,7 +418,7 @@ public class ConquerWorld
      */
     private boolean canPut(int[] positions){
         boolean aux=true;
-        System.out.println(positions[0]+" "+positions[1] );
+        //System.out.println(positions[0]+" "+positions[1] );
         for(Nation nation: arrayNations){
             aux = isFigure(positions[0],positions[1],nation);            
             if(aux) return false;
@@ -542,7 +542,7 @@ public class ConquerWorld
     {
          Map<String,ArrayList<String>> reversedMap = new TreeMap<String,ArrayList<String>>(adjList);
             for (Map.Entry entry: reversedMap.entrySet()){
-                System.out.println(entry.getKey()+ " " + entry.getValue());
+                //System.out.println(entry.getKey()+ " " + entry.getValue());
             }
     }
     /**

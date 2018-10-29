@@ -94,7 +94,7 @@ public abstract class Nation
         }
         //funciona el army si no es un pentagono
         if(!shape.equals("pentagon")){
-            System.out.println("new _army");
+            //System.out.println("new _army");
             army = new Army(armies,pos,mundo);
         }
         
