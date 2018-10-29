@@ -9,26 +9,23 @@ import java.util.*;
  * @author  Yeisson Gualdron and Santiago Rubiano
  * @version 4.3  (30 August 2018)
  */
-public class Nation
+public abstract class Nation
 {
     // instance variables - replace the example below with your own
-    private String nationShape;
-    private shapes.Canvas mundo;
-    private int area;
-    private String color;
-    private int[] position;
-    private Army army;
-<<<<<<< HEAD:Archive/conquer_world_astah/conquerWorld/Nation.java
+    protected String nationShape;
+    protected shapes.Canvas mundo;
+    protected int area;
+    protected String color;
+    protected int[] position;
+    protected Army army;
   
-=======
->>>>>>> 39c281156b311876016322698dc5899394ae9d13:conquerWorld/Nation.java
-    private int puntos;
+    protected int puntos;
     public static double PI=3.1416;
-    private Figure figure;
-    private int height;
-    private int width;
+    protected Figure figure;
+    protected int height;
+    protected int width;
     
-    private ArrayList<Figure> figures = new ArrayList<Figure>();
+    protected ArrayList<Figure> figures = new ArrayList<Figure>();
     /**
      * Constructor for objects of class nation
      */
@@ -97,6 +94,7 @@ public class Nation
         }
         //funciona el army si no es un pentagono
         if(!shape.equals("pentagon")){
+            System.out.println("new _army");
             army = new Army(armies,pos,mundo);
         }
         
@@ -111,7 +109,6 @@ public class Nation
         {
             o.makeInvisible();
         }
-
         army.makeInvisible();
     }      
     /**
@@ -120,26 +117,21 @@ public class Nation
      *
      */
     public void makeVisible()
-<<<<<<< HEAD:Archive/conquer_world_astah/conquerWorld/Nation.java
-    {          
-        for (Rectangle r:rec)
-        {
-            r.makeVisible();
-            army.makeVisible();
-        }
-        for (Triangle t:tri)
-=======
-    {        // put your code her       
+    {            
         for (Figure o:figures)
->>>>>>> 39c281156b311876016322698dc5899394ae9d13:conquerWorld/Nation.java
+
         {
             o.makeVisible();
+            
             if (o instanceof Pentagon){
                 army.makeVisible(1);
+            }else{
+                army.makeVisible();
             }
         }
         
-    }       
+    }
+    
     /**
      *Delete all the corresponding shapes of a nation.
      *

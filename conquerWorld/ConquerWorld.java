@@ -140,7 +140,7 @@ public class ConquerWorld
         }        
         if(put &&  !(colorNations.contains(color))){
             aux[0]=xPos;aux[1]=yPos;
-            nation = new Nation(shape,area,color,aux,armies,this.mundo);
+            nation = new Normal(shape,area,color,aux,armies,this.mundo);
             arrayNations.add(nation);
             colorNations.add(color);
             adjList.put(color,new ArrayList<String>());
@@ -264,6 +264,7 @@ public class ConquerWorld
     public void erase(){
         
         mundo.erase();
+        
     }                 
     /**
      * Hace visible todas las naciones y rutas
@@ -354,12 +355,17 @@ public class ConquerWorld
      */
     public void moveArmy(String fromNation,String toNation)
     {
+        System.out.println("move_army_conquer_1");
         Nation object1 = getNation(fromNation),object2=getNation(toNation);
         for(Route rout: routes){
-            if(rout.getFrom().equals(fromNation) && rout.getTo().equals(toNation)
+
+            if(((rout.getFrom().equals(fromNation) && rout.getTo().equals(toNation))
+            || (rout.getFrom().equals(toNation) && rout.getTo().equals(fromNation)))
             && adjList.get(fromNation).contains(toNation) && adjList.get(toNation).contains(fromNation)
             ){
-                if(object1.getArmyH()>0 && cash.getCash()>0 && cash.getCash() > rout.getCost()){                    
+                System.out.println("move_army_conquer_1_5");
+                if(object1.getArmyH()>0 && cash.getCash()>0 && cash.getCash() > rout.getCost()){  
+                    System.out.println("move_army_conquer_2");
                     int n = object1.getArmyH()-object1.getArmyN();
                     int m = object2.getArmyN()-object2.getArmyH();
                     if (n>m){
@@ -370,9 +376,6 @@ public class ConquerWorld
                         object2.setArmy(n);
                         object1.setArmy(-n);
                     }
-                    
-                    // object2.setArmy(object1.getArmy());
-                    // object1.setArmy();
                     cash.addCash(cash.getCash()-rout.getCost());
                     okR=true;
                     break;
@@ -381,7 +384,9 @@ public class ConquerWorld
             }
             else okR=false;
         }
-        
+        erase();
+        makeVisible();
+
     }
     /**
      * Obtiene la nacion a partir del Nombre/Color, para esto iteramos el arrayList de naciones 
@@ -391,7 +396,7 @@ public class ConquerWorld
      */
     private Nation getNation(String nationName){
         int[] pos={1,1};
-        Nation x = new Nation("triangle",1,"blue",pos,pos,this.mundo);
+        Nation x = new Normal("triangle",1,"blue",pos,pos,this.mundo);
         
         for(Nation n: arrayNations){    
             if(n.getColor().equals(nationName)){ 

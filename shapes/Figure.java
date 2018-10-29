@@ -41,6 +41,7 @@ public abstract class Figure
      * Make this figure invisible. If it was already invisible, do nothing.
      */
     public void makeInvisible(){
+        
         erase();
         isVisible = false;
     }  

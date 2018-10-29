@@ -476,16 +476,19 @@ public class ConquerWorldTest01
     @Test
     public void yeisson(){
         ConquerWorld cw = new ConquerWorld(800, 800);
-        cw.addNation("pentagon", 3000, "blue", new int[]{200, 200},new int[] {50,30});
+        cw.addNation("pentagon", 3000, "blue", new int[]{200, 200},new int[] {3,2});
         
-        cw.addNation("triangle", 3000, "yellow", new int[]{350, 350},new  int[] {5,3});
+        cw.addNation("triangle", 3000, "yellow", new int[]{350, 350},new  int[] {5,0});
         
-        cw.addNation("square", 3000, "red ", new int[]{400, 500},new  int[] {7,2});
+       cw.addNation("square", 3000, "red", new int[]{400, 500},new  int[] {1,3});
         
-        cw.addNation("square", 3000, "red", new int[]{100, 400},new  int[] {10,23});
-        cw.addRoute(new String[] { "blue","yellow"},56);
-        cw.addRoute(new String[] { "red","blue"},56);
-        cw.makeVisible();
-
+        //cw.addNation("square", 3000, "red", new int[]{100, 400},new  int[] {10,23});
+       cw.addRoute(new String[] { "blue","yellow"},56);
+       cw.addRoute(new String[] { "red","blue"},56);
+       cw.addCash(1000000);
+       cw.makeVisible();
+    
+       cw.moveArmy("blue","red");
+       
     }
 }

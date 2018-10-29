@@ -245,9 +245,9 @@ public class Canvas{
         Dimension size = canvas.getSize();
         graphic.fill(new java.awt.Rectangle(0, 0, size.width, size.height));
         graphic.setColor(original);
-        for(Object ss: objects){
-            erase(ss);
-        }
+        // for(Object ss: objects){
+            // erase(ss);
+        // }
         
     }
 

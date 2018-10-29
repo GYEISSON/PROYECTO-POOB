@@ -91,6 +91,7 @@ public class Army
      * Make this visible. If it was already visible, do nothing.
      */
     public void makeVisible(){
+
         isVisible = true;
         draw();
     }
@@ -103,6 +104,7 @@ public class Army
      * Make this invisible. If it was already invisible, do nothing.
      */
     public void makeInvisible(){
+        System.out.println("makeinvis_army");
         erase();
         isVisible = false;
     }
@@ -121,8 +123,8 @@ public class Army
      * Draw the square with current specifications on screen.
      */
 
-    private void draw() {
-        //System.out.println("okdraw");
+    private void draw(){
+
         if(isVisible) {
             
             mundo.drawString(Integer.toString(armyHave),pos[0]-5,pos[1]-5);
@@ -130,7 +132,7 @@ public class Army
         }
     }
     private void draw(int x) {
-        //System.out.println("okdraw");
+        
         if(isVisible) {
             
             mundo.drawString(Integer.toString(armyHave),pos[0]-(width-30),pos[1]-(height+5));
