@@ -44,8 +44,7 @@ public class simulateTest
         int[][] routes={{1,2,5},{3,1,5}};
         int[][] armies = {{3,2},{5,0},{1,3}};
         boolean slow = true;
-        simulate board = new simulate(3);
-        board.jugar(routes,armies,slow);
+
     }
     
     @Test
