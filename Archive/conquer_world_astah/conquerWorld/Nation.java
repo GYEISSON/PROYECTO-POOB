@@ -18,8 +18,7 @@ public class Nation
     private String color;
     private int[] position;
     private Army army;
-    
-
+  
     private int puntos;
     public static double PI=3.1416;
     private Square square;
@@ -144,7 +143,7 @@ public class Nation
      *
      */
     public void makeVisible()
-    {        // put your code her       
+    {          
         for (Rectangle r:rec)
         {
             r.makeVisible();

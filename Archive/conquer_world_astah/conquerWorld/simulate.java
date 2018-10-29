@@ -38,5 +38,6 @@ public class simulate
         cw.addRoute(new String[] {"red","blue"},routes[1][2]);
         cw.makeVisible();
         cw.moveArmy("blue","red");
+        cw.makeInvisible();
     }
 }
