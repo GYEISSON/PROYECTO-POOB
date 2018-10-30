@@ -355,7 +355,8 @@ public class ConquerWorld
      */
     public void moveArmy(String fromNation,String toNation)
     {
-        //System.out.println("move_army_conquer_1");
+
+        erase();
         Nation object1 = getNation(fromNation),object2=getNation(toNation);
         for(Route rout: routes){
 
@@ -363,11 +364,12 @@ public class ConquerWorld
             || (rout.getFrom().equals(toNation) && rout.getTo().equals(fromNation)))
             && adjList.get(fromNation).contains(toNation) && adjList.get(toNation).contains(fromNation)
             ){
-                //System.out.println("move_army_conquer_1_5");
+
                 if(object1.getArmyH()>0 && cash.getCash()>0 && cash.getCash() > rout.getCost()){  
-                    //System.out.println("move_army_conquer_2");
+
                     int n = object1.getArmyH()-object1.getArmyN();
                     int m = object2.getArmyN()-object2.getArmyH();
+                    
                     if (n>m){
                         object2.setArmy(object2.getArmyN());
                         object1.setArmy(-m);
@@ -384,9 +386,15 @@ public class ConquerWorld
             }
             else okR=false;
         }
-        erase();
+        
         makeVisible();
-
+    }
+    public void moveArmyNaive(String fromNation,String toNation,int value){
+        erase();
+        Nation object1 = getNation(fromNation),object2=getNation(toNation);
+        object1.setArmy(-value);
+        object2.setArmy(value);
+        makeVisible();
     }
     /**
      * Obtiene la nacion a partir del Nombre/Color, para esto iteramos el arrayList de naciones 
@@ -607,5 +615,8 @@ public class ConquerWorld
     public void zoominnout(String symbol)
     {
         mundo.sign(symbol);
+    }
+    public void wait(int miliseconds){
+        mundo.wait(miliseconds);
     }
 }

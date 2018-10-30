@@ -49,6 +49,9 @@ public class Simulate
         cw.addRoute(new String[] {"red","blue"},routes[1][2]);
         cw.addCash(500000000);
         cw.makeVisible();
+        simuling(routes,armies,slow);
+    }
+    private void simuling(int[][] routes,int[][] armies, boolean slow){
         //llenamos la matriz de distancias de  infinitos
         for(int i=0;i<=nations;i++) {
             for(int j=0;j<=nations;j++) {
@@ -66,7 +69,7 @@ public class Simulate
             else if(xI[k] < yI[k]) necesitados.add(k);
         }
         floyd_Warshall();
-        System.out.println(solve());
+        System.out.println(solve(slow));
     }
     public void floyd_Warshall() {
         for(int k=0;k<=nations;k++) {
@@ -83,18 +86,17 @@ public class Simulate
     private int flowPath(int source, int target,int value) {
         int cost=mat[source][target];
         while(source != target) {
-            cw.erase();
-            cw.moveArmy(mapeo.get(source),mapeo.get(path[target][source]));
-            cw.makeVisible();
+            cw.moveArmyNaive(mapeo.get(source),mapeo.get(path[target][source]),value);
             xI[source]-=value;
             source = path[target][source];
             xI[source]+= value;
         }
         return cost;
     }
-    private long solve() {
+    private long solve(boolean slow) {
         int xneed,ydon,ydonpos,value;
         long cost=0;
+        if(slow){ cw.wait(500);}
         while(necesitados.size()>0) {
             xneed=necesitados.get(0);
             ydon = donantes.get(0);
@@ -110,6 +112,7 @@ public class Simulate
             cost += flowPath(ydon,xneed,value);
             if(xI[xneed]>=yI[xneed]) necesitados.remove(0);
             if(xI[ydon]==yI[ydon]) donantes.remove(ydonpos);
+            if(slow){ cw.wait(500);}
         }
         return cost;
     }
