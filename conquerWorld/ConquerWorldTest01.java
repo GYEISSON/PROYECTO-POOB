@@ -305,7 +305,7 @@ public class ConquerWorldTest01
         assertTrue(cw.ok());
         
         cw.removeArmies("red");
-        assertFalse(cw.ok());
+        assertTrue(cw.ok());
     }
     
     @Test
@@ -355,9 +355,9 @@ public class ConquerWorldTest01
         cw.moveArmy("red", "blue");
         assertTrue(cw.ok());
     
-        cw.addCash(11);
+        cw.addCash(101);
         cw.moveArmy("blue", "yellow");
-        assertTrue(cw.ok());
+        assertFalse(cw.ok());
         cw.moveArmy("yellow", "red");
         assertTrue(cw.ok());
     }

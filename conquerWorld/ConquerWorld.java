@@ -364,7 +364,8 @@ public class ConquerWorld
      */
     public void moveArmy(String fromNation,String toNation)
     {
-        erase();
+        
+        okR = false;
         Nation object1 = getNation(fromNation),object2=getNation(toNation);
         for(Route rout: routes){
             if(((rout.getFrom().equals(fromNation) && rout.getTo().equals(toNation))
@@ -372,23 +373,29 @@ public class ConquerWorld
             && adjList.get(fromNation).contains(toNation) && adjList.get(toNation).contains(fromNation)
             ){
                 if(object1.getArmyH()>0 && cash.getCash()>0 && cash.getCash() > rout.getCost() &&
-                    (object1.canRemoveA() && object2.canRemoveA() &&
-                    object1.getArmy() instanceof Stingy && 
+                    (object1.canRemoveA() && object2.canRemoveA() )
+                    ){
+                    if( !(object1.getArmy() instanceof Stingy) || (object1.getArmy() instanceof Stingy && 
                     object1.getArmy().canRemoveB(routes,fromNation,toNation,rout) &&
                     object2.getArmy() instanceof Stingy && 
-                    object2.getArmy().canRemoveB(routes,fromNation,toNation,rout))
-                    ){                      
-                    int n = object1.getArmyH()-object1.getArmyN();
-                    int m = object2.getArmyN()-object2.getArmyH();
-                    soloMover(n,m,object1,object2);                                                      
-                    cash.addCash(cash.getCash()-rout.getCost());
-                    okR=true; break;
+                    object2.getArmy().canRemoveB(routes,fromNation,toNation,rout))  ){
+                        
+                        System.out.println("mal");
+                        erase();
+                        int n = object1.getArmyH()-object1.getArmyN();
+                        int m = object2.getArmyN()-object2.getArmyH();
+                        soloMover(n,m,object1,object2);                                                      
+                        cash.addCash(cash.getCash()-rout.getCost());
+                        makeVisible();
+                        okR=true; break;
+                    }
+                    else okR = false;
                 }
                 else okR=false;
             }
             else okR=false;
         }
-        makeVisible();
+        System.out.println(okR);
     }
     /*
      *mover un army con las restricciones previamente evaluadas 
