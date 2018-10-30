@@ -1,5 +1,6 @@
 package conquerWorld;
-
+import shapes.*;
+import java.util.*;
 
 /**
  * Write a description of class Wanderer here.
@@ -27,9 +28,15 @@ public class Wanderer
      * @param  y  a sample parameter for a method
      * @return    the sum of x and y
      */
-    public int sampleMethod(int y)
-    {
-        // put your code here
-        return x + y;
+    public void movingArmy(long cash, String nation,ArrayList<Route> routes,ConquerWorld cw)
+    {   
+        if(cash>0){
+            for(Route r: routes){
+                if(r.getFrom().equals(nation)){
+                    cw.moveArmy(nation,r.getTo());
+                    movingArmy(cash,r.getTo(),routes,cw);
+                }
+            }
+        }
     }
 }

@@ -1,4 +1,6 @@
 package conquerWorld;
+import shapes.*;
+import java.util.*;
 
 
 /**
@@ -7,29 +9,33 @@ package conquerWorld;
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Unique
+public class Unique extends Army
 {
-    // instance variables - replace the example below with your own
-    private int x;
 
     /**
-     * Constructor for objects of class Unique
+     * Constructor for objects of class NormalA
      */
-    public Unique()
+    public Unique(int[] armies,int[] positions,Canvas mundo)
     {
-        // initialise instance variables
-        x = 0;
+        super(armies,positions,mundo);
     }
-
     /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * Constructor for objects of class NormalA
      */
-    public int sampleMethod(int y)
+    public Unique(int[] armies,int[] positions,int width,int height,Canvas mundo)
+    {
+        super(armies,positions,width,height,mundo);
+    }
+    /**
+     * Add armies to the ones, the nation already has
+     *
+     * @param  y, the number of armies to be added
+     */
+    public void setArmy(int y)
     {
         // put your code here
-        return x + y;
-    }
+        makeInvisible();
+        armyHave = y;
+        makeVisible();
+    }  
 }
