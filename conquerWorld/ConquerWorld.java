@@ -372,24 +372,15 @@ public class ConquerWorld
             && adjList.get(fromNation).contains(toNation) && adjList.get(toNation).contains(fromNation)
             ){
                 if(object1.getArmyH()>0 && cash.getCash()>0 && cash.getCash() > rout.getCost() &&
-                    (object1.canRemoveA() && object2.canRemoveA())
-                ){  
-                    int min = 3214678; 
+                    (object1.canRemoveA() && object2.canRemoveA() &&
+                    object1.getArmy() instanceof Stingy && 
+                    object1.getArmy().canRemoveB(routes,fromNation,toNation,rout) &&
+                    object2.getArmy() instanceof Stingy && 
+                    object2.getArmy().canRemoveB(routes,fromNation,toNation,rout))
+                    ){                      
                     int n = object1.getArmyH()-object1.getArmyN();
                     int m = object2.getArmyN()-object2.getArmyH();
-                    if(object1.getArmy() instanceof Stingy ){                        
-                         for(Route r: routes){
-                             if(r.getFrom().equals(fromNation)){
-                                 if(r.getCost()<min){ min = r.getCost();}
-                             }
-                         }
-                         if(min==rout.getCost()){
-                             soloMover(n,m,object1,object2);
-                         }
-                    }
-                    else{
-                        soloMover(n,m,object1,object2);
-                    }                                        
+                    soloMover(n,m,object1,object2);                                                      
                     cash.addCash(cash.getCash()-rout.getCost());
                     okR=true; break;
                 }
@@ -399,6 +390,10 @@ public class ConquerWorld
         }
         makeVisible();
     }
+    /*
+     *mover un army con las restricciones previamente evaluadas 
+     *
+    */
     private void soloMover(int n,int m,Nation object1,Nation object2){
         if (n>m){
             object2.setArmy(object2.getArmyN());

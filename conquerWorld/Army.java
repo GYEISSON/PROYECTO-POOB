@@ -1,5 +1,5 @@
 package conquerWorld;
-
+import java.util.*;
 import shapes.*;
 /**
  * Write a description of class Army here.
@@ -144,5 +144,6 @@ public abstract class Army
      */
     public boolean canRemoveA(){
         return true;
-    } 
+    }
+    protected boolean canRemoveB(ArrayList<Route> routes,String fromNation,String toNation, Route route){return true;}
 }
