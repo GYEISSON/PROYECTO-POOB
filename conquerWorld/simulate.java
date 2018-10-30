@@ -16,15 +16,13 @@ public class Simulate
 {
     private int solution;
     private ConquerWorld cw;
-    
-    
-    
-    private static Scanner in;
-    private static int nations,u,v,c,x,y;
-    private static int[][] path,mat;
-    private static int[] xI,yI;
+    private int nations,u,v,c,x,y;
+    private int[][] path,mat;
+    private int[] xI,yI;
     private static final int  max_int = 429496729;
-    private static Vector<Integer> donantes,necesitados;
+    private Vector<Integer> donantes,necesitados;
+    private HashMap<Integer,String> mapeo;
+    
     /**
      * Default constructor for test class simulate
      */
@@ -39,13 +37,14 @@ public class Simulate
         yI = new int[nations+1];
         donantes = new Vector<Integer>();
         necesitados = new Vector<Integer>();
+        mapeo = new HashMap<Integer,String>();
     }
 
     
     public void simulate(int[][] routes,int[][] armies, boolean slow){
-        cw.addNation("pentagon",2500,"blue",new int[] {200,200},armies[0]);
-        cw.addNation("triangle",2000,"yellow",new int[] {450,350},armies[1]);
-        cw.addNation("rectangle",2000,"red",new int[] {500,150},armies[2]);
+        cw.addNation("pentagon",2500,"blue",new int[] {200,200},armies[0]);mapeo.put(1,"blue");
+        cw.addNation("triangle",2000,"yellow",new int[] {450,350},armies[1]);mapeo.put(2,"yellow");
+        cw.addNation("rectangle",2000,"red",new int[] {500,150},armies[2]);mapeo.put(3,"red");
         cw.addRoute(new String[] {"blue","yellow"},routes[0][2]);
         cw.addRoute(new String[] {"red","blue"},routes[1][2]);
         cw.makeVisible();
@@ -76,7 +75,6 @@ public class Simulate
                         mat[i][j]=mat[i][k]+mat[k][j];
                         path[i][j]=path[k][j];
                     }
-
                 }
             }
         }
@@ -84,6 +82,9 @@ public class Simulate
     private int flowPath(int source, int target,int value) {
         int cost=mat[source][target];
         while(source != target) {
+            System.out.println(mapeo.get(source)+" "+mapeo.get(path[target][source]));
+            System.out.println(source+" "+path[target][source]);
+            cw.moveArmy(mapeo.get(source),mapeo.get(path[target][source]));
             xI[source]-=value;
             source = path[target][source];
             xI[source]+= value;
