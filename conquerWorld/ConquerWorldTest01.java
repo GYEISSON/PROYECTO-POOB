@@ -150,43 +150,8 @@ public class ConquerWorldTest01
         cw.addNation("Triangle", 10, "blue", new int[]{9, 8},  new int[]{3,2});
         cw.addArmies(new String[]{"blue", "red"});
         assertFalse(cw.ok());
-    }
-    
-    @Test
-    public void shouldRemoveNation() {
-        ConquerWorld cw = new ConquerWorld(200, 200);
-        cw.removeNation("blue");
-        assertFalse(cw.ok());
-        
-        cw.addNation("Triangle", 30, "blue", new int[]{9, 8},  new int[]{3,2});
-        cw.addNation("Circle", 20, "red", new int[]{18, 16}, new int[]{3,2});
-        assertTrue(cw.ok());
-        
-        cw.removeNation("blue");
-        assertTrue(cw.ok());
-        
-        cw.removeNation("red");
-        assertTrue(cw.ok());
-    }
-    
-    @Test
-    public void shouldNotRemoveNonExistentNations() {
-        ConquerWorld cw = new ConquerWorld(200, 200);
-        cw.removeNation("blue");
-        assertFalse(cw.ok());
-        
-        cw.addNation("Triangle", 30, "blue", new int[]{9, 8},  new int[]{3,2});
-        cw.addNation("Circle", 20, "red", new int[]{18, 16},  new int[]{3,2});
-        
-        cw.removeNation("yellow");
-        assertFalse(cw.ok());
-        
-        cw.removeNation("red");
-        assertTrue(cw.ok());
-        
-        cw.removeNation("red");
-        assertFalse(cw.ok());
-    }
+    } 
+
         
     @Test
     public void shouldNotRemoveNationsWithRoutes() {
@@ -289,23 +254,6 @@ public class ConquerWorldTest01
         assertTrue(cw.ok());
         cw.removeArmies("red");
         assertFalse(cw.ok());        
-    }
-    
-    @Test
-    public void shouldNotRemoveArmiesToOfNonExistentNations() {
-        ConquerWorld cw = new ConquerWorld(200, 200);
-        
-        cw.removeArmies("blue");
-        assertFalse(cw.ok());
-
-        cw.addNation("Rectangle", 10, "red", new int[]{18, 8},  new int[]{2,3});
-        assertTrue(cw.ok());
-        
-        cw.removeNation("red");
-        assertFalse(cw.ok());
-        
-        cw.removeArmies("red");
-        assertTrue(cw.ok());
     }
     
     @Test
