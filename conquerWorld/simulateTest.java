@@ -28,14 +28,27 @@ public class simulateTest
      * @return     the sum of x and y
      */
     @Test
-    public void testing()
+    public void simuling_case_1()
     {
-        int[][] routes={{1,2,5},{3,1,5}};
-        int[][] armies = {{3,2},{5,0},{1,3}};
+    
         boolean slow = true;
         Simulate simulador = new Simulate(3);
-        simulador.simulate(new int[][] {{1,2,5},{3,1,5}}, new int[][]{{2,1},{5,0},{1,3}},true);
+        simulador.simulate_1(new int[][] {{1,2,5},{3,1,5}}, new int[][]{{2,1},{5,0},{1,3}},slow);
         
+    }
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
+     */
+    @Test
+    public void simuling_case_2()
+    {
+        boolean slow = true;
+        Simulate simulador = new Simulate(6);
+        simulador.simulate_2(new int[][] {{1,2,2},{1,3,5},{1,4,1},{2,5,5},{2,6,1}},
+        new int[][]{{0,0},{1,0},{2,1},{2,1},{0,1},{0,1}},slow);
     }
     
     // @Test

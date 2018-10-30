@@ -1,4 +1,4 @@
-package conquerWorld;
+    package conquerWorld;
 
 import java.util.*;
 import static org.junit.Assert.*;
@@ -28,7 +28,7 @@ public class Simulate
      */
     public Simulate(int n)
     {
-    	this.nations = n;
+        this.nations = n;
         solution = 0;
         cw = new ConquerWorld(1000,1000);
         path = new int[nations+1][nations+1];
@@ -41,12 +41,34 @@ public class Simulate
     }
 
     
-    public void simulate(int[][] routes,int[][] armies, boolean slow){
+    public void simulate_1(int[][] routes,int[][] armies, boolean slow){
         cw.addNation("pentagon",2500,"blue",new int[] {200,200},armies[0]);mapeo.put(1,"blue");
         cw.addNation("triangle",2000,"yellow",new int[] {450,350},armies[1]);mapeo.put(2,"yellow");
         cw.addNation("rectangle",2000,"red",new int[] {500,150},armies[2]);mapeo.put(3,"red");
         cw.addRoute(new String[] {"blue","yellow"},routes[0][2]);
         cw.addRoute(new String[] {"red","blue"},routes[1][2]);
+        cw.addCash(500000000);
+        cw.makeVisible();
+        simuling(routes,armies,slow);
+    }
+    public void simulate_2(int[][] routes,int[][] armies, boolean slow){
+        cw.addNation("pentagon",1000,"blue",new int[] {100,200},armies[0]);mapeo.put(1,"blue");
+        cw.addNation("triangle",1200,"yellow",new int[] {300,100},armies[1]);mapeo.put(2,"yellow");
+        cw.addNation("rectangle",1200,"red",new int[] {200,400},armies[2]);mapeo.put(3,"red");
+        cw.addNation("square",1600,"white",new int[] {550,550},armies[3]);mapeo.put(4,"white");
+        cw.addNation("rectangle",1000,"black",new int[] {500,150},armies[4]);mapeo.put(5,"black");
+        cw.addNation("triangle",1400,"cherry",new int[] {400,300},armies[5]);mapeo.put(6,"cherry");
+        
+        cw.addRoute(new String[] {mapeo.get(routes[0][0]),mapeo.get(routes[0][1])},routes[0][2]);
+
+        cw.addRoute(new String[] {mapeo.get(routes[1][0]),mapeo.get(routes[1][1])},routes[1][2]);
+
+        cw.addRoute(new String[] {mapeo.get(routes[2][0]),mapeo.get(routes[2][1])},routes[2][2]);
+
+        cw.addRoute(new String[] {mapeo.get(routes[3][0]),mapeo.get(routes[3][1])},routes[3][2]);
+
+        cw.addRoute(new String[] {mapeo.get(routes[4][0]),mapeo.get(routes[4][1])},routes[4][2]);
+      
         cw.addCash(500000000);
         cw.makeVisible();
         simuling(routes,armies,slow);
@@ -61,7 +83,7 @@ public class Simulate
             }
         }
         for(int i=0 ; i< nations-1;i++){
-        	mat[routes[i][0]][routes[i][1]] = routes[i][2]; mat[routes[i][1]][routes[i][0]] = routes[i][2];
+            mat[routes[i][0]][routes[i][1]] = routes[i][2]; mat[routes[i][1]][routes[i][0]] = routes[i][2];
         }
         for(int k=1;k<=nations;k++) {
             xI[k] = armies[k-1][0]; yI[k] = armies[k-1][1];
@@ -83,9 +105,10 @@ public class Simulate
             }
         }
     }
-    private int flowPath(int source, int target,int value) {
+    private int flowPath(int source, int target,int value,boolean slow) {
         int cost=mat[source][target];
         while(source != target) {
+            if(slow){ cw.wait(1000);}
             cw.moveArmyNaive(mapeo.get(source),mapeo.get(path[target][source]),value);
             xI[source]-=value;
             source = path[target][source];
@@ -96,7 +119,7 @@ public class Simulate
     private long solve(boolean slow) {
         int xneed,ydon,ydonpos,value;
         long cost=0;
-        if(slow){ cw.wait(500);}
+        if(slow){ cw.wait(50);}
         while(necesitados.size()>0) {
             xneed=necesitados.get(0);
             ydon = donantes.get(0);
@@ -109,10 +132,10 @@ public class Simulate
             }
             if((xI[ydon]-yI[ydon]) <= (yI[xneed]-xI[xneed])) { value = xI[ydon]-yI[ydon]; }
             else { value = yI[xneed]-xI[xneed]; }
-            cost += flowPath(ydon,xneed,value);
+            cost += flowPath(ydon,xneed,value,slow);
             if(xI[xneed]>=yI[xneed]) necesitados.remove(0);
             if(xI[ydon]==yI[ydon]) donantes.remove(ydonpos);
-            if(slow){ cw.wait(500);}
+            if(slow){ cw.wait(100);}
         }
         return cost;
     }
