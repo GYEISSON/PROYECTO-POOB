@@ -47,6 +47,7 @@ public class Simulate
         cw.addNation("rectangle",2000,"red",new int[] {500,150},armies[2]);mapeo.put(3,"red");
         cw.addRoute(new String[] {"blue","yellow"},routes[0][2]);
         cw.addRoute(new String[] {"red","blue"},routes[1][2]);
+        cw.addCash(500000000);
         cw.makeVisible();
         //llenamos la matriz de distancias de  infinitos
         for(int i=0;i<=nations;i++) {
@@ -82,9 +83,9 @@ public class Simulate
     private int flowPath(int source, int target,int value) {
         int cost=mat[source][target];
         while(source != target) {
-            System.out.println(mapeo.get(source)+" "+mapeo.get(path[target][source]));
-            System.out.println(source+" "+path[target][source]);
+            cw.erase();
             cw.moveArmy(mapeo.get(source),mapeo.get(path[target][source]));
+            cw.makeVisible();
             xI[source]-=value;
             source = path[target][source];
             xI[source]+= value;
