@@ -281,7 +281,7 @@ public class ConquerWorldTest01
         assertTrue(cw.ok());
         
         cw.removeArmies("blue");
-        assertFalse(cw.ok());
+        assertTrue(cw.ok());
  
         cw.addArmy("red");
         assertTrue(cw.ok());       
@@ -302,7 +302,7 @@ public class ConquerWorldTest01
         assertTrue(cw.ok());
         
         cw.removeNation("red");
-        assertTrue(cw.ok());
+        assertFalse(cw.ok());
         
         cw.removeArmies("red");
         assertTrue(cw.ok());
@@ -373,14 +373,14 @@ public class ConquerWorldTest01
         
         cw.addCash(100);
         cw.moveArmy("blue", "red");   
-        assertFalse(cw.ok());
+        assertTrue(cw.ok());
         
         cw.addArmy("blue");
         assertTrue(cw.ok());
         cw.moveArmy("blue", "red");
         assertTrue(cw.ok());
         cw.moveArmy("blue", "red");
-        assertFalse(cw.ok()); 
+        assertTrue(cw.ok()); 
     }
     
     @Test
@@ -395,16 +395,16 @@ public class ConquerWorldTest01
         cw.addCash(100);
         cw.addArmy("blue");
         cw.moveArmy("blue", "red");
-        assertFalse(cw.ok());
+        assertTrue(cw.ok());
         cw.moveArmy("yellow", "red");
-        assertFalse(cw.ok());
+        assertTrue(cw.ok());
         
         cw.addRoute(new String[]{"blue", "red"}, 10);
         cw.addRoute(new String[]{"red", "yellow"}, 5);
         cw.addRoute(new String[]{"blue", "yellow"}, 6);
         
         cw.moveArmy("red", "yellow");
-        assertFalse(cw.ok());
+        assertTrue(cw.ok());
     }
     
     @Test
@@ -473,5 +473,6 @@ public class ConquerWorldTest01
         
         assertTrue(cw.okRoutes());        
     }
+        
 
 }

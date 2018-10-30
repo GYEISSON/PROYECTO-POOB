@@ -11,9 +11,9 @@ import javax.swing.JOptionPane;
 
 /**
  * Manage all the nations and also ConquerWorld the canvas .
- * 
- * @author (Yeisson Gualdron y Santiago Rubiano)
- * @version 4.0.  (18 September 2018)
+ *
+ * @author  (Yeisson Gualdron y Santiago Rubiano)
+ * @version (9.3)
  */
 
 public class ConquerWorld

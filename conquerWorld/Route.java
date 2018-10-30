@@ -8,8 +8,9 @@ import java.awt.geom.*;
 /**
  * A route connects two nations with a cost to move armies between them.
  * 
- * @author  Yeisson Gualdron and Santiago Rubiano
- * @version 2.3  (30 August 2018)
+ *
+ * @author  (Yeisson Gualdron y Santiago Rubiano)
+ * @version (9.3)
  */
 
 public class Route

@@ -4,10 +4,9 @@ import java.awt.*;
 
 /**
  * Manage the cash of the game.
- * 
- * 
- * @author  Yeisson Gualdron and Santiago Rubiano
- * @version 1.2  (30 August 2018)
+ *
+ * @author  (Yeisson Gualdron y Santiago Rubiano)
+ * @version (9.3)
  */
 public class Cash
 {

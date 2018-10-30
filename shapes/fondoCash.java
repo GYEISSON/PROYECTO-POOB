@@ -1,10 +1,11 @@
 package shapes;
 
 /**
- * Write a description of class fondoCash here.
+ * Cash background so the cash can be drawn
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ *
+ * @author  (Yeisson Gualdron y Santiago Rubiano)
+ * @version (9.3)
  */
 public class fondoCash
 {

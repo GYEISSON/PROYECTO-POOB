@@ -7,7 +7,7 @@ import java.awt.geom.*;
  * A pentagon that can be manipulated and that draws itself on a canvas.
  * 
  * @author  Yeisson Gualdron and Santiago Rubiano
- * @version 1.3  (30 August 2018)
+ * @version 9.3 
  */
 
 public class Line extends Figure{

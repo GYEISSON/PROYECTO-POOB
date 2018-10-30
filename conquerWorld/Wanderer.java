@@ -3,10 +3,11 @@ import shapes.*;
 import java.util.*;
 
 /**
- * Write a description of class Wanderer here.
+ * The army that belongs to a specific Nation
+ * 
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author  (Yeisson Gualdron y Santiago Rubiano)
+ * @version (9.3)
  */
 public class Wanderer
 {

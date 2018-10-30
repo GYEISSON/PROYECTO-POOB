@@ -2,10 +2,11 @@ package conquerWorld;
 
 
 /**
- * Write a description of class Still here.
+ * A nation that contains a determined shape and a determined color.
+ * 
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author  (Yeisson Gualdron y Santiago Rubiano)
+ * @version (9.3)
  */
 public class Still extends Nation
 {

@@ -6,8 +6,9 @@ import java.util.*;
 /**
  * A nation that contains a determined shape and a determined color.
  * 
- * @author  Yeisson Gualdron and Santiago Rubiano
- * @version 4.3  (30 August 2018)
+ *
+ * @author  (Yeisson Gualdron y Santiago Rubiano)
+ * @version (9.3)
  */
 public abstract class Nation
 {
@@ -164,7 +165,7 @@ public abstract class Nation
     /**
      * Add armies to the ones, the nation already has
      *
-     * @param  y, the number of armies to be added
+     * @param the number of armies to be added
      */
     public void setArmy(int y)
     {
@@ -198,7 +199,12 @@ public abstract class Nation
         // put your code here
         return army.getArmyH();
     }
-    public Army getArmy() {return army;}
+    /**
+     * Return the army of the current nation
+     */
+    public Army getArmy() {
+        return army;
+    }
     /**
      * Return the shape of the current nation
      *

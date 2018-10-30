@@ -9,8 +9,8 @@ import org.junit.Test;
 /**
  * The test class simulate.
  *
- * @author  (your name)
- * @version (a version number or a date)
+ * @author  (Yeisson Gualdron y Santiago Rubiano))
+ * @version (9.3)
  */
 public class Simulate
 {
@@ -24,7 +24,7 @@ public class Simulate
     private HashMap<Integer,String> mapeo;
     
     /**
-     * Default constructor for test class simulate
+     * Default constructor for class simulate
      */
     public Simulate(int n)
     {
@@ -40,7 +40,9 @@ public class Simulate
         mapeo = new HashMap<Integer,String>();
     }
 
-    
+    /**
+     * Caso 1 de simulacion
+     */
     public void simulate_1(int[][] routes,int[][] armies, boolean slow){
         cw.addNation("pentagon",2500,"blue",new int[] {200,200},armies[0]);mapeo.put(1,"blue");
         cw.addNation("triangle",2000,"yellow",new int[] {450,350},armies[1]);mapeo.put(2,"yellow");
@@ -51,6 +53,9 @@ public class Simulate
         cw.makeVisible();
         simuling(routes,armies,slow);
     }
+    /**
+     * Caso 2 de simulacion
+     */
     public void simulate_2(int[][] routes,int[][] armies, boolean slow){
         cw.addNation("pentagon",1000,"blue",new int[] {100,200},armies[0]);mapeo.put(1,"blue");
         cw.addNation("triangle",1200,"yellow",new int[] {300,100},armies[1]);mapeo.put(2,"yellow");
@@ -73,6 +78,11 @@ public class Simulate
         cw.makeVisible();
         simuling(routes,armies,slow);
     }
+    /**
+     * Simulando se encarga de simular la ejecucion
+     * 
+     * @param rutas, ejercitos, y si es o no con un movimiento rapido
+     */
     private void simuling(int[][] routes,int[][] armies, boolean slow){
         //llenamos la matriz de distancias de  infinitos
         for(int i=0;i<=nations;i++) {
@@ -93,6 +103,9 @@ public class Simulate
         floyd_Warshall();
         System.out.println(solve(slow));
     }
+    /**
+     * floyd Warshall para poder obtener minimo costo
+     */
     public void floyd_Warshall() {
         for(int k=0;k<=nations;k++) {
             for(int i=0;i<=nations;i++) {
@@ -105,6 +118,10 @@ public class Simulate
             }
         }
     }
+    
+    /**
+     * Me permite ver el camino recorrido
+     */
     private int flowPath(int source, int target,int value,boolean slow) {
         int cost=mat[source][target];
         while(source != target) {
@@ -116,6 +133,12 @@ public class Simulate
         }
         return cost;
     }
+    /**
+     * Solucion del problema
+     * 
+     * @param si es o no lento
+     * @return respuesta
+     */
     private long solve(boolean slow) {
         int xneed,ydon,ydonpos,value;
         long cost=0;
