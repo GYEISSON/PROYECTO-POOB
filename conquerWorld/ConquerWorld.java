@@ -364,39 +364,50 @@ public class ConquerWorld
      */
     public void moveArmy(String fromNation,String toNation)
     {
-
         erase();
         Nation object1 = getNation(fromNation),object2=getNation(toNation);
         for(Route rout: routes){
-
             if(((rout.getFrom().equals(fromNation) && rout.getTo().equals(toNation))
             || (rout.getFrom().equals(toNation) && rout.getTo().equals(fromNation)))
             && adjList.get(fromNation).contains(toNation) && adjList.get(toNation).contains(fromNation)
             ){
-
-                if(object1.getArmyH()>0 && cash.getCash()>0 && cash.getCash() > rout.getCost()){  
-
+                if(object1.getArmyH()>0 && cash.getCash()>0 && cash.getCash() > rout.getCost() &&
+                    (object1.canRemoveA() && object2.canRemoveA())
+                ){  
+                    int min = 3214678; 
                     int n = object1.getArmyH()-object1.getArmyN();
                     int m = object2.getArmyN()-object2.getArmyH();
-                    
-                    if (n>m){
-                        object2.setArmy(object2.getArmyN());
-                        object1.setArmy(-m);
+                    if(object1.getArmy() instanceof Stingy ){                        
+                         for(Route r: routes){
+                             if(r.getFrom().equals(fromNation)){
+                                 if(r.getCost()<min){ min = r.getCost();}
+                             }
+                         }
+                         if(min==rout.getCost()){
+                             soloMover(n,m,object1,object2);
+                         }
                     }
-                    else {
-                        object2.setArmy(n);
-                        object1.setArmy(-n);
-                    }
+                    else{
+                        soloMover(n,m,object1,object2);
+                    }                                        
                     cash.addCash(cash.getCash()-rout.getCost());
-                    okR=true;
-                    break;
+                    okR=true; break;
                 }
                 else okR=false;
             }
             else okR=false;
         }
-        
         makeVisible();
+    }
+    private void soloMoversoloMover(int n,int m,Nation object1,Nation object2){
+        if (n>m){
+            object2.setArmy(object2.getArmyN());
+            object1.setArmy(-m);
+        }
+        else {
+            object2.setArmy(n);
+            object1.setArmy(-n);
+        }
     }
     public void moveArmyNaive(String fromNation,String toNation,int value){
         erase();

@@ -10,11 +10,11 @@ import shapes.*;
 public abstract class Army
 {
     // instance variables - replace the example below with your own
-    private int armiesNeeded;
-    private int armyHave,width,height;
-    private int[] pos; 
-    private boolean isVisible;
-    Canvas mundo;
+    protected int armiesNeeded;
+    protected int armyHave,width,height;
+    protected int[] pos; 
+    protected boolean isVisible;
+    protected Canvas mundo;
 
     /**
      * Constructor for objects of class Army
@@ -113,7 +113,7 @@ public abstract class Army
     /**
      * Erase the army on screen.
      */
-    private void erase(){
+    public void erase(){
         if(isVisible) {
             Canvas canvas = Canvas.getCanvas();
             canvas.erase(this);
@@ -123,7 +123,7 @@ public abstract class Army
      * Draw the square with current specifications on screen.
      */
 
-    private void draw(){
+    public void draw(){
 
         if(isVisible) {
             
@@ -131,7 +131,7 @@ public abstract class Army
             mundo.drawString(Integer.toString(armiesNeeded),pos[0]+30,pos[1]-5);
         }
     }
-    private void draw(int x) {
+    public void draw(int x) {
         
         if(isVisible) {
             

@@ -57,7 +57,7 @@ public class Solution {
     public static int flowPath(int source, int target,int value) {
         int cost=mat[source][target];
         while(source != target) {
-            System.out.println(source+" "+path[target][source]);
+
             xI[source]-=value;
             source = path[target][source];
             xI[source]+= value;

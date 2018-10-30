@@ -128,8 +128,7 @@ public abstract class Nation
             }else{
                 army.makeVisible();
             }
-        }
-        
+        }        
     }
     
     /**
@@ -199,6 +198,7 @@ public abstract class Nation
         // put your code here
         return army.getArmyH();
     }
+    public Army getArmy() {return army;}
     /**
      * Return the shape of the current nation
      *
@@ -225,6 +225,12 @@ public abstract class Nation
     public int getHeight(){
         return height;
     }
+    /**
+     * @return si es posible que la nacion realice ese comportamiento
+     */
+    public boolean canRemoveA(){
+        return army.canRemoveA();
+    } 
     /**
      * @return si es posible que la nacion realice ese comportamiento
      */
