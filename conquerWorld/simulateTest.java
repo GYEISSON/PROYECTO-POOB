@@ -21,17 +21,6 @@ public class simulateTest
     public simulateTest()
     {
     }
-
-    /**
-     * Sets up the test fixture.
-     *
-     * Called before every test case method.
-     */
-    @Before
-    public void setUp()
-    {
-    }
-    
     /**
      * An example of a method - replace this comment with your own
      *
@@ -44,7 +33,8 @@ public class simulateTest
         int[][] routes={{1,2,5},{3,1,5}};
         int[][] armies = {{3,2},{5,0},{1,3}};
         boolean slow = true;
-
+        Simulate simulador = new Simulate(3);
+        simulador.simulate(new int[][] {{1,2,5},{3,1,5}}, new int[][]{{2,1},{5,0},{1,3}},true);
     }
     
     @Test
@@ -65,15 +55,4 @@ public class simulateTest
        cw.moveArmy("blue","red");
        
     }
-
-    /**
-     * Tears down the test fixture.
-     *
-     * Called after every test case method.
-     */
-    @After
-    public void tearDown()
-    {
-    }
-    
 }

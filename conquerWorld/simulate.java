@@ -62,13 +62,13 @@ public class Simulate
         }
         for(int k=1;k<=nations;k++) {
             xI[k] = armies[k-1][0]; yI[k] = armies[k-1][1];
-            if(x>y) donantes.add(k);
-            else if(x < y) necesitados.add(k);
+            if(xI[k]>yI[k]) donantes.add(k);
+            else if(xI[k] < yI[k]) necesitados.add(k);
         }
         floyd_Warshall();
         System.out.println(solve());
     }
-    public static void floyd_Warshall() {
+    public void floyd_Warshall() {
         for(int k=0;k<=nations;k++) {
             for(int i=0;i<=nations;i++) {
                 for(int j=0;j<=nations;j++) {
@@ -81,7 +81,7 @@ public class Simulate
             }
         }
     }
-    private static int flowPath(int source, int target,int value) {
+    private int flowPath(int source, int target,int value) {
         int cost=mat[source][target];
         while(source != target) {
             xI[source]-=value;
@@ -90,7 +90,7 @@ public class Simulate
         }
         return cost;
     }
-    private static long solve() {
+    private long solve() {
         int xneed,ydon,ydonpos,value;
         long cost=0;
         while(necesitados.size()>0) {

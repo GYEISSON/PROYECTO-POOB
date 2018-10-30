@@ -13,16 +13,9 @@ public class Solution {
     public static void main(String[] args) {
         in = new Scanner(System.in);
         nations = in.nextInt();
-
-        path = new int[nations+1][nations+1];
-        mat = new int[nations+1][nations+1];
-
-        xI = new int[nations+1];
-        yI = new int[nations+1];
-
-        donantes = new Vector<Integer>();
-        necesitados = new Vector<Integer>();
-
+        path = new int[nations+1][nations+1]; mat = new int[nations+1][nations+1];
+        xI = new int[nations+1]; yI = new int[nations+1];
+        donantes = new Vector<Integer>(); necesitados = new Vector<Integer>();
         //llenamos la matriz de distancias de  infinitos
         for(int i=0;i<=nations;i++) {
             for(int j=0;j<=nations;j++) {
@@ -31,51 +24,23 @@ public class Solution {
                 path[i][j]=i;
             }
         }
-
-        //end
-
         for(int i=1;i<nations;i++) {
-            u = in.nextInt();
-            v=in.nextInt();
-            c=in.nextInt();
-            mat[u][v] = c;
-            mat[v][u] = c;
+            u = in.nextInt(); v=in.nextInt(); c=in.nextInt();
+            mat[u][v] = mat[v][u] = c;
         }
-
         for(int k=1;k<=nations;k++) {
-            x = in.nextInt();
-            y = in.nextInt();
-            xI[k] = x;
-            yI[k] = y;
+            x = in.nextInt(); y = in.nextInt();
+            xI[k] = x; yI[k] = y;
             if(x>y) donantes.add(k);
             else if(x < y) necesitados.add(k);
         }
-
         floyd_Warshall();
-
         System.out.println(solve());
-        /*
-        System.out.println("matriz de distancias");
-        for(int i=0;i<=nations;i++) {
-        for(int j=0;j<=nations;j++) {
-        System.out.print(mat[i][j]+" ");
-        }
-        System.out.println(" ");
-        }
-        System.out.println("Matriz de caminos");
-        for(int i=0;i<=nations;i++) {
-        for(int j=0;j<=nations;j++) {
-        System.out.print(path[i][j]+" ");
-        }
-        System.out.println(" ");
-        }
-
-        rPath(1,4);
-
-         */
         in.close();
     }
+    
     public Solution(){}
+    
     public static void floyd_Warshall() {
         for(int k=0;k<=nations;k++) {
             for(int i=0;i<=nations;i++) {
@@ -84,7 +49,6 @@ public class Solution {
                         mat[i][j]=mat[i][k]+mat[k][j];
                         path[i][j]=path[k][j];
                     }
-
                 }
             }
         }
@@ -100,14 +64,11 @@ public class Solution {
         }
         return cost;
     }
-
     public static long solve() {
         int xneed,ydon,ydonpos,value;
         long cost=0;
-        //System.out.println(donantes.size()+" #donantes");
         while(necesitados.size()>0) {
             xneed=necesitados.get(0);
-            //System.out.println(donantes.size());
             ydon = donantes.get(0);
             ydonpos = 0;
             for(int i=0;i<donantes.size();i++) {
@@ -115,22 +76,13 @@ public class Solution {
                     ydon = donantes.get(i);
                     ydonpos = i;
                 }
-
             }
-
-            //System.out.println(xI[ydon]+" "+yI[ydon]+ " " + yI[xneed]+" "+xI[xneed] );
-            if((xI[ydon]-yI[ydon]) <= (yI[xneed]-xI[xneed])) {
-                value = xI[ydon]-yI[ydon];
-            }
-            else {
-                value = yI[xneed]-xI[xneed];
-            }
-            //System.out.println(ydon + " " + xneed + " " + value);
+            if((xI[ydon]-yI[ydon]) <= (yI[xneed]-xI[xneed])) { value = xI[ydon]-yI[ydon]; }
+            else { value = yI[xneed]-xI[xneed]; }
             cost += flowPath(ydon,xneed,value);
             if(xI[xneed]>=yI[xneed]) necesitados.remove(0);
             if(xI[ydon]==yI[ydon]) donantes.remove(ydonpos);
         }
-        //System.out.println(cost+" cost");
         return cost;
     }
 }
