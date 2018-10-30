@@ -2,20 +2,20 @@ package conquerWorld;
 
 
 /**
- * Write a description of class Steady here.
+ * Write a description of class Wanderer here.
  *
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Steady
+public class Wanderer
 {
     // instance variables - replace the example below with your own
     private int x;
 
     /**
-     * Constructor for objects of class Steady
+     * Constructor for objects of class Wanderer
      */
-    public Steady()
+    public Wanderer()
     {
         // initialise instance variables
         x = 0;

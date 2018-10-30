@@ -2,23 +2,23 @@ package conquerWorld;
 
 
 /**
- * Write a description of class Normal here.
+ * Write a description of class Stingy here.
  *
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Normal extends Nation
+public class Stingy
 {
     // instance variables - replace the example below with your own
     private int x;
 
     /**
-     * Constructor for objects of class Normal
+     * Constructor for objects of class Stingy
      */
-    public Normal(String shape,int area,String color,int[] pos,int[] armies,shapes.Canvas mundo)
+    public Stingy()
     {
         // initialise instance variables
-        super(shape,area,color,pos,armies,mundo);
+        x = 0;
     }
 
     /**
@@ -31,13 +31,5 @@ public class Normal extends Nation
     {
         // put your code here
         return x + y;
-    }
-    /**
-     *Delete all the corresponding shapes of a nation.
-     *
-     * @param  color of the nation to be removed
-     */
-    public void removeNationF(String color){ 
-       figure.delete();
     }
 }

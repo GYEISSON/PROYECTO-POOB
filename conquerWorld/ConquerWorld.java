@@ -140,7 +140,7 @@ public class ConquerWorld
         }        
         if(put &&  !(colorNations.contains(color))){
             aux[0]=xPos;aux[1]=yPos;
-            nation = new Normal(shape,area,color,aux,armies,this.mundo);
+            nation = new NormalN(shape,area,color,aux,armies,this.mundo);
             arrayNations.add(nation);
             colorNations.add(color);
             adjList.put(color,new ArrayList<String>());
@@ -160,28 +160,32 @@ public class ConquerWorld
     public void removeNation(String removeColor){        
         String colorob;
         okR=false;
-        boolean okTempt = true;        
-        if(colorNations.contains(removeColor)){ 
-            for(int i=0;i<arrayNations.size();i++){
-                colorob= arrayNations.get(i).getColor();
-                if(arrayNations.get(i).getColor().equals(removeColor)){
-                    for(String nodo: colorNations){
-                         for(int k =0;k<adjList.get(nodo).size();k++){
-                             if(adjList.get(nodo).get(k).equals(removeColor)){
-                                okTempt = false;                                
-                             }
-                         }
-                    }
-                    //okTemp revisa otra nacion existente tiene una ruta creada hacia removecolor(nacion a remover)
-                    if(okTempt){
-                         arrayNations.get(i).removeNationF(removeColor);
-                         arrayNations.remove(i);
-                         colorNations.remove(i);
-                         adjList.remove(removeColor);
-                         okR = true;
-                    }
-                }                    
-            }         
+        boolean okTempt = true;    
+        for (Nation n:arrayNations){
+            if (n.getColor().equals(removeColor)&& n.canRemoveN()){
+                if(colorNations.contains(removeColor)){ 
+                    for(int i=0;i<arrayNations.size();i++){
+                        colorob= arrayNations.get(i).getColor();
+                        if(arrayNations.get(i).getColor().equals(removeColor)){
+                            for(String nodo: colorNations){
+                                 for(int k =0;k<adjList.get(nodo).size();k++){
+                                     if(adjList.get(nodo).get(k).equals(removeColor)){
+                                        okTempt = false;                                
+                                     }
+                                 }
+                            }
+                            //okTemp revisa otra nacion existente tiene una ruta creada hacia removecolor(nacion a remover)
+                            if(okTempt){
+                                 arrayNations.get(i).removeNationF(removeColor);
+                                 arrayNations.remove(i);
+                                 colorNations.remove(i);
+                                 adjList.remove(removeColor);
+                                 okR = true;
+                            }
+                        }                    
+                    }         
+                }
+            }
         }
     }
     /**
@@ -226,9 +230,14 @@ public class ConquerWorld
         int[] aPosition={0,0},bPosition={0,0};
         int posRouteToRemove = 0;
         okR=false;
+        boolean puede=true;
+        for(Nation n : arrayNations){
+            puede = puede&&n.canRemoveR();
+        }
+        
         for(Route r : routes){
             if((r.getFrom()==nations[0] && r.getTo()==nations[1]) ||( 
-            r.getFrom()==nations[1] && r.getTo()==nations[0])){
+            r.getFrom()==nations[1] && r.getTo()==nations[0])&& puede){
                 elimina = r;
                 for(Nation obNation : arrayNations){
                     if(obNation.getColor()== nations[0]){
@@ -404,7 +413,7 @@ public class ConquerWorld
      */
     private Nation getNation(String nationName){
         int[] pos={1,1};
-        Nation x = new Normal("triangle",1,"blue",pos,pos,this.mundo);
+        Nation x = new NormalN("triangle",1,"blue",pos,pos,this.mundo);
         
         for(Nation n: arrayNations){    
             if(n.getColor().equals(nationName)){ 

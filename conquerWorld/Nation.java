@@ -79,7 +79,7 @@ public abstract class Nation
             this.width=(int)Math.sqrt(2*area);
             this.height = (int)Math.sqrt(2*area);
             figures.add(figure);
-            army = new Army(armies,pos,this.width,this.height,mundo);
+            army = new NormalA(armies,pos,this.width,this.height,mundo);
         }
         else if(shape.equals("rectangle"))
         {
@@ -95,7 +95,7 @@ public abstract class Nation
         //funciona el army si no es un pentagono
         if(!shape.equals("pentagon")){
             //System.out.println("new _army");
-            army = new Army(armies,pos,mundo);
+            army = new NormalA(armies,pos,mundo);
         }
         
     }
@@ -224,5 +224,17 @@ public abstract class Nation
      */
     public int getHeight(){
         return height;
+    }
+    /**
+     * @return si es posible que la nacion realice ese comportamiento
+     */
+    public boolean canRemoveN(){
+        return true;
+    } 
+    /**
+     * @return si es posible que la nacion realice ese comportamiento
+     */
+    public boolean canRemoveR(){
+        return true;
     }
 }

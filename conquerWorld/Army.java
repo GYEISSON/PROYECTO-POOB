@@ -7,7 +7,7 @@ import shapes.*;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Army
+public abstract class Army
 {
     // instance variables - replace the example below with your own
     private int armiesNeeded;
@@ -110,8 +110,8 @@ public class Army
     }
 
     
-        /*
-     * Erase the rectangle on screen.
+    /**
+     * Erase the army on screen.
      */
     private void erase(){
         if(isVisible) {
@@ -139,4 +139,10 @@ public class Army
             mundo.drawString(Integer.toString(armiesNeeded),pos[0]-(width-100),pos[1]-(height+5));
         }
     }
+        /**
+     * @return si es posible que la nacion realice ese comportamiento
+     */
+    public boolean canRemoveA(){
+        return true;
+    } 
 }
