@@ -399,7 +399,7 @@ public class ConquerWorld
         }
         makeVisible();
     }
-    private void soloMoversoloMover(int n,int m,Nation object1,Nation object2){
+    private void soloMover(int n,int m,Nation object1,Nation object2){
         if (n>m){
             object2.setArmy(object2.getArmyN());
             object1.setArmy(-m);
