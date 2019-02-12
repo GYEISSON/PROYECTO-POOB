@@ -57,6 +57,7 @@ public class ConquerWorld
     }   
     /** Anadir efectivo al presupuesto de batalla, ademas guardamos el antigua cash le sumamos el valor de cash a anadir 
      * y comparamos con el nuevo valor 
+	 *hola
      *  
      *
      * @param  dinero a adicionar
@@ -222,6 +223,7 @@ public class ConquerWorld
      * Remueve una ruta entre dos naciones de la batalla, para esto reviamos que las naciones existan,
      * y eliminamos las apariciones de las naciones en la lista de adyacencia
      *
+	 *hola
      * @param  y   a sample parameter for a method
      * @return     the sum of x and y
      */
@@ -291,7 +293,7 @@ public class ConquerWorld
         isVisible = true;
     }      
      /**
-     * Hace invisible todas las naciones y rutas
+     * Hace invisible todas las naciones y rutas.god
      */
     public void makeInvisible(){
         for (Nation c:arrayNations)
@@ -309,6 +311,7 @@ public class ConquerWorld
      * Anade armamento a una nacion, buscamos la nacion en el arrayList de naciones,
      * obteniendo su color y comparandolo con el color de la nacion a la cual anadiremos 
      * army 
+	 *
      * @param  Nacion a agregar armamento
      */
     public void addArmy(String nation){
@@ -341,7 +344,8 @@ public class ConquerWorld
     }
     /**
      * Quita armamento a una nacion,buscamos la nacion en el arrayList de naciones
-     * y revismaos si tiene un army a remover 
+     * y revismaos si tiene un army a remover.
+	 *
      *
      * @param  Nacion a quitar armamento
      */
